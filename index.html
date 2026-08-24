@@ -1,313 +1,21 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+    <!-- KIVIS IT — application authorship signature -->
+    <meta name="author" content="KIVIS IT">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KT404 - Quản lý Tài sản IT</title>
+    <title>Quản lý Tài sản IT</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a6abf'/%3E%3Crect x='14' y='16' width='36' height='11' rx='3' fill='white'/%3E%3Ccircle cx='20' cy='21.5' r='2.2' fill='%230a6abf'/%3E%3Crect x='14' y='30' width='36' height='11' rx='3' fill='white' opacity='.85'/%3E%3Ccircle cx='20' cy='35.5' r='2.2' fill='%230a6abf'/%3E%3Crect x='14' y='44' width='36' height='11' rx='3' fill='white' opacity='.7'/%3E%3Ccircle cx='20' cy='49.5' r='2.2' fill='%230a6abf'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,100..1000;1,6..12,100..1000&display=swap" rel="stylesheet">
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        :root{
-            --primary:#0a6abf;--dark:#064a8a;--light:#e8f4fd;--accent:#2196F3;
-            --bg:#f0f4f8;--text:#1a2332;--light-text:#6b7c93;--white:#fff;
-            --success:#1b9e3e;--warning:#c78c00;--danger:#c62828;--border:#dde3ea;
-            --shadow:0 2px 10px rgba(10,106,191,.1);--shadow-lg:0 6px 24px rgba(10,106,191,.16);
-            --radius:10px;
-        }
-        body{font-family:'Nunito Sans','Be Vietnam Pro',Tahoma,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
- 
-        .header{background:linear-gradient(135deg,#073b6e 0%,var(--primary) 50%,var(--accent) 100%);color:var(--white);padding:0 32px;height:58px;display:flex;align-items:center;box-shadow:0 4px 20px rgba(7,59,110,.3);position:sticky;top:0;z-index:1000}
-        .header-content{max-width:1520px;margin:0 auto;width:100%;display:flex;justify-content:space-between;align-items:center}
-        .logo{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:700;letter-spacing:-.2px}
-        .logo i{font-size:21px;opacity:.9}
-        .user-info{display:flex;align-items:center;gap:14px}
-        .notif-btn{position:relative;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:white;width:34px;height:34px;border-radius:50%;cursor:pointer;transition:all .3s;font-size:13px;display:flex;align-items:center;justify-content:center}
-        .notif-btn:hover{background:rgba(255,255,255,.25)}
-        .notif-badge{position:absolute;top:-4px;right:-4px;background:var(--danger);color:white;border-radius:50%;width:17px;height:17px;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:800;border:2px solid #073b6e}
-        .user-avatar{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);padding:4px 14px 4px 5px;border-radius:24px;border:1px solid rgba(255,255,255,.15)}
-        .user-avatar i{font-size:24px;opacity:.8}
-        .user-avatar span{font-size:12.5px;font-weight:600}
- 
-        .main-container{display:flex;max-width:1520px;margin:18px auto;gap:14px;padding:0 18px;min-height:calc(100vh - 58px - 36px)}
-        .sidebar{width:210px;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px 0;height:fit-content;position:sticky;top:76px;flex-shrink:0;border:1px solid rgba(0,0,0,.04)}
-        .nav-menu{list-style:none}
-        .nav-item{margin:1px 6px}
-        .nav-link{display:flex;align-items:center;gap:8px;padding:8px 11px;text-decoration:none;color:var(--text);border-radius:8px;transition:all .25s;font-weight:600;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-size:12.5px;font-family:inherit;letter-spacing:.1px}
-        .nav-link i{width:17px;text-align:center;font-size:12.5px;opacity:.75}
-        .nav-link:hover{background:var(--light);color:var(--primary)}
-        .nav-link:hover i{opacity:1}
-        .nav-link.active{background:linear-gradient(135deg,var(--primary),var(--accent));color:var(--white);box-shadow:0 3px 12px rgba(10,106,191,.3)}
-        .nav-link.active i{opacity:1}
-        .content-area{flex:1;min-width:0}
-        .section{display:none;animation:fadeIn .3s ease-out}
-        .section.active{display:block}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
- 
-        .panel{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;border:1px solid rgba(0,0,0,.04)}
-        .panel-header{background:linear-gradient(135deg,var(--primary),var(--accent));color:var(--white);padding:11px 16px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:7px}
-        .panel-header.danger{background:linear-gradient(135deg,#b71c1c,#e53935)}
-        .panel-header.success{background:linear-gradient(135deg,#1b7a2e,#43a047)}
-        .panel-header.warning{background:linear-gradient(135deg,#a67500,#f9a825);color:var(--text)}
-        .panel-body{padding:16px}
- 
-        .dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:11px;margin-bottom:16px}
-        .stat-card{background:var(--white);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);transition:all .3s;cursor:pointer;border-left:4px solid transparent;position:relative;overflow:hidden}
-        .stat-card::before{content:'';position:absolute;top:-18px;right:-18px;width:70px;height:70px;border-radius:50%;opacity:.06}
-        .stat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
-        .stat-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-        .stat-top{display:flex;align-items:center;gap:10px;margin-bottom:7px}
-        .stat-number{font-size:24px;font-weight:800;color:var(--text);line-height:1.1}
-        .stat-label{color:var(--light-text);font-size:11px;font-weight:600;margin-top:2px}
-        .stat-card.pc .stat-icon{background:#e3f2fd;color:#1565c0}.stat-card.pc{border-left-color:#1565c0}.stat-card.pc::before{background:#1565c0}
-        .stat-card.storage .stat-icon{background:#f3e5f5;color:#7b1fa2}.stat-card.storage{border-left-color:#7b1fa2}.stat-card.storage::before{background:#7b1fa2}
-        .stat-card.ram .stat-icon{background:#e0f2f1;color:#00897b}.stat-card.ram{border-left-color:#00897b}.stat-card.ram::before{background:#00897b}
-        .stat-card.laptop .stat-icon{background:#fff3e0;color:#ef6c00}.stat-card.laptop{border-left-color:#ef6c00}.stat-card.laptop::before{background:#ef6c00}
-        .stat-card.borrow .stat-icon{background:#fce4ec;color:#c2185b}.stat-card.borrow{border-left-color:#c2185b}.stat-card.borrow::before{background:#c2185b}
-        .stat-click-hint{position:absolute;bottom:5px;right:7px;font-size:8.5px;color:var(--primary);opacity:0;transition:opacity .3s;font-weight:600}
-        .stat-card:hover .stat-click-hint{opacity:.6}
- 
-        .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:11px}
-        .form-group{display:flex;flex-direction:column;margin-bottom:9px}
-        .form-group.full{grid-column:1/-1}
-        .form-label{font-weight:700;margin-bottom:3px;color:var(--text);font-size:11.5px}
-        .form-label .req{color:var(--danger);margin-left:1px}
-        .form-input,.form-select,.form-textarea{padding:8px 11px;border:2px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;transition:all .25s;background:var(--white)}
-        .form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(10,106,191,.08)}
-        .form-textarea{resize:vertical;min-height:55px}
- 
-        .btn{padding:8px 16px;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:all .25s;display:inline-flex;align-items:center;gap:5px;font-family:inherit;white-space:nowrap}
-        .btn:active{transform:scale(.97)}
-        .btn-primary{background:linear-gradient(135deg,var(--primary),var(--accent));color:var(--white);box-shadow:0 3px 10px rgba(10,106,191,.2)}
-        .btn-primary:hover{box-shadow:0 5px 14px rgba(10,106,191,.3);transform:translateY(-1px)}
-        .btn-success{background:linear-gradient(135deg,#1b9e3e,#43a047);color:var(--white)}
-        .btn-danger{background:linear-gradient(135deg,#c62828,#e53935);color:var(--white)}
-        .btn-warning{background:linear-gradient(135deg,#c78c00,#fbc02d);color:var(--white)}
-        .btn-outline{background:var(--white);color:var(--text);border:2px solid var(--border)}
-        .btn-outline:hover{border-color:var(--primary);color:var(--primary);background:var(--light)}
-        .btn-sm{padding:5px 10px;font-size:10.5px}
-        .btn-lg{padding:10px 22px;font-size:13px}
- 
-        .table-container{overflow-x:auto}
-        table{width:100%;border-collapse:collapse;font-size:11.5px}
-        thead{background:var(--light)}
-        th{padding:9px 10px;text-align:left;font-weight:700;color:var(--primary);border-bottom:2px solid var(--border);white-space:nowrap;font-size:10.5px;text-transform:uppercase;letter-spacing:.3px}
-        td{padding:7px 10px;border-bottom:1px solid #eef1f5}
-        tbody tr{transition:all .2s}
-        tbody tr:hover{background:#f7fafd}
- 
-        .badge{display:inline-block;padding:2px 8px;border-radius:9px;font-size:9.5px;font-weight:700;letter-spacing:.2px}
-        .badge-success{background:#d4edda;color:#155724}
-        .badge-warning{background:#fff3cd;color:#856404}
-        .badge-danger{background:#f8d7da;color:#721c24}
-        .badge-info{background:var(--light);color:var(--primary)}
-        .badge-secondary{background:#e9ecef;color:#495057}
-        .cat-tag{display:inline-block;padding:2px 7px;border-radius:5px;font-size:9.5px;font-weight:700}
-        .cat-thietbi{background:#e3f2fd;color:#1565c0}
-        .cat-linhkien{background:#f3e5f5;color:#7b1fa2}
-        .cat-ngoai_vi{background:#fff3e0;color:#ef6c00}
-        .cat-tieuhao{background:#e8f5e9;color:#2e7d32}
-        .cond-new{background:#d4edda;color:#155724}
-        .cond-old{background:#fff3cd;color:#856404}
-        .cond-broken{background:#f8d7da;color:#721c24}
-        .qty-badge{display:inline-flex;align-items:center;gap:3px;background:#eef3fa;color:var(--primary);padding:2px 8px;border-radius:9px;font-size:10px;font-weight:800}
-        .qty-badge i{font-size:9px}
- 
-        .search-box{position:relative;margin-bottom:10px}
-        .search-input{width:100%;padding:9px 12px 9px 36px;border:2px solid var(--border);border-radius:9px;font-size:12px;transition:all .25s;font-family:inherit}
-        .search-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(10,106,191,.08)}
-        .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--light-text);font-size:13px}
- 
-        .dual-list-container{background:var(--bg);padding:14px;border-radius:var(--radius)}
-        .dual-section{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch}
-        .list-box{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.05);display:flex;flex-direction:column;border:1px solid var(--border)}
-        .list-box-header{background:var(--light);padding:7px 10px;font-weight:700;color:var(--primary);display:flex;justify-content:space-between;align-items:center;font-size:11.5px;border-bottom:2px solid var(--border)}
-        .list-box-count{background:var(--primary);color:var(--white);padding:1px 7px;border-radius:9px;font-size:9.5px}
-        .list-box-search{padding:5px 7px;border-bottom:1px solid var(--border);position:relative}
-        .list-box-search input{width:100%;padding:5px 7px 5px 26px;border:1px solid var(--border);border-radius:6px;font-size:10.5px;font-family:inherit}
-        .list-box-search i{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--light-text);font-size:10px}
-        .list-box-body{flex:1;overflow-y:auto;max-height:210px;min-height:130px}
-        .list-item{padding:6px 9px;border-bottom:1px solid #f0f2f5;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;font-size:10.5px}
-        .list-item:hover{background:var(--light)}
-        .list-item.selected{background:#cce5ff;border-left:3px solid var(--primary)}
-        .list-item input[type=checkbox]{width:13px;height:13px;cursor:pointer;accent-color:var(--primary)}
-        .list-item-info{flex:1;min-width:0}
-        .list-item-name{font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px}
-        .list-item-meta{font-size:9px;color:var(--light-text);margin-top:1px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-        .arrow-btns{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:0 2px}
-        .arrow-btn{width:34px;height:34px;border:2px solid var(--primary);background:var(--white);color:var(--primary);border-radius:8px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .25s}
-        .arrow-btn:hover{background:var(--primary);color:var(--white)}
-        .reason-date-sec{margin-top:12px;display:grid;grid-template-columns:2fr 1fr;gap:10px;align-items:end}
-        .info-card{background:var(--white);padding:12px;border-radius:var(--radius);box-shadow:0 2px 6px rgba(0,0,0,.05);border:1px solid var(--border)}
-        .info-card h4{color:var(--primary);margin-bottom:8px;font-size:12px;display:flex;align-items:center;gap:6px}
- 
-        .user-lookup-wrap{position:relative}
-        .user-lookup-input{width:100%;padding:8px 11px;border:2px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;transition:all .25s;background:var(--white)}
-        .user-lookup-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(10,106,191,.08)}
-        .user-lookup-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--white);border:2px solid var(--primary);border-top:none;border-radius:0 0 8px 8px;max-height:190px;overflow-y:auto;z-index:100;display:none;box-shadow:0 6px 16px rgba(0,0,0,.12)}
-        .user-lookup-dropdown.show{display:block}
-        .user-lookup-option{padding:8px 10px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:8px;border-bottom:1px solid #f0f2f5;font-size:11.5px}
-        .user-lookup-option:last-child{border-bottom:none}
-        .user-lookup-option:hover{background:var(--light)}
-        .user-lookup-option .ulo-code{font-weight:800;color:var(--primary);min-width:55px;font-size:11px}
-        .user-lookup-option .ulo-name{flex:1;font-weight:600}
-        .user-lookup-option .ulo-dept{font-size:10px;color:var(--light-text);background:var(--bg);padding:2px 7px;border-radius:4px}
-        .user-info-card{background:linear-gradient(135deg,#f0f7ff,var(--light));border:1px solid #b8d8f8;border-radius:8px;padding:10px 12px;margin-top:7px;display:none}
-        .user-info-card.show{display:block;animation:fadeIn .25s}
-        .user-info-card .uic-row{display:flex;align-items:center;gap:5px;font-size:11.5px;margin:2px 0}
-        .user-info-card .uic-row b{color:var(--primary);min-width:65px;font-size:11px}
-        .user-info-card .uic-header{display:flex;align-items:center;gap:8px;margin-bottom:4px;padding-bottom:4px;border-bottom:1px solid rgba(10,106,191,.12)}
-        .user-info-card .uic-avatar{width:34px;height:34px;background:var(--primary);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
-        .user-info-card .uic-name{font-weight:800;font-size:12.5px;color:var(--text)}
-        .user-info-card .uic-role{font-size:9.5px;color:var(--light-text)}
-        .user-info-card .uic-clear{margin-left:auto;background:none;border:none;color:var(--danger);cursor:pointer;font-size:11px;font-weight:700;font-family:inherit}
-        .user-info-card .uic-clear:hover{text-decoration:underline}
- 
-        .dev-cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;max-width:980px;margin:0 auto}
-        .dev-cat-card{background:var(--white);border:2px solid var(--border);border-radius:var(--radius);padding:14px 8px;text-align:center;cursor:pointer;transition:all .3s}
-        .dev-cat-card:hover{border-color:var(--primary);box-shadow:var(--shadow-lg);transform:translateY(-3px)}
-        .dev-cat-card i{font-size:28px;color:var(--primary);margin-bottom:6px;display:block}
-        .dev-cat-card h3{font-size:11.5px;color:var(--text);margin-bottom:2px;font-weight:700}
-        .dev-cat-card p{font-size:9.5px;color:var(--light-text)}
- 
-        .cond-radio-group{display:flex;gap:7px;margin-top:3px}
-        .cond-radio{flex:1;padding:7px;border:2px solid var(--border);border-radius:8px;cursor:pointer;text-align:center;transition:all .25s}
-        .cond-radio input{display:none}
-        .cond-radio:has(input:checked){border-color:var(--primary);background:var(--light)}
-        .cond-radio.cr-new:has(input:checked){border-color:var(--success);background:#d4edda}
-        .cond-radio.cr-old:has(input:checked){border-color:var(--warning);background:#fff3cd}
-        .cond-radio.cr-broken:has(input:checked){border-color:var(--danger);background:#f8d7da}
-        .cond-label{font-size:11px;font-weight:700;display:block}
-        .cond-desc{font-size:8.5px;color:var(--light-text);margin-top:1px}
- 
-        .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.4);display:none;justify-content:center;align-items:center;z-index:3000;backdrop-filter:blur(2px)}
-        .modal-overlay.show{display:flex;animation:fadeIn .25s}
-        .modal{background:var(--white);border-radius:var(--radius);width:95%;max-width:720px;max-height:88vh;overflow-y:auto;box-shadow:0 12px 48px rgba(0,0,0,.22)}
-        .modal-header{padding:13px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--light);border-radius:var(--radius) var(--radius) 0 0;position:sticky;top:0;z-index:1}
-        .modal-title{font-size:15px;font-weight:800;color:var(--primary)}
-        .modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--light-text);line-height:1;transition:all .25s;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%}
-        .modal-close:hover{color:var(--danger);background:rgba(198,40,40,.06);transform:rotate(90deg)}
-        .modal-body{padding:18px}
- 
-        .login-overlay{position:fixed;inset:0;background:linear-gradient(135deg,var(--primary),#1e3a8a);display:flex;align-items:center;justify-content:center;z-index:6000;padding:16px;}
-        .login-overlay:not(.show){display:none;}
-        .header,.main-container{display:none;}
-        .login-box{background:var(--white);border-radius:var(--radius);padding:32px 28px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.3);}
-        .login-logo{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:800;color:var(--primary);margin-bottom:22px;justify-content:center;}
-        .login-err{color:var(--danger);font-size:12px;margin:-4px 0 12px;text-align:center;}
-        .login-hint{font-size:11px;color:var(--light-text);text-align:center;margin-top:14px;}
-        .nav-link.locked{opacity:.45;cursor:not-allowed;}
-        .nav-link.locked span:after{content:" \f023";font-family:"Font Awesome 6 Free";font-weight:900;font-size:10px;margin-left:5px;}
-        .user-avatar{cursor:pointer;}
-        .qty-picker{display:flex;align-items:center;gap:3px;background:var(--white);border:1px solid var(--border);border-radius:7px;padding:2px;flex-shrink:0}
-        .qty-btn{width:20px;height:20px;border:none;background:var(--light);color:var(--primary);border-radius:5px;font-weight:800;cursor:pointer;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center;padding:0}
-        .qty-btn:hover{background:var(--primary);color:var(--white)}
-        .qty-input{width:32px;text-align:center;border:none;font-size:11px;font-weight:800;color:var(--text);background:transparent}
-        .qty-input::-webkit-outer-spin-button,.qty-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-        .list-item-x{background:none;border:none;color:var(--light-text);cursor:pointer;font-size:12px;padding:4px 2px;flex-shrink:0}
-        .list-item-x:hover{color:var(--danger)}
-        .toast-container{position:fixed;bottom:18px;right:18px;z-index:4000;display:flex;flex-direction:column;gap:7px}
-        .sync-badge{position:fixed;bottom:18px;left:18px;z-index:2500;background:var(--white);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:11px;font-weight:700;color:var(--light-text);box-shadow:var(--shadow);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s}
-        .sync-badge:hover{box-shadow:var(--shadow-lg)}
-        .sync-badge.ok{color:var(--success)}
-        .sync-badge.err{color:var(--danger)}
-        .sync-badge.syncing i{animation:spin 1s linear infinite}
-        @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-        .toast{background:var(--white);padding:11px 14px;border-radius:var(--radius);box-shadow:0 8px 28px rgba(0,0,0,.14);display:flex;align-items:center;gap:9px;font-size:12px;animation:toastIn .3s ease-out;min-width:270px;border-left:4px solid var(--primary);font-weight:600}
-        .toast.success{border-left-color:var(--success)}.toast.success i{color:var(--success)}
-        .toast.error{border-left-color:var(--danger)}.toast.error i{color:var(--danger)}
-        .toast.warning{border-left-color:var(--warning)}.toast.warning i{color:var(--warning)}
-        @keyframes toastIn{from{opacity:0;transform:translateX(70px)}to{opacity:1;transform:translateX(0)}}
-        @keyframes toastOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(70px)}}
- 
-        .empty-state{text-align:center;padding:35px 16px;color:var(--light-text)}
-        .empty-state i{font-size:40px;margin-bottom:10px;opacity:.3;display:block}
- 
-        .admin-tabs{display:flex;gap:3px;flex-wrap:wrap;border-bottom:2px solid var(--border);padding-bottom:7px;margin-bottom:12px}
-        .admin-tab{padding:7px 14px;border:none;background:none;cursor:pointer;font-size:12px;font-weight:700;color:var(--light-text);border-bottom:3px solid transparent;transition:all .25s;font-family:inherit}
-        .admin-tab:hover{color:var(--primary)}
-        .admin-tab.active{color:var(--primary);border-bottom-color:var(--primary)}
- 
-        .cat-mgr-list{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-        .cat-mgr-item{padding:10px 14px;border-bottom:1px solid #eef1f5;display:flex;justify-content:space-between;align-items:center;transition:all .2s}
-        .cat-mgr-item:last-child{border-bottom:none}
-        .cat-mgr-item:hover{background:#f9fbfd}
-        .cat-mgr-info h4{font-size:12px;color:var(--text);margin-bottom:2px;display:flex;align-items:center;gap:5px}
-        .cat-mgr-info p{font-size:10px;color:var(--light-text)}
-        .cat-mgr-actions{display:flex;gap:5px}
-        .field-editor{background:var(--bg);padding:10px;border-radius:8px;margin-top:8px}
-        .field-item{display:flex;align-items:center;gap:7px;padding:7px 9px;background:var(--white);border:1px solid var(--border);border-radius:6px;margin-bottom:5px;font-size:11px;transition:border-color .15s,background .15s}
-        .field-handle{cursor:grab;color:var(--light-text)}
-        .field-handle:active{cursor:grabbing}
-        .field-item.dragging{opacity:.4}
-        .field-item.drag-over{border:1px dashed var(--primary);background:var(--light)}
-        .field-name{flex:1;font-weight:600}
-        .field-type{font-size:9.5px;color:var(--light-text);background:var(--light);padding:1px 6px;border-radius:4px}
-        .field-req{font-size:9.5px;color:var(--danger);font-weight:800}
- 
-        .notif-panel{position:fixed;top:58px;right:18px;width:350px;background:var(--white);border-radius:var(--radius);box-shadow:0 10px 36px rgba(0,0,0,.18);display:none;z-index:2000;max-height:400px;overflow-y:auto;border:1px solid var(--border)}
-        .notif-panel.show{display:block;animation:fadeIn .25s}
-        .notif-header{padding:11px 14px;border-bottom:1px solid var(--border);font-weight:700;color:var(--primary);display:flex;justify-content:space-between;align-items:center;font-size:12.5px}
-        .notif-item{padding:10px 14px;border-bottom:1px solid #eef1f5;transition:all .2s;cursor:pointer}
-        .notif-item:hover{background:var(--light)}
-        .notif-title{font-weight:700;font-size:11.5px;color:var(--text);margin-bottom:2px}
-        .notif-desc{font-size:10.5px;color:var(--light-text)}
-        .notif-time{font-size:9.5px;color:var(--light-text);margin-top:2px}
-        .notif-urgent{border-left:3px solid var(--danger)}
-        .notif-warn{border-left:3px solid var(--warning)}
- 
-        .filter-bar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;padding:10px;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid rgba(0,0,0,.04)}
-        .filter-btn{padding:5px 12px;border:2px solid var(--border);background:var(--white);border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
-        .filter-btn:hover{border-color:var(--primary);color:var(--primary)}
-        .filter-btn.active{background:var(--primary);color:var(--white);border-color:var(--primary)}
-        .bulk-bar{display:none;margin-top:10px;padding:10px 14px;background:var(--light);border-radius:var(--radius);justify-content:space-between;align-items:center;border:1px solid var(--border)}
-        .bulk-bar.show{display:flex}
-        .divider{border:none;border-top:1px dashed var(--border);margin:14px 0}
-        .text-muted{color:var(--light-text)}
-        .text-primary{color:var(--primary)}
-        .text-danger{color:var(--danger)}
-        .fw-bold{font-weight:800}
-        .mt-2{margin-top:7px}.mb-2{margin-bottom:7px}.mb-3{margin-bottom:10px}
-        .d-flex{display:flex}.gap-2{gap:7px}
-        .device-count-chip{background:rgba(255,255,255,.2);padding:3px 12px;border-radius:14px;font-weight:700;font-size:11.5px;margin-left:auto}
- 
-        .history-row{cursor:pointer;transition:all .2s}
-        .history-row:hover{background:#eef3fa!important}
-        .history-row td:first-child{color:var(--primary);font-weight:700;text-decoration:underline;cursor:pointer}
- 
-        .detail-section{margin-bottom:14px}
-        .detail-section h4{font-size:12.5px;font-weight:800;color:var(--primary);margin-bottom:8px;display:flex;align-items:center;gap:6px;padding-bottom:5px;border-bottom:2px solid var(--light)}
-        .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
-        .detail-row{font-size:12px;display:flex;gap:6px}
-        .detail-row .dr-label{color:var(--light-text);min-width:90px;font-weight:600;font-size:11px}
-        .detail-row .dr-value{font-weight:600;color:var(--text)}
-        .dev-chip{display:inline-flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 9px;font-size:11px;margin:3px 2px}
-        .dev-chip .dc-name{font-weight:700}
-        .dev-chip .dc-serial{color:var(--light-text);font-size:10px}
- 
-        @media(max-width:1024px){
-            .main-container{flex-direction:column}
-            .sidebar{width:100%;position:static;order:-1}
-            .nav-menu{display:flex;overflow-x:auto;gap:1px;padding:0 6px}
-            .nav-item{margin:0;flex-shrink:0}
-            .nav-link{white-space:nowrap;padding:7px 9px;font-size:11px}
-            .dual-section{grid-template-columns:1fr}
-            .arrow-btns{flex-direction:row;justify-content:center;padding:3px 0}
-            .reason-date-sec{grid-template-columns:1fr}
-            .dev-cat-grid{grid-template-columns:repeat(3,1fr)}
-        }
-        @media(max-width:576px){
-            .header{padding:0 14px}
-            .logo{font-size:13px}.logo span{display:none}
-            .dashboard-grid{grid-template-columns:repeat(2,1fr)}
-            .dev-cat-grid{grid-template-columns:repeat(2,1fr)}
-            .cond-radio-group{flex-direction:column}
-            .notif-panel{width:calc(100% - 28px);right:14px}
-            .detail-grid{grid-template-columns:1fr}
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/forms.css">
+    <link rel="stylesheet" href="assets/css/tables.css">
+    <link rel="stylesheet" href="assets/css/modal.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
 <body>
  
@@ -326,9 +34,11 @@
     <div class="header-content">
         <div class="logo"><i class="fas fa-server"></i><span>Quản lý Tài sản IT CYBERTAN</span></div>
         <div class="user-info">
-            <button class="notif-btn" onclick="exportStatsExcel()" title="Xuất báo cáo thống kê"><i class="fas fa-chart-bar"></i></button>
-            <button class="notif-btn" onclick="exportBackupJSON()" title="Sao lưu dữ liệu (JSON)"><i class="fas fa-database"></i></button>
-            <button class="notif-btn" onclick="toggleNotif()" aria-label="Thông báo"><i class="fas fa-bell"></i><span class="notif-badge" id="notifBadge">0</span></button>
+            <button class="notif-btn history-nav-btn" id="undoBtn" onclick="undoLastAction()" title="Hoàn tác thao tác gần nhất" aria-label="Hoàn tác thao tác gần nhất" disabled><i class="fas fa-undo"></i></button>
+            <button class="notif-btn history-nav-btn" id="redoBtn" onclick="redoLastAction()" title="Tiến lên thao tác vừa hoàn tác" aria-label="Tiến lên thao tác vừa hoàn tác" disabled><i class="fas fa-redo"></i></button>
+            <button class="notif-btn" onclick="openAssetExport()" title="Xuất báo cáo thống kê"><i class="fas fa-chart-bar"></i></button>
+            <button class="notif-btn" id="backupBtn" onclick="exportBackupJSON()" title="Sao lưu dữ liệu (JSON)"><i class="fas fa-database"></i></button>
+            <button class="notif-btn" id="notifBtn" onclick="toggleNotif()" aria-label="Thông báo"><i class="fas fa-bell"></i><span class="notif-badge" id="notifBadge">0</span></button>
             <div class="user-avatar" id="curUserBox" onclick="logout()" title="Bấm để đăng xuất"><i class="fas fa-user-circle"></i><span id="curUserName">-</span><i class="fas fa-sign-out-alt" style="margin-left:7px;font-size:11px;opacity:.7;"></i></div>
         </div>
     </div>
@@ -346,8 +56,8 @@
     <li class="nav-item"><button class="nav-link" data-sec="allocate" data-admin-only="1"><i class="fas fa-hand-holding"></i><span>Cấp phát TB</span></button></li>
     <li class="nav-item"><button class="nav-link" data-sec="return" data-admin-only="1"><i class="fas fa-undo-alt"></i><span>Thu hồi TB</span></button></li>
     <li class="nav-item"><button class="nav-link" data-sec="borrow" data-admin-only="1"><i class="fas fa-exchange-alt"></i><span>Mượn TB</span></button></li>
-    <li class="nav-item"><button class="nav-link" data-sec="addDev"><i class="fas fa-plus-circle"></i><span>Thêm TB</span></button></li>
-    <li class="nav-item"><button class="nav-link" data-sec="inventory"><i class="fas fa-warehouse"></i><span>Kiểm tra kho</span></button></li>
+    <li class="nav-item"><button class="nav-link" data-sec="addDev" data-no-user="1"><i class="fas fa-plus-circle"></i><span>Thêm TB</span></button></li>
+    <li class="nav-item"><button class="nav-link" data-sec="inventory" data-no-user="1"><i class="fas fa-warehouse"></i><span>Kiểm tra kho</span></button></li>
     <li class="nav-item"><button class="nav-link" data-sec="assets"><i class="fas fa-list"></i><span>Danh mục TS</span></button></li>
     <li class="nav-item"><button class="nav-link" data-sec="lookup"><i class="fas fa-search"></i><span>Tra cứu NV</span></button></li>
     <li class="nav-item"><button class="nav-link" data-sec="adminCat" data-admin-only="1"><i class="fas fa-cog"></i><span>QL Danh mục</span></button></li>
@@ -358,9 +68,11 @@
 <main class="content-area">
  
 <section id="dash" class="section active">
-    <div class="dashboard-grid" id="dashGrid"></div>
+    <div class="dashboard-heading"><div><h2>Tổng quan thiết bị</h2><div class="dashboard-week-range"><i class="far fa-calendar-alt"></i><span id="dashboardWeekRange"></span></div></div><div class="dashboard-week-nav"><button class="btn btn-outline btn-sm" onclick="changeDashboardWeek(-1)"><i class="fas fa-chevron-left"></i> Tuần trước</button><button class="btn btn-primary btn-sm" onclick="goDashboardCurrentWeek()">Tuần này</button><button class="btn btn-outline btn-sm" id="dashboardNextWeek" onclick="changeDashboardWeek(1)">Tuần sau <i class="fas fa-chevron-right"></i></button></div></div>
+    <div class="dashboard-grid dashboard-type-grid" id="dashGrid"></div>
     <div class="panel" id="upcomingPanel" style="display:none;"><div class="panel-header danger"><i class="fas fa-exclamation-triangle"></i> Cảnh báo: Thiết bị sắp/quá hạn trả</div><div class="panel-body" id="upcomingList"></div></div>
-    <div class="panel"><div class="panel-header"><i class="fas fa-history"></i> Hoạt động gần đây</div><div class="panel-body"><div class="table-container"><table><thead><tr><th>Hành động</th><th>Thiết bị</th><th>User</th><th>Thời gian</th><th>TT</th></tr></thead><tbody id="recentActs"></tbody></table></div></div></div>
+    <div class="dashboard-movement-layout"><div class="panel dashboard-chart-panel"><div class="panel-header"><i class="fas fa-chart-bar"></i> Biến động thiết bị 7 ngày</div><div class="panel-body"><div id="dashboardChart"></div></div></div><div class="dashboard-operation-panels"><div class="panel"><div class="panel-header"><i class="fas fa-share-square"></i> Cấp phát</div><div class="panel-body dashboard-top-types" id="dashboardAllocationTypes"></div></div><div class="panel"><div class="panel-header success"><i class="fas fa-undo-alt"></i> Thu hồi</div><div class="panel-body dashboard-top-types" id="dashboardReturnTypes"></div></div></div></div>
+    <div class="panel dashboard-changes-panel"><div class="panel-header"><i class="fas fa-history"></i> Thay đổi tài sản trong tuần</div><div class="panel-body"><div class="dashboard-change-tools"><div class="search-box"><i class="fas fa-search search-icon"></i><input id="dashboardChangeSearch" class="search-input" placeholder="Tìm Mã tài sản, thiết bị, nhân viên, vị trí..." oninput="setDashboardChangeSearch(this.value)"></div><select id="dashboardActionFilter" class="form-select" onchange="setDashboardActionFilter(this.value)"><option value="all">Tất cả thao tác</option></select></div><div class="table-container"><table><thead><tr><th class="sortable-th" onclick="setDashboardChangeSort('time')">Thời gian</th><th class="sortable-th" onclick="setDashboardChangeSort('action')">Thao tác</th><th class="sortable-th" onclick="setDashboardChangeSort('serial')">Mã tài sản</th><th class="sortable-th" onclick="setDashboardChangeSort('device')">Thiết bị</th><th class="sortable-th" onclick="setDashboardChangeSort('qty')">SL</th><th class="sortable-th" onclick="setDashboardChangeSort('fromLocation')">Từ vị trí</th><th class="sortable-th" onclick="setDashboardChangeSort('toLocation')">Đến vị trí</th><th class="sortable-th" onclick="setDashboardChangeSort('holder')">Người đứng tên</th><th class="sortable-th" onclick="setDashboardChangeSort('user')">Người thực hiện</th><th>TT</th></tr></thead><tbody id="dashboardChangesBody"></tbody></table></div><div class="dashboard-pagination"><button class="btn btn-outline btn-sm" id="dashboardChangesPrev" onclick="setDashboardChangesPage(dashboardChangesPage-1)"><i class="fas fa-chevron-left"></i> Trước</button><span id="dashboardChangesPageInfo"></span><button class="btn btn-outline btn-sm" id="dashboardChangesNext" onclick="setDashboardChangesPage(dashboardChangesPage+1)">Sau <i class="fas fa-chevron-right"></i></button></div></div></div>
 </section>
  
 <section id="allocate" class="section">
@@ -368,14 +80,13 @@
         <form id="allocForm" onsubmit="handleAllocate(event)"><div class="dual-list-container">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
                 <div class="info-card"><h4><i class="fas fa-user-check"></i> Người cấp (Admin đang đăng nhập)</h4><div class="user-info-card" id="allocGiverCard" style="display:block;"><div class="uic-header"><div class="uic-avatar" id="allocGiverAvatar">A</div><div><div class="uic-name" id="allocGiverName">-</div><div class="uic-role" id="allocGiverRole">-</div></div></div><div class="uic-row"><b>Mã NV:</b><span id="allocGiverCodeShow">-</span></div><div class="uic-row"><b>Bộ phận:</b><span id="allocGiverDept">-</span></div><div class="uic-row"><b>Email:</b><span id="allocGiverEmail">-</span></div><input type="hidden" name="giverName" id="allocGiverNameH"><input type="hidden" name="giverCode" id="allocGiverCodeH"></div></div>
-                <div class="info-card"><h4><i class="fas fa-user-plus"></i> Người nhận</h4><div class="form-group"><label class="form-label">Họ tên <span class="req">*</span></label><input type="text" class="form-input" name="recvName" required></div><div class="form-group"><label class="form-label">Mã NV <span class="req">*</span></label><input type="text" class="form-input" name="recvCode" required></div><div class="form-group"><label class="form-label">Bộ phận <span class="req">*</span></label><select class="form-select" name="dept" id="allocRecvDept" required><option value="">-- Chọn --</option></select></div></div>
+                <div class="info-card"><h4><i class="fas fa-user-plus"></i> Người nhận</h4><div class="form-group"><label class="form-label">Họ tên <span class="req">*</span></label><input type="text" class="form-input" name="recvName" id="allocRecvName" list="allocUserList" onchange="syncAllocRecipient(this.value)" required><datalist id="allocUserList"></datalist></div><div class="asset-form-row" style="grid-template-columns:1fr 1fr;"><div class="form-group"><label class="form-label">Mã nhân viên <span class="req">*</span></label><input type="text" class="form-input" name="recvCode" id="allocRecvCode" onchange="syncAllocRecipient(this.value)" required></div><div class="form-group"><label class="form-label">Bộ phận <span class="req">*</span></label><select class="form-select" name="dept" id="allocRecvDept" required><option value="">-- Chọn --</option></select></div></div></div>
             </div>
             <div class="dual-section">
-                <div class="list-box"><div class="list-box-header"><span>TB trong kho</span><span class="list-box-count" id="allocSrcCnt">0</span></div><div class="list-box-search"><i class="fas fa-search"></i><input type="text" placeholder="Tìm..." oninput="filterAllocSrc(this.value)"></div><div class="list-box-body" id="allocSrcList"></div></div>
-                <div class="arrow-btns"><button type="button" class="arrow-btn" onclick="moveAlloc('right')"><i class="fas fa-arrow-right"></i></button><button type="button" class="arrow-btn" onclick="moveAlloc('left')"><i class="fas fa-arrow-left"></i></button><button type="button" class="arrow-btn" onclick="moveAllAlloc('right')"><i class="fas fa-angle-double-right"></i></button><button type="button" class="arrow-btn" onclick="moveAllAlloc('left')"><i class="fas fa-angle-double-left"></i></button></div>
-                <div class="list-box"><div class="list-box-header"><span>DS cấp phát</span><span class="list-box-count" id="allocTgtCnt">0</span></div><div class="list-box-search"><i class="fas fa-search"></i><input type="text" placeholder="Tìm..." oninput="filterAllocTgt(this.value)"></div><div class="list-box-body" id="allocTgtList"></div></div>
+                <div class="list-box"><div class="list-box-header"><span>TB trong kho</span><div class="list-box-header-right"><button type="button" class="list-box-action" onclick="moveAllAlloc('right')">Chọn tất cả</button><span class="list-box-count" id="allocSrcCnt">0</span></div></div><div class="list-box-search"><i class="fas fa-search"></i><input type="text" placeholder="Tìm..." oninput="filterAllocSrc(this.value)"></div><div class="list-box-body" id="allocSrcList"></div></div>
+                <div class="list-box"><div class="list-box-header"><span>DS cấp phát</span><div class="list-box-header-right"><button type="button" class="list-box-action" onclick="moveAllAlloc('left')">Bỏ chọn</button><span class="list-box-count" id="allocTgtCnt">0</span></div></div><div class="list-box-search"><i class="fas fa-search"></i><input type="text" placeholder="Tìm..." oninput="filterAllocTgt(this.value)"></div><div class="list-box-body" id="allocTgtList"></div></div>
             </div>
-            <div class="reason-date-sec"><div class="form-group"><label class="form-label">Lý do <span class="req">*</span></label><textarea class="form-textarea" name="reason" required></textarea></div><div class="form-group"><label class="form-label">Ngày CP <span class="req">*</span></label><input type="date" class="form-input" name="allocDate" required></div></div>
+            <div class="asset-form-row transaction-fields" style="margin-top:12px;"><div class="form-group"><label class="form-label">Lý do <span class="req">*</span></label><textarea class="form-textarea" name="reason" required></textarea></div><div class="form-group"><label class="form-label">Vị trí mới <span class="req">*</span></label><input class="form-input" name="newLocation" required></div><div class="form-group"><label class="form-label">Ngày CP <span class="req">*</span></label><input type="date" class="form-input" name="allocDate" data-default-today required></div></div>
         </div><div style="margin-top:12px;"><button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane"></i> Xác nhận CP (<span id="allocSelCnt">0</span>)</button></div></form>
     </div></div>
     <div class="panel"><div class="panel-header"><i class="fas fa-list-alt"></i> Lịch sử Cấp phát<button class="btn btn-sm btn-success" style="margin-left:auto;" onclick="exportAllocExcel()"><i class="fas fa-file-excel"></i> Xuất Excel</button></div><div class="panel-body"><div class="table-container"><table><thead><tr><th>Mã phiếu</th><th>Người cấp</th><th>Người nhận</th><th>PB</th><th>SL TB</th><th>Ngày</th><th>TT</th></tr></thead><tbody id="allocHistory"></tbody></table></div></div></div>
@@ -389,29 +100,27 @@
                 <div><h4 style="color:var(--primary);margin-bottom:8px;font-size:12px;"><i class="fas fa-user-plus"></i> Người nhận lại (Admin đang đăng nhập)</h4><div class="user-info-card" id="retReceiverCard" style="display:block;"><div class="uic-header"><div class="uic-avatar" id="retReceiverAvatar">A</div><div><div class="uic-name" id="retReceiverName">-</div><div class="uic-role" id="retReceiverRole">-</div></div></div><div class="uic-row"><b>Mã NV:</b><span id="retReceiverCodeShow">-</span></div><div class="uic-row"><b>Bộ phận:</b><span id="retReceiverDept">-</span></div><input type="hidden" name="retReceiver" id="retReceiverNameH"><input type="hidden" name="retReceiverCode" id="retReceiverCodeH"></div></div>
             </div>
             <div class="dual-section">
-                <div class="list-box"><div class="list-box-header"><span>TB đang SD</span><span class="list-box-count" id="retSrcCnt">0</span></div><div class="list-box-search"><i class="fas fa-search"></i><input type="text" placeholder="Tìm..." oninput="filterRetSrc(this.value)"></div><div class="list-box-body" id="retSrcList"><div class="empty-state" style="padding:14px;"><i class="fas fa-search" style="font-size:22px;"></i><p style="font-size:10.5px;">Nhập mã NV để tìm</p></div></div></div>
-                <div class="arrow-btns"><button type="button" class="arrow-btn" onclick="moveRet('right')"><i class="fas fa-arrow-right"></i></button><button type="button" class="arrow-btn" onclick="moveRet('left')"><i class="fas fa-arrow-left"></i></button><button type="button" class="arrow-btn" onclick="moveAllRet('right')"><i class="fas fa-angle-double-right"></i></button><button type="button" class="arrow-btn" onclick="moveAllRet('left')"><i class="fas fa-angle-double-left"></i></button></div>
-                <div class="list-box"><div class="list-box-header"><span>DS thu hồi</span><span class="list-box-count" id="retTgtCnt">0</span></div><div class="list-box-search"><i class="fas fa-search"></i><input type="text" placeholder="Tìm..." oninput="filterRetTgt(this.value)"></div><div class="list-box-body" id="retTgtList"><div class="empty-state" style="padding:14px;"><i class="fas fa-inbox" style="font-size:22px;"></i><p style="font-size:10.5px;">Chưa chọn</p></div></div></div>
+                <div class="list-box"><div class="list-box-header"><span>TB đang SD</span><div class="list-box-header-right"><button type="button" class="list-box-action" onclick="moveAllRet('right')">Chọn tất cả</button><span class="list-box-count" id="retSrcCnt">0</span></div></div><div class="list-box-search"><i class="fas fa-search"></i><input type="text" placeholder="Tìm..." oninput="filterRetSrc(this.value)"></div><div class="list-box-body" id="retSrcList"><div class="empty-state" style="padding:14px;"><i class="fas fa-search" style="font-size:22px;"></i><p style="font-size:10.5px;">Nhập mã NV để tìm</p></div></div></div>
+                <div class="list-box"><div class="list-box-header"><span>DS thu hồi</span><div class="list-box-header-right"><button type="button" class="list-box-action" onclick="moveAllRet('left')">Bỏ chọn</button><span class="list-box-count" id="retTgtCnt">0</span></div></div><div class="list-box-search"><i class="fas fa-search"></i><input type="text" placeholder="Tìm..." oninput="filterRetTgt(this.value)"></div><div class="list-box-body" id="retTgtList"><div class="empty-state" style="padding:14px;"><i class="fas fa-inbox" style="font-size:22px;"></i><p style="font-size:10.5px;">Chưa chọn</p></div></div></div>
             </div>
-            <div class="reason-date-sec"><div class="form-group"><label class="form-label">Lý do TH <span class="req">*</span></label><textarea class="form-textarea" name="retReason" required></textarea></div><div class="form-group"><label class="form-label">Ngày TH <span class="req">*</span></label><input type="date" class="form-input" name="retDate" required></div></div>
+            <div class="reason-date-sec transaction-fields"><div class="form-group"><label class="form-label">Lý do TH <span class="req">*</span></label><textarea class="form-textarea" name="retReason" required></textarea></div><div class="form-group"><label class="form-label">Ngày TH <span class="req">*</span></label><input type="date" class="form-input" name="retDate" data-default-today required></div></div>
         </div><div style="margin-top:12px;"><button type="submit" class="btn btn-success btn-lg"><i class="fas fa-check-circle"></i> Xác nhận TH (<span id="retSelCnt">0</span>)</button></div></form>
     </div></div>
     <div class="panel"><div class="panel-header"><i class="fas fa-history"></i> Lịch sử Thu hồi<button class="btn btn-sm btn-success" style="margin-left:auto;" onclick="exportRetExcel()"><i class="fas fa-file-excel"></i> Xuất Excel</button></div><div class="panel-body"><div class="table-container"><table><thead><tr><th>Mã phiếu</th><th>Người trả</th><th>Người nhận</th><th>SL TB</th><th>Ngày</th><th>TT sau TH</th></tr></thead><tbody id="retHistory"></tbody></table></div></div></div>
 </section>
  
 <section id="borrow" class="section">
-    <div class="panel"><div class="panel-header warning"><i class="fas fa-exchange-alt"></i> Mượn Thiết bị</div><div class="panel-body">
+    <div class="panel"><div class="panel-header warning borrow-panel-title"><i class="fas fa-exchange-alt"></i> Mượn Thiết bị</div><div class="panel-body">
         <form id="brForm" onsubmit="handleBorrow(event)"><div class="dual-list-container">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
                 <div class="info-card"><h4><i class="fas fa-hand-holding"></i> Người cấp (Admin đang đăng nhập)</h4><div class="user-info-card" id="brLenderCard" style="display:block;"><div class="uic-header"><div class="uic-avatar" id="brLenderAvatar">A</div><div><div class="uic-name" id="brLenderName">-</div><div class="uic-role" id="brLenderRole">-</div></div></div><div class="uic-row"><b>Mã NV:</b><span id="brLenderCodeShow">-</span></div><div class="uic-row"><b>Bộ phận:</b><span id="brLenderDept">-</span></div><input type="hidden" name="brLender" id="brLenderNameH"><input type="hidden" name="brLenderCodeVal" id="brLenderCodeH"></div></div>
                 <div class="info-card"><h4><i class="fas fa-user-plus"></i> Người mượn</h4><div class="form-group"><label class="form-label">Họ tên <span class="req">*</span></label><input type="text" class="form-input" name="brBorrower" required placeholder="Nhập họ tên"></div><div class="form-group"><label class="form-label">Mã NV mượn <span class="req">*</span></label><input type="text" class="form-input" name="brBorrowerCode" required placeholder="Nhập mã NV"></div><p style="font-size:9.5px;color:var(--light-text);margin-top:3px;"><i class="fas fa-info-circle"></i> Người mượn có thể không nằm trong hệ thống</p></div>
             </div>
             <div class="dual-section">
-                <div class="list-box"><div class="list-box-header"><span>TB trong kho</span><span class="list-box-count" id="brSrcCnt">0</span></div><div class="list-box-search"><i class="fas fa-search"></i><input type="text" placeholder="Tìm..." oninput="filterBrSrc(this.value)"></div><div class="list-box-body" id="brSrcList"></div></div>
-                <div class="arrow-btns"><button type="button" class="arrow-btn" onclick="moveBr('right')"><i class="fas fa-arrow-right"></i></button><button type="button" class="arrow-btn" onclick="moveBr('left')"><i class="fas fa-arrow-left"></i></button><button type="button" class="arrow-btn" onclick="moveAllBr('right')"><i class="fas fa-angle-double-right"></i></button><button type="button" class="arrow-btn" onclick="moveAllBr('left')"><i class="fas fa-angle-double-left"></i></button></div>
-                <div class="list-box"><div class="list-box-header"><span>DS mượn</span><span class="list-box-count" id="brTgtCnt">0</span></div><div class="list-box-search"><i class="fas fa-search"></i><input type="text" placeholder="Tìm..." oninput="filterBrTgt(this.value)"></div><div class="list-box-body" id="brTgtList"><div class="empty-state" style="padding:14px;"><i class="fas fa-inbox" style="font-size:22px;"></i><p style="font-size:10.5px;">Chưa chọn</p></div></div></div>
+                <div class="list-box"><div class="list-box-header"><span>TB trong kho</span><div class="list-box-header-right"><button type="button" class="list-box-action" onclick="moveAllBr('right')">Chọn tất cả</button><span class="list-box-count" id="brSrcCnt">0</span></div></div><div class="list-box-search"><i class="fas fa-search"></i><input type="text" placeholder="Tìm..." oninput="filterBrSrc(this.value)"></div><div class="list-box-body" id="brSrcList"></div></div>
+                <div class="list-box"><div class="list-box-header"><span>DS mượn</span><div class="list-box-header-right"><button type="button" class="list-box-action" onclick="moveAllBr('left')">Bỏ chọn</button><span class="list-box-count" id="brTgtCnt">0</span></div></div><div class="list-box-search"><i class="fas fa-search"></i><input type="text" placeholder="Tìm..." oninput="filterBrTgt(this.value)"></div><div class="list-box-body" id="brTgtList"><div class="empty-state" style="padding:14px;"><i class="fas fa-inbox" style="font-size:22px;"></i><p style="font-size:10.5px;">Chưa chọn</p></div></div></div>
             </div>
-            <div class="reason-date-sec"><div class="form-group"><label class="form-label">Lý do mượn <span class="req">*</span></label><textarea class="form-textarea" name="brReason" required></textarea></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;"><div class="form-group"><label class="form-label">Ngày mượn <span class="req">*</span></label><input type="date" class="form-input" name="brDate" required></div><div class="form-group"><label class="form-label">Ngày hẹn trả <span class="req">*</span></label><input type="date" class="form-input" name="brDueDate" required></div></div></div>
+            <div class="reason-date-sec transaction-fields"><div class="form-group"><label class="form-label">Lý do mượn <span class="req">*</span></label><textarea class="form-textarea" name="brReason" required></textarea></div><div class="transaction-date-pair"><div class="form-group"><label class="form-label">Ngày mượn <span class="req">*</span></label><input type="date" class="form-input" name="brDate" data-default-today required></div><div class="form-group"><label class="form-label">Ngày hẹn trả <span class="req">*</span></label><input type="date" class="form-input" name="brDueDate" required></div></div></div>
         </div><div style="margin-top:12px;"><button type="submit" class="btn btn-warning btn-lg"><i class="fas fa-plus"></i> Đăng ký mượn (<span id="brSelCnt">0</span>)</button></div></form>
     </div></div>
     <div class="panel"><div class="panel-header"><i class="fas fa-list"></i> DS Mượn TB<button class="btn btn-sm btn-success" style="margin-left:auto;" onclick="exportBrExcel()"><i class="fas fa-file-excel"></i> Xuất Excel</button></div><div class="panel-body"><div class="table-container"><table><thead><tr><th>Mã phiếu</th><th>Người mượn</th><th>SL TB</th><th>Ngày mượn</th><th>Hẹn trả</th><th>TT</th><th>Thao tác</th></tr></thead><tbody id="brHistory"></tbody></table></div></div></div>
@@ -419,7 +128,7 @@
  
 <section id="addDev" class="section">
     <div id="addDevStep1">
-        <div style="text-align:center;padding:30px 16px 20px;"><i class="fas fa-plus-circle" style="font-size:55px;color:var(--primary);opacity:.8;"></i><h2 style="margin:10px 0 5px;font-size:19px;">Thêm Thiết bị Mới</h2><p style="color:var(--light-text);max-width:420px;margin:0 auto;font-size:12.5px;">Chọn loại TB để thêm vào kho. Mỗi loại có form trường được cấu hình.</p><button type="button" class="btn btn-success btn-sm" style="margin-top:14px;" onclick="openExcelImport()"><i class="fas fa-file-excel"></i> Nhập nhiều TB từ Excel</button></div>
+        <div style="text-align:center;padding:30px 16px 20px;"><i class="fas fa-plus-circle" style="font-size:55px;color:var(--primary);opacity:.8;"></i><h2 style="margin:10px 0 5px;font-size:19px;">Thêm Thiết bị Mới</h2><p style="color:var(--light-text);max-width:420px;margin:0 auto;font-size:12.5px;">Chọn loại TB để thêm vào kho. Mỗi loại có form trường được cấu hình.</p><div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:14px;"><button type="button" class="btn btn-success btn-sm" onclick="openExcelImport()"><i class="fas fa-file-excel"></i> Nhập nhiều TB từ Excel</button><button type="button" class="btn btn-outline btn-sm" onclick="openAddDevHistory()"><i class="fas fa-history"></i> Xem lịch sử</button></div></div>
         <div class="dev-cat-grid" id="devCatGrid"></div>
     </div>
     <div id="addDevStep2" style="display:none;">
@@ -427,13 +136,10 @@
             <form id="addDevForm" onsubmit="handleAddDev(event)">
                 <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px dashed var(--border);"><button type="button" class="btn btn-outline btn-sm" onclick="backToAddDev1()" style="width:32px;height:32px;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center;"><i class="fas fa-arrow-left"></i></button><div style="width:38px;height:38px;background:var(--light);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--primary);" id="devFormIcon"><i class="fas fa-laptop"></i></div><div><h3 id="devFormCatName" style="font-size:14px;margin-bottom:1px;">Tên loại</h3><p id="devFormCatDesc" style="font-size:10.5px;color:var(--light-text);">Mô tả</p></div></div>
                 <div id="devDynamicFields"></div>
-                <hr class="divider">
-                <div class="form-grid"><div class="form-group"><label class="form-label">Vị trí lưu kho <span class="req">*</span></label><input type="text" class="form-input" name="location" required placeholder="Kho A-Kệ1"></div><div class="form-group"><label class="form-label">Số lượng <span class="req">*</span></label><input type="number" class="form-input" name="quantity" min="1" value="1" required></div><div class="form-group"><label class="form-label">Ghi chú</label><input type="text" class="form-input" name="notes" placeholder="Ghi chú..."></div></div>
                 <div style="text-align:center;margin-top:16px;"><button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Lưu TB vào kho</button></div>
             </form>
         </div></div>
     </div>
-    <div class="panel"><div class="panel-header"><i class="fas fa-history"></i> Lịch sử Thêm TB<button class="btn btn-sm btn-success" style="margin-left:auto;" onclick="exportAddDevExcel()"><i class="fas fa-file-excel"></i> Xuất Excel</button></div><div class="panel-body"><div class="table-container"><table><thead><tr><th>Mã phiếu</th><th>Thiết bị</th><th>Số lượng</th><th>Vị trí</th><th>Người thêm</th><th>Ngày thêm</th></tr></thead><tbody id="addDevHistory"></tbody></table></div></div></div>
 </section>
  
 <section id="inventory" class="section">
@@ -445,21 +151,22 @@
         <button class="filter-btn" onclick="filterInv('Tiêu hao',this)">Tiêu hao</button>
     </div>
     <div class="search-box"><i class="fas fa-search search-icon"></i><input type="text" class="search-input" placeholder="Tìm kiếm thiết bị..." oninput="searchInv(this.value)"></div>
-    <div class="panel"><div class="panel-header"><i class="fas fa-clipboard-list"></i> DS TB trong kho <span class="device-count-chip" id="invResultCnt">0</span><button class="btn btn-sm btn-success" style="margin-left:auto;" onclick="exportInventoryExcel()"><i class="fas fa-file-excel"></i> Xuất Excel</button></div><div class="panel-body" style="padding:0;"><div class="table-container"><table><thead><tr><th style="width:34px;"><input type="checkbox" id="invCheckAll" onchange="toggleAllInv(this.checked)"></th><th>Mã TB</th><th>Tên</th><th>Category</th><th>Loại</th><th>Serial</th><th>Tình trạng</th><th>SL</th><th>Vị trí</th><th>Thao tác</th></tr></thead><tbody id="invTableBody"></tbody></table></div><div id="invEmpty" class="empty-state" style="display:none;padding:18px;"><i class="fas fa-warehouse" style="font-size:36px;"></i><p>Không có thiết bị nào</p></div></div></div>
+    <div class="panel"><div class="panel-header"><i class="fas fa-clipboard-list"></i> DS TB trong kho <span class="device-count-chip" id="invResultCnt">0</span><button class="btn btn-sm btn-success" style="margin-left:auto;" onclick="exportInventoryExcel()"><i class="fas fa-file-excel"></i> Xuất Excel</button></div><div class="panel-body" style="padding:0;"><div class="table-container"><table><thead><tr><th style="width:34px;"><input type="checkbox" id="invCheckAll" onchange="toggleAllInv(this.checked)"></th><th class="sortable-th" onclick="toggleTableSort('inventory','name')" title="Sắp xếp" data-sort-scope="inventory" data-sort-key="name">Tên</th><th class="sortable-th" onclick="toggleTableSort('inventory','serial')" title="Sắp xếp" data-sort-scope="inventory" data-sort-key="serial">Mã tài sản</th><th class="sortable-th" onclick="toggleTableSort('inventory','category')" title="Sắp xếp" data-sort-scope="inventory" data-sort-key="category">Category</th><th class="sortable-th" onclick="toggleTableSort('inventory','type')" title="Sắp xếp" data-sort-scope="inventory" data-sort-key="type">Loại</th><th class="sortable-th" onclick="toggleTableSort('inventory','condition')" title="Sắp xếp" data-sort-scope="inventory" data-sort-key="condition">Tình trạng</th><th class="sortable-th" onclick="toggleTableSort('inventory','qty')" title="Sắp xếp" data-sort-scope="inventory" data-sort-key="qty">SL trong kho</th><th class="sortable-th" onclick="toggleTableSort('inventory','location')" title="Sắp xếp" data-sort-scope="inventory" data-sort-key="location">Vị trí</th><th class="action-cell-header">Thao tác</th></tr></thead><tbody id="invTableBody"></tbody></table></div><div id="invEmpty" class="empty-state" style="display:none;padding:18px;"><i class="fas fa-warehouse" style="font-size:36px;"></i><p>Không có thiết bị nào</p></div></div></div>
     <div class="bulk-bar" id="bulkBar"><span><b id="selInvCnt">0</b> TB đã chọn</span><div class="d-flex gap-2"><button class="btn btn-sm btn-primary" onclick="bulkCP()"><i class="fas fa-hand-holding"></i> CP</button><button class="btn btn-sm btn-danger" onclick="bulkDeleteInv()"><i class="fas fa-trash"></i> Xóa</button><button class="btn btn-sm btn-danger" onclick="clearSelInv()"><i class="fas fa-times"></i> Bỏ chọn</button></div></div>
 </section>
  
 <section id="assets" class="section">
     <div class="panel"><div class="panel-header"><i class="fas fa-list"></i> Danh mục Tài sản</div><div class="panel-body">
-        <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px;"><select class="form-select" style="padding:6px 9px;font-size:11px;min-width:130px;" onchange="filterAssetsByCat(this.value)"><option value="">Tất cả Category</option><option>Thiết bị</option><option>Linh kiện</option><option>Ngoại vi</option><option>Tiêu hao</option></select><select class="form-select" style="padding:6px 9px;font-size:11px;min-width:130px;" onchange="filterAssetsByStatus(this.value)"><option value="">Tất cả TT</option><option value="available">Trong kho</option><option value="allocated">Đã cấp</option><option value="borrowed">Đang mượn</option></select></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px;"><select class="form-select" style="padding:6px 9px;font-size:11px;min-width:130px;" onchange="filterAssetsByCat(this.value)"><option value="">Tất cả Category</option><option>Thiết bị</option><option>Linh kiện</option><option>Ngoại vi</option><option>Tiêu hao</option></select><select class="form-select" style="padding:6px 9px;font-size:11px;min-width:130px;" onchange="filterAssetsByStatus(this.value)"><option value="">Tất cả TT</option><option value="available">Trong kho</option><option value="allocated">Đã cấp</option><option value="borrowed">Đang mượn</option></select><select class="form-select" id="assetGroupFilter" style="padding:6px 9px;font-size:11px;min-width:130px;" onchange="filterAssetsByGroup(this.value)"></select><button class="btn btn-sm btn-success" onclick="openAssetExport()"><i class="fas fa-file-excel"></i> Xuất Excel</button><button class="btn btn-sm btn-primary" onclick="openInventoryAudit()"><i class="fas fa-clipboard-check"></i> Kiểm kê</button></div>
         <div class="search-box"><i class="fas fa-search search-icon"></i><input type="text" class="search-input" placeholder="Tìm kiếm..." oninput="searchAssets(this.value)"></div>
-        <div class="table-container"><table><thead><tr><th>Mã TB</th><th>Tên</th><th>Category</th><th>Loại</th><th>Serial</th><th>TT</th><th>SL</th><th>Vị trí</th><th>User</th></tr></thead><tbody id="assetTableBody"></tbody></table></div>
+        <div class="table-container"><table><thead><tr><th style="width:34px;"><input type="checkbox" id="assetCheckAll" onchange="toggleAllAssets(this.checked)" aria-label="Chọn tất cả tài sản đang hiển thị"></th><th class="sortable-th" onclick="toggleTableSort('assets','serial')" title="Sắp xếp" data-sort-scope="assets" data-sort-key="serial">Mã tài sản</th><th class="sortable-th" onclick="toggleTableSort('assets','name')" title="Sắp xếp" data-sort-scope="assets" data-sort-key="name">Tên</th><th class="sortable-th" onclick="toggleTableSort('assets','category')" title="Sắp xếp" data-sort-scope="assets" data-sort-key="category">Category</th><th class="sortable-th" onclick="toggleTableSort('assets','assetGroup')" title="Sắp xếp" data-sort-scope="assets" data-sort-key="assetGroup">Nhóm tài sản</th><th class="sortable-th" onclick="toggleTableSort('assets','type')" title="Sắp xếp" data-sort-scope="assets" data-sort-key="type">Loại</th><th class="sortable-th" onclick="toggleTableSort('assets','status')" title="Sắp xếp" data-sort-scope="assets" data-sort-key="status">Phân bổ</th><th class="sortable-th" onclick="toggleTableSort('assets','qty')" title="Sắp xếp" data-sort-scope="assets" data-sort-key="qty">Tổng SL</th><th class="sortable-th" onclick="toggleTableSort('assets','location')" title="Sắp xếp" data-sort-scope="assets" data-sort-key="location">Vị trí</th><th class="sortable-th" onclick="toggleTableSort('assets','holder')" title="Sắp xếp" data-sort-scope="assets" data-sort-key="holder">Người đứng tên</th><th class="action-cell-header">Thao tác</th></tr></thead><tbody id="assetTableBody"></tbody></table></div>
+        <div class="bulk-bar" id="assetBulkBar"><span><b id="selAssetCnt">0</b> tài sản đã chọn</span><div class="d-flex gap-2"><button class="btn btn-sm btn-danger" id="assetBulkDeleteBtn" onclick="bulkDeleteAssets()"><i class="fas fa-trash"></i> Xóa</button><button class="btn btn-sm btn-outline" onclick="clearSelectedAssets()"><i class="fas fa-times"></i> Bỏ chọn</button></div></div>
     </div></div>
 </section>
  
 <section id="lookup" class="section">
     <div class="panel"><div class="panel-header"><i class="fas fa-search"></i> Tra cứu theo Nhân viên</div><div class="panel-body">
-        <div class="search-box" style="max-width:400px;margin-bottom:14px;position:relative;"><i class="fas fa-id-card search-icon"></i><input type="text" class="search-input" id="empLookupInput" placeholder="Nhập mã NV..." onkeydown="if(event.key==='Enter')lookupEmp()"><button class="btn btn-primary btn-sm" style="position:absolute;right:3px;top:3px;" onclick="lookupEmp()"><i class="fas fa-search"></i></button></div>
+        <div class="search-box employee-lookup-search"><i class="fas fa-id-card search-icon"></i><input type="text" class="search-input" id="empLookupInput" placeholder="Nhập tên hoặc mã NV..." onkeydown="if(event.key==='Enter')lookupEmp()"><button class="btn btn-primary btn-sm employee-lookup-button" onclick="lookupEmp()" title="Tìm kiếm"><i class="fas fa-search"></i></button></div>
         <div id="empResult" style="display:none;"><div style="background:linear-gradient(135deg,#073b6e,var(--primary));color:var(--white);padding:14px;border-radius:var(--radius) var(--radius) 0 0;display:flex;align-items:center;gap:10px;"><div style="width:46px;height:46px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;"><i class="fas fa-user"></i></div><div><h3 id="empResName" style="font-size:14px;margin-bottom:1px;">-</h3><p style="opacity:.85;font-size:11.5px;">Mã: <span id="empResCode">-</span> | PB: <span id="empResDept">-</span></p></div><div class="device-count-chip" id="empResCnt">0 TB</div></div><div style="padding:14px;background:var(--white);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);"><div class="table-container"><table><thead><tr><th>Mã TB</th><th>Tên</th><th>Category</th><th>SL</th><th>TT sở hữu</th></tr></thead><tbody id="empAssetsBody"></tbody></table></div></div></div>
         <div id="noResult" class="empty-state" style="display:none;"><i class="fas fa-user-slash" style="font-size:44px;"></i><p>Không tìm thấy nhân viên</p></div>
     </div></div>
@@ -467,9 +174,9 @@
  
 <section id="adminCat" class="section">
     <div class="panel"><div class="panel-header"><i class="fas fa-cog"></i> Quản lý Danh mục Thiết bị</div><div class="panel-body">
-        <div class="admin-tabs" id="adminTabs"><button class="admin-tab active" onclick="switchAdminTab('thietbi',this)"><i class="fas fa-desktop"></i> Thiết bị</button><button class="admin-tab" onclick="switchAdminTab('linhkien',this)"><i class="fas fa-microchip"></i> Linh kiện</button><button class="admin-tab" onclick="switchAdminTab('ngoai_vi',this)"><i class="fas fa-keyboard"></i> Ngoại vi</button><button class="admin-tab" onclick="switchAdminTab('tieuhao',this)"><i class="fas fa-box"></i> Tiêu hao</button></div>
+        <div class="admin-tabs" id="adminTabs"><button class="admin-tab active" onclick="switchAdminTab('thietbi',this)"><i class="fas fa-desktop"></i> Thiết bị</button><button class="admin-tab" onclick="switchAdminTab('linhkien',this)"><i class="fas fa-microchip"></i> Linh kiện</button><button class="admin-tab" onclick="switchAdminTab('ngoai_vi',this)"><i class="fas fa-keyboard"></i> Ngoại vi</button><button class="admin-tab" onclick="switchAdminTab('tieuhao',this)"><i class="fas fa-box"></i> Tiêu hao</button><button class="admin-tab" onclick="switchAssetGroupTab(this)"><i class="fas fa-layer-group"></i> Nhóm tài sản</button></div>
         <div id="adminCatList" class="cat-mgr-list"></div>
-        <div style="margin-top:10px;display:flex;gap:7px;justify-content:center;"><button class="btn btn-primary btn-sm" onclick="showAddSubCatModal()"><i class="fas fa-plus"></i> Thêm loại TB mới</button><button class="btn btn-outline btn-sm" onclick="resetCatConfig()"><i class="fas fa-undo"></i> Reset mặc định</button></div>
+        <div id="categoryActions" style="margin-top:10px;display:flex;gap:7px;justify-content:center;"><button class="btn btn-primary btn-sm" onclick="showAddSubCatModal()"><i class="fas fa-plus"></i> Thêm loại TB mới</button><button class="btn btn-outline btn-sm" onclick="resetCatConfig()"><i class="fas fa-undo"></i> Reset mặc định</button></div>
     </div></div>
     <div class="panel" style="margin-top:16px;"><div class="panel-header"><i class="fas fa-building"></i> Quản lý Bộ phận</div><div class="panel-body">
         <div id="deptMgrList" class="cat-mgr-list"></div>
@@ -478,6 +185,7 @@
 </section>
  
 <section id="adminUsers" class="section">
+    <div class="panel"><div class="panel-header"><i class="fas fa-warehouse"></i> Thiết lập quản lý kho</div><div class="panel-body"><div class="warehouse-settings-grid"><div class="warehouse-setting-card"><p class="text-muted mb-2">Người đứng tên mặc định khi thiết bị chưa chọn người đứng tên: <b id="warehouseManagerStatus">Chưa thiết lập</b></p><div class="warehouse-manager-setting"><div class="form-group"><label class="form-label" for="warehouseManagerName">Tên nhân viên <span class="req">*</span></label><input class="form-input" id="warehouseManagerName" autocomplete="off" placeholder="Tên nhân viên"></div><div class="form-group"><label class="form-label" for="warehouseManagerCode">Mã nhân viên</label><input class="form-input" id="warehouseManagerCode" autocomplete="off" placeholder="Mã nhân viên"></div><div class="form-group"><label class="form-label" for="warehouseManagerDept">Bộ phận</label><input class="form-input" id="warehouseManagerDept" autocomplete="off" placeholder="Bộ phận"></div><button type="button" class="btn btn-primary" id="saveWarehouseManagerBtn" onclick="saveWarehouseManagerSetting()"><i class="fas fa-save"></i> Lưu</button></div></div><div class="warehouse-setting-card"><p class="text-muted mb-2">Chỉ dùng để đối chiếu vị trí, không ghi đè tài sản: <b id="defaultWarehouseLocationStatus">Chưa thiết lập</b></p><div class="warehouse-manager-setting"><div class="form-group"><label class="form-label" for="defaultWarehouseLocation">Vị trí kho mặc định <span class="req">*</span></label><input class="form-input" id="defaultWarehouseLocation" autocomplete="off" placeholder="VD: Kho IT tầng 2"></div><button type="button" class="btn btn-primary" id="saveDefaultWarehouseLocationBtn" onclick="saveDefaultWarehouseLocationSetting()"><i class="fas fa-save"></i> Lưu</button></div></div></div></div></div>
     <div class="panel"><div class="panel-header"><i class="fas fa-users-cog"></i> Quản lý User & Phân quyền</div><div class="panel-body">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><h3 style="font-size:14px;">Danh sách Users</h3><div class="d-flex gap-2"><button class="btn btn-outline btn-sm" onclick="resetUsers()"><i class="fas fa-undo"></i> Reset</button><button class="btn btn-primary btn-sm" onclick="showAddUserModal()"><i class="fas fa-user-plus"></i> Thêm User</button></div></div>
         <div class="table-container"><table><thead><tr><th>Mã NV</th><th>Họ tên</th><th>Email</th><th>Bộ phận</th><th>Vai trò</th><th>TT</th><th>Thao tác</th></tr></thead><tbody id="userTableBody"></tbody></table></div>
@@ -492,462 +200,43 @@
 <div class="toast-container" id="toastContainer"></div>
 <div class="sync-badge" id="syncBadge" onclick="manualSync()" title="Bấm để đồng bộ lại dữ liệu"><i class="fas fa-cloud"></i> <span id="syncBadgeText">Cục bộ</span></div>
  
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-// ===================== SUPABASE CONFIG =====================
-// Dán URL và anon key của project Supabase vào đây (Settings > API trong dashboard Supabase)
-const SUPABASE_URL = 'https://ravpzhfocqbzmroyhfwf.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_GYf6BdYokTiceJbBPqw8-A_Gct-v7rv';
-let sb = null;
-const SUPABASE_CONFIGURED = /^https:\/\/.+\.supabase\.co\/?$/.test(SUPABASE_URL) && typeof SUPABASE_ANON_KEY === 'string' && SUPABASE_ANON_KEY.length > 20;
-try{ if(SUPABASE_CONFIGURED && window.supabase) sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); }catch(e){ console.error('Supabase init lỗi:', e); }
-
-// ===================== DỮ LIỆU MẶC ĐỊNH =====================
-function getDefaultCatConfig(){return{thietbi:{name:'Thiết bị',icon:'fa-desktop',subcategories:[
-{id:'tivi',name:'TIVI',icon:'fa-tv',hasCondition:true,fields:[{name:'name',label:'Tên TB',type:'text',required:true},{name:'brand',label:'Hãng SX',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'size',label:'Kích thước',type:'text',required:true},{name:'resolution',label:'Độ phân giải',type:'select',options:['HD','Full HD','4K','8K'],required:true}]},
-{id:'dienthoai',name:'Điện thoại bàn',icon:'fa-phone',hasCondition:true,fields:[{name:'name',label:'Tên TB',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'lines',label:'Số dòng',type:'select',options:['1','2','4','8'],required:true}]},
-{id:'casepc',name:'Case PC',icon:'fa-server',hasCondition:true,fields:[{name:'name',label:'Tên TB',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'cpu',label:'CPU',type:'text',required:true},{name:'ram',label:'RAM',type:'text',required:true}]},
-{id:'laptop',name:'Laptop',icon:'fa-laptop',hasCondition:true,fields:[{name:'name',label:'Tên TB',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'cpu',label:'CPU',type:'text',required:true},{name:'ram',label:'RAM',type:'text',required:true},{name:'storage',label:'Ổ cứng',type:'text',required:true}]},
-{id:'switch',name:'Switch',icon:'fa-network-wired',hasCondition:true,fields:[{name:'name',label:'Tên TB',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'ports',label:'Số cổng',type:'text',required:true}]},
-{id:'router',name:'Router',icon:'fa-route',hasCondition:true,fields:[{name:'name',label:'Tên TB',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'wanPorts',label:'Cổng WAN',type:'text',required:true}]},
-{id:'firewall',name:'Firewall',icon:'fa-shield-alt',hasCondition:true,fields:[{name:'name',label:'Tên TB',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'throughput',label:'Throughput',type:'text',required:true}]},
-{id:'webcam',name:'Webcam',icon:'fa-video',hasCondition:true,fields:[{name:'name',label:'Tên TB',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'resolution',label:'Độ phân giải',type:'select',options:['720p','1080p','4K'],required:true}]},
-{id:'mayquetthe',name:'Máy quét thẻ',icon:'fa-credit-card',hasCondition:true,fields:[{name:'name',label:'Tên TB',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'scanType',label:'Loại',type:'select',options:['Card Reader','Barcode Scanner','QR Scanner'],required:true}]},
-{id:'tumang',name:'Tủ mạng',icon:'fa-door-closed',hasCondition:false,fields:[{name:'name',label:'Tên TB',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'heightU',label:'Chiều cao(U)',type:'select',options:['6U','9U','12U','15U','18U','21U','27U','32U','37U','42U','47U'],required:true}]}
-]},linhkien:{name:'Linh kiện',icon:'fa-microchip',subcategories:[
-{id:'mainboard',name:'Mainboard',icon:'fa-microchip',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'socket',label:'Socket CPU',type:'text',required:true},{name:'formFactor',label:'Form Factor',type:'select',options:['ATX','Micro-ATX','Mini-ITX'],required:true}]},
-{id:'cpu',name:'CPU/Chip',icon:'fa-microchip',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'cores',label:'Số nhân',type:'text',required:true},{name:'clockSpeed',label:'Xung nhịp',type:'text',required:true}]},
-{id:'ram',name:'RAM',icon:'fa-memory',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'capacity',label:'Dung lượng',type:'select',options:['4GB','8GB','16GB','32GB','64GB','128GB'],required:true},{name:'ramType',label:'Loại',type:'select',options:['DDR3','DDR4','DDR5'],required:true}]},
-{id:'storage',name:'Ổ cứng',icon:'fa-hdd',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'capacity',label:'Dung lượng',type:'text',required:true},{name:'storageType',label:'Loại',type:'select',options:['SSD SATA','SSD NVMe','HDD SATA','HDD SAS'],required:true},{name:'serial',label:'Serial',type:'text',required:true}]},
-{id:'psu',name:'Nguồn (PSU)',icon:'fa-bolt',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'wattage',label:'Công suất (W)',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true}]},
-{id:'vga',name:'VGA',icon:'fa-tv',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'vram',label:'VRAM',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true}]}
-]},ngoai_vi:{name:'Ngoại vi',icon:'fa-keyboard',subcategories:[
-{id:'keyboard',name:'Bàn phím',icon:'fa-keyboard',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'kbType',label:'Loại',type:'select',options:['Cổ điển','Có bàn phím số','Gaming','Wireless'],required:true}]},
-{id:'mouse',name:'Chuột',icon:'fa-mouse-pointer',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'mouseType',label:'Loại',type:'select',options:['Cổ điển','Wireless','Bluetooth','Gaming'],required:true}]},
-{id:'monitor',name:'Màn hình',icon:'fa-desktop',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'size',label:'Kích thước',type:'text',required:true},{name:'resolution',label:'Độ phân giải',type:'select',options:['HD','Full HD','2K','4K'],required:true}]},
-{id:'speaker',name:'Loa',icon:'fa-volume-up',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true}]},
-{id:'headset',name:'Tai nghe',icon:'fa-headphones',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'headsetType',label:'Loại',type:'select',options:['Có dây','Bluetooth','USB'],required:true}]},
-{id:'usb',name:'USB',icon:'fa-usb',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'capacity',label:'Dung lượng',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true}]},
-{id:'printer',name:'Máy in',icon:'fa-print',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'printerType',label:'Loại',type:'select',options:['Laser','In phun','Đa chức năng'],required:true}]},
-{id:'scanner',name:'Máy scan',icon:'fa-scanner',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true}]},
-{id:'projector',name:'Máy chiếu',icon:'fa-film',hasCondition:true,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true},{name:'brightness',label:'Độ sáng (lumens)',type:'text',required:true}]}
-]},tieuhao:{name:'Tiêu hao',icon:'fa-box',subcategories:[
-{id:'cable',name:'Dây cáp',icon:'fa-plug',hasCondition:false,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'cableType',label:'Loại cáp',type:'select',options:['HDMI','VGA','LAN','USB','Type-C','Power','Audio','DisplayPort'],required:true},{name:'length',label:'Chiều dài',type:'text',required:true}]},
-{id:'paper',name:'Giấy in',icon:'fa-file-alt',hasCondition:false,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'paperSize',label:'Kích thước',type:'select',options:['A3','A4','A5','Legal'],required:true},{name:'quantity',label:'Số lượng (tờ)',type:'text',required:true}]},
-{id:'ink',name:'Mực in',icon:'fa-tint',hasCondition:false,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'inkType',label:'Loại',type:'select',options:['Mực đen','Mực màu','Laser đen','Laser màu','Hộp mực'],required:true},{name:'compatible',label:'Tương thích',type:'text',required:true}]},
-{id:'accessory',name:'Phụ kiện khác',icon:'fa-tools',hasCondition:false,fields:[{name:'name',label:'Tên',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'description',label:'Mô tả',type:'text',required:true},{name:'quantity',label:'Số lượng',type:'text',required:true}]}
-]}}}
-
-function getDefaultDevices(){return[
-{id:'DEV001',name:'TIVI Samsung 55" UA55AU7700',catKey:'thietbi',subId:'tivi',subName:'TIVI',brand:'Samsung',model:'UA55AU7700',serial:'SN-TV-001',size:'55 inch',resolution:'4K',condition:'new',status:'available',location:'Kho A-Kệ1',notes:'',qty:5,allocatedTo:null,borrowedBy:null,createdAt:'2024-01-15'},
-{id:'DEV002',name:'Laptop Dell Latitude 5520',catKey:'thietbi',subId:'laptop',subName:'Laptop',brand:'Dell',model:'Latitude 5520',serial:'SN-LT-002',cpu:'i5-1145G7',ram:'8GB',storage:'256GB SSD',condition:'old',status:'allocated',location:'',notes:'',qty:3,allocatedTo:{name:'Lê Minh Cường',code:'NV003',dept:'Kế toán',date:'2024-03-10'},borrowedBy:null,createdAt:'2024-01-20'},
-{id:'DEV003',name:'Case PC Dell OptiPlex 7090',catKey:'thietbi',subId:'casepc',subName:'Case PC',brand:'Dell',model:'OptiPlex 7090',serial:'SN-PC-003',cpu:'i5-11500',ram:'16GB',condition:'new',status:'available',location:'Kho A-Kệ2',notes:'',qty:8,allocatedTo:null,borrowedBy:null,createdAt:'2024-02-01'},
-{id:'DEV004',name:'RAM Kingston 16GB DDR4',catKey:'linhkien',subId:'ram',subName:'RAM',brand:'Kingston',capacity:'16GB',ramType:'DDR4',condition:'new',status:'available',location:'Kho B-Túi1',notes:'',qty:12,allocatedTo:null,borrowedBy:null,createdAt:'2024-02-10'},
-{id:'DEV005',name:'SSD Samsung 512GB NVMe',catKey:'linhkien',subId:'storage',subName:'Ổ cứng',brand:'Samsung',capacity:'512GB',storageType:'SSD NVMe',serial:'SN-SSD-005',condition:'new',status:'available',location:'Kho B-Túi1',notes:'',qty:10,allocatedTo:null,borrowedBy:null,createdAt:'2024-02-15'},
-{id:'DEV006',name:'Bàn phím Logitech K120',catKey:'ngoai_vi',subId:'keyboard',subName:'Bàn phím',brand:'Logitech',model:'K120',serial:'SN-KB-006',kbType:'Cổ điển',condition:'old',status:'available',location:'Kho C-Kệ1',notes:'',qty:15,allocatedTo:null,borrowedBy:null,createdAt:'2024-03-01'},
-{id:'DEV007',name:'Chuột Logitech M171',catKey:'ngoai_vi',subId:'mouse',subName:'Chuột',brand:'Logitech',model:'M171',serial:'SN-MS-007',mouseType:'Wireless',condition:'old',status:'available',location:'Kho C-Kệ1',notes:'',qty:20,allocatedTo:null,borrowedBy:null,createdAt:'2024-03-01'},
-{id:'DEV008',name:'Switch Cisco SG250-24',catKey:'thietbi',subId:'switch',subName:'Switch',brand:'Cisco',model:'SG250-24',serial:'SN-SW-008',ports:'24',condition:'new',status:'available',location:'Tủ mạng A',notes:'',qty:4,allocatedTo:null,borrowedBy:null,createdAt:'2024-03-05'},
-{id:'DEV009',name:'Laptop HP ProBook 450 G9',catKey:'thietbi',subId:'laptop',subName:'Laptop',brand:'HP',model:'ProBook 450 G9',serial:'SN-LT-009',cpu:'i7-1255U',ram:'16GB',storage:'512GB SSD',condition:'new',status:'allocated',location:'',notes:'',qty:2,allocatedTo:{name:'Phạm Thu Hà',code:'NV004',dept:'Marketing',date:'2024-04-01'},borrowedBy:null,createdAt:'2024-03-15'},
-{id:'DEV010',name:'Mainboard ASUS B550M',catKey:'linhkien',subId:'mainboard',subName:'Mainboard',brand:'ASUS',model:'B550M',serial:'SN-MB-010',socket:'AM4',formFactor:'Micro-ATX',condition:'new',status:'available',location:'Kho B-Túi2',notes:'',qty:6,allocatedTo:null,borrowedBy:null,createdAt:'2024-03-20'},
-{id:'DEV011',name:'CPU Intel i5-12400',catKey:'linhkien',subId:'cpu',subName:'CPU/Chip',brand:'Intel',model:'i5-12400',serial:'SN-CPU-011',cores:'6 nhân 12 luồng',clockSpeed:'2.5GHz - 4.4GHz',condition:'new',status:'available',location:'Kho B-Túi2',notes:'',qty:7,allocatedTo:null,borrowedBy:null,createdAt:'2024-03-22'},
-{id:'DEV012',name:'Máy in HP LaserJet M404dn',catKey:'ngoai_vi',subId:'printer',subName:'Máy in',brand:'HP',model:'LaserJet M404dn',serial:'SN-PR-012',printerType:'Laser',condition:'old',status:'allocated',location:'',notes:'',qty:3,allocatedTo:{name:'Trần Thị Bình',code:'NV002',dept:'Nhân sự',date:'2024-02-20'},borrowedBy:null,createdAt:'2024-01-25'},
-{id:'DEV013',name:'Dây cáp HDMI 2m',catKey:'tieuhao',subId:'cable',subName:'Dây cáp',brand:'Anker',cableType:'HDMI',length:'2m',condition:null,status:'available',location:'Kho D-Kệ1',notes:'',qty:50,allocatedTo:null,borrowedBy:null,createdAt:'2024-04-01'},
-{id:'DEV014',name:'Màn hình Dell P2422H 24"',catKey:'ngoai_vi',subId:'monitor',subName:'Màn hình',brand:'Dell',model:'P2422H',serial:'SN-MN-014',size:'24 inch',resolution:'Full HD',condition:'new',status:'borrowed',location:'',notes:'',qty:6,allocatedTo:null,borrowedBy:{name:'Hoàng Đức Long',code:'NV005',dept:'Sales',date:new Date().toISOString().split('T')[0],dueDate:getFD(1),reason:'Presentation khách hàng'},createdAt:'2024-03-28'},
-{id:'DEV015',name:'Router TP-Link AX1800',catKey:'thietbi',subId:'router',subName:'Router',brand:'TP-Link',model:'AX1800',serial:'SN-RT-015',wanPorts:'1',condition:'new',status:'available',location:'Tủ mạng A',notes:'',qty:3,allocatedTo:null,borrowedBy:null,createdAt:'2024-04-05'}
-]}
-
-function getDefaultUsers(){return[
-{code:'NV001',name:'Nguyễn Văn An',dept:'IT',email:'an.nv@company.com',role:'Admin',status:'active',password:'123456'},
-{code:'NV002',name:'Trần Thị Bình',dept:'Nhân sự',email:'binh.tt@company.com',role:'User',status:'active',password:'123456'},
-{code:'NV003',name:'Lê Minh Cường',dept:'Kế toán',email:'cuong.lm@company.com',role:'User',status:'active',password:'123456'},
-{code:'NV004',name:'Phạm Thu Hà',dept:'Marketing',email:'ha.pt@company.com',role:'Manager',status:'active',password:'123456'},
-{code:'NV005',name:'Hoàng Đức Long',dept:'Sales',email:'long.hd@company.com',role:'User',status:'active',password:'123456'},
-{code:'NV006',name:'Võ Thị Mai',dept:'IT',email:'mai.vt@company.com',role:'User',status:'inactive',password:'123456'}
-]}
-
-function getDefaultAllocations(){return[
-{id:'CP001',giverName:'Nguyễn Văn An',giverCode:'NV001',recvName:'Lê Minh Cường',recvCode:'NV003',dept:'Kế toán',deviceIds:['DEV002'],qtys:{DEV002:1},reason:'Cấp phát làm việc',date:'2024-03-10',status:'completed'},
-{id:'CP002',giverName:'Nguyễn Văn An',giverCode:'NV001',recvName:'Phạm Thu Hà',recvCode:'NV004',dept:'Marketing',deviceIds:['DEV009'],qtys:{DEV009:1},reason:'Cấp phát laptop mới',date:'2024-04-01',status:'completed'},
-{id:'CP003',giverName:'Nguyễn Văn An',giverCode:'NV001',recvName:'Trần Thị Bình',recvCode:'NV002',dept:'Nhân sự',deviceIds:['DEV012'],qtys:{DEV012:1},reason:'Máy in cho bộ phận NS',date:'2024-02-20',status:'completed'}
-]}
-
-function getDefaultBorrows(){const t=new Date().toISOString().split('T')[0];return[{id:'MR001',lender:'Nguyễn Văn An',lenderCode:'NV001',borrower:'Hoàng Đức Long',borrowerCode:'NV005',deviceIds:['DEV014'],qtys:{DEV014:1},reason:'Presentation khách hàng',date:t,dueDate:getFD(1),status:'borrowing',returnDate:null,returnCondition:null}]}
-
-function getDefaultActivities(){const t=new Date().toISOString().split('T')[0];return[
-{action:'Mượn TB',device:'Màn hình Dell P2422H',user:'Hoàng Đức Long',time:t,type:'borrow',status:'Đang mượn',refType:'borrow',refId:'MR001'},
-{action:'Cấp phát',device:'Laptop HP ProBook 450 G9',user:'Phạm Thu Hà',time:'2024-04-01',type:'allocate',status:'Hoàn thành',refType:'alloc',refId:'CP002'},
-{action:'Thêm mới',device:'Router TP-Link AX1800',user:'Admin',time:'2024-04-05',type:'add',status:'Trong kho',refType:'add',refId:'DEV015'},
-{action:'Cấp phát',device:'Laptop Dell Latitude 5520',user:'Lê Minh Cường',time:'2024-03-10',type:'allocate',status:'Hoàn thành',refType:'alloc',refId:'CP001'},
-{action:'Cấp phát',device:'Máy in HP LaserJet',user:'Trần Thị Bình',time:'2024-02-20',type:'allocate',status:'Hoàn thành',refType:'alloc',refId:'CP003'},
-{action:'Thêm mới',device:'Dây cáp HDMI 2m',user:'Admin',time:'2024-04-01',type:'add',status:'Trong kho',refType:'add',refId:'DEV013'}
-]}
-
-function getFD(d){const n=new Date();n.setDate(n.getDate()+d);return n.toISOString().split('T')[0]}
-
-function getDefaultDepartments(){return['IT','Nhân sự','Kế toán','Marketing','Sales','Ban đạo']}
-
-// ===================== STATE =====================
-let categoryConfig=getDefaultCatConfig(),devices=getDefaultDevices(),users=getDefaultUsers(),allocations=getDefaultAllocations(),returns=[],borrows=getDefaultBorrows(),activities=getDefaultActivities(),addDevLogs=[],departments=getDefaultDepartments();
-let currentUser=null;
-
-// ===================== ĐĂNG NHẬP / PHÂN QUYỀN =====================
-function showLoginScreen(){document.getElementById('loginScreen').classList.add('show');document.querySelector('.header').style.display='none';document.querySelector('.main-container').style.display='none'}
-function hideLoginScreen(){document.getElementById('loginScreen').classList.remove('show');document.querySelector('.header').style.display='flex';document.querySelector('.main-container').style.display='flex'}
-function handleLogin(e){e.preventDefault();const code=document.getElementById('loginCode').value.trim().toUpperCase();const pass=document.getElementById('loginPass').value;const errBox=document.getElementById('loginErr');const u=users.find(x=>x.code.toUpperCase()===code);if(!u||u.status!=='active'||(u.password||'123456')!==pass){errBox.textContent='Sai mã NV hoặc mật khẩu, hoặc tài khoản đã bị khóa.';errBox.style.display='block';return}
-    errBox.style.display='none';currentUser=u;try{localStorage.setItem('itams_session',u.code)}catch(err){}
-    document.getElementById('loginCode').value='';document.getElementById('loginPass').value='';
-    hideLoginScreen();afterLogin()}
-function logout(){if(!confirm('Đăng xuất khỏi hệ thống?'))return;currentUser=null;try{localStorage.removeItem('itams_session')}catch(e){}showLoginScreen()}
-function tryAutoLogin(){try{const code=localStorage.getItem('itams_session');if(code){const u=users.find(x=>x.code===code&&x.status==='active');if(u){currentUser=u;return true}}}catch(e){}return false}
-function renderCurrentUserBox(){const el=document.getElementById('curUserName');if(el&&currentUser)el.textContent=`${currentUser.name} (${currentUser.role})`}
-function applyRolePermissions(){const isAdmin=currentUser&&currentUser.role==='Admin';document.querySelectorAll('.nav-link[data-admin-only]').forEach(btn=>btn.classList.toggle('locked',!isAdmin));renderAllocGiverBox();renderRetReceiverBox();renderBrLenderBox()}
-function afterLogin(){renderCurrentUserBox();applyRolePermissions();renderEverything()}
-let currentAdminCat='thietbi',currentDevCatKey='',currentDevSubId='';
-let invFilter='all',invSearch='',assetCatFilter='',assetStatusFilter='',assetSearch='';
-let allocSrcSelected=new Set(),retSrcSelected=new Set(),brSrcSelected=new Set(),invChecked=new Set();
-let retEmpDevices=[],retTgtIds=new Set(),brTgtIds=new Set();
-let allocQtys={},brQtys={};
-let retEmpUser=null;
-
-// ===================== PERSISTENCE (Supabase + localStorage cache) =====================
-function getStateSnapshot(){return {categoryConfig,devices,users,allocations,returns,borrows,activities,addDevLogs,departments}}
-function applyStateSnapshot(p){if(!p)return;if(p.categoryConfig)categoryConfig=p.categoryConfig;if(p.devices)devices=p.devices;if(p.users)users=p.users;if(p.allocations)allocations=p.allocations;if(p.returns)returns=p.returns;if(p.borrows)borrows=p.borrows;if(p.activities)activities=p.activities;if(p.addDevLogs)addDevLogs=p.addDevLogs;if(p.departments&&p.departments.length)departments=p.departments}
-
-function setSyncBadge(state){const b=document.getElementById('syncBadge'),t=document.getElementById('syncBadgeText');if(!b)return;b.classList.remove('ok','err','syncing');if(!SUPABASE_CONFIGURED){b.classList.add('err');t.textContent='Chưa cấu hình Supabase';b.title='Chỉ đang lưu cục bộ trên trình duyệt này. Điền SUPABASE_URL/ANON_KEY để đồng bộ đám mây.';return}
-    if(state==='syncing'){b.classList.add('syncing');t.textContent='Đang đồng bộ...'}
-    else if(state==='ok'){b.classList.add('ok');t.textContent='Đã đồng bộ';b.title='Dữ liệu đã lưu lên Supabase. Bấm để tải lại mới nhất.'}
-    else if(state==='err'){b.classList.add('err');t.textContent='Lỗi đồng bộ';b.title='Không lưu được lên Supabase, dữ liệu vẫn an toàn trong trình duyệt này. Bấm để thử lại.'}
-}
-
-let _saveTimer=null;
-function saveData(){
-    const snap=getStateSnapshot();
-    try{localStorage.setItem('itams_v4',JSON.stringify(snap))}catch(e){}
-    if(!sb)return;
-    clearTimeout(_saveTimer);
-    setSyncBadge('syncing');
-    _saveTimer=setTimeout(()=>{
-        sb.from('app_state').upsert({id:'main',data:snap,updated_at:new Date().toISOString()}).then(({error})=>{
-            if(error){console.error('Supabase save error:',error);setSyncBadge('err')}
-            else{setSyncBadge('ok')}
-        });
-    },400);
-}
-
-function loadData(){try{const d=localStorage.getItem('itams_v4');if(d)applyStateSnapshot(JSON.parse(d))}catch(e){}}
-
-async function loadRemoteData(){
-    if(!sb)return false;
-    setSyncBadge('syncing');
-    try{
-        const{data,error}=await sb.from('app_state').select('data').eq('id','main').maybeSingle();
-        if(error){console.error('Supabase load error:',error);setSyncBadge('err');return false}
-        if(data&&data.data&&Object.keys(data.data).length){applyStateSnapshot(data.data);setSyncBadge('ok');return true}
-        // Chưa có dữ liệu trên server -> đẩy dữ liệu hiện tại (mặc định/local) lên làm dữ liệu gốc
-        await sb.from('app_state').upsert({id:'main',data:getStateSnapshot(),updated_at:new Date().toISOString()});
-        setSyncBadge('ok');return false
-    }catch(e){console.error(e);setSyncBadge('err');return false}
-}
-
-function renderEverything(){
-    const fns=[renderDashboard,renderNotifications,renderDeptMgrList,renderAdminCatList,renderUserTable,()=>renderAllocHistory(),()=>renderRetHistory(),()=>renderBrHistory(),renderAddDevHistory,renderInventory,renderDevCatGrid,renderAllocSrc,renderAllocTgt];
-    fns.forEach(fn=>{try{fn()}catch(e){console.error('renderEverything lỗi ở',fn.name||'anonymous',':',e)}});
-}
-
-async function manualSync(){if(!sb){showToast('Chưa cấu hình Supabase','warning');return}showToast('Đang tải dữ liệu mới nhất...','warning');const ok=await loadRemoteData();renderEverything();showToast(ok?'Đã đồng bộ dữ liệu mới nhất':'Không tải được, đang dùng dữ liệu cục bộ',ok?'success':'error')}
-
-// ===================== UTILS =====================
-function genId(p){return p+String(Date.now()).slice(-6)+String(Math.random()).slice(2,5)}
-function fmtD(d){if(!d)return'-';const p=d.split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:d}
-function catN(k){return categoryConfig[k]?.name||k}
-function catC(k){return{thietbi:'cat-thietbi',linhkien:'cat-linhkien',ngoai_vi:'cat-ngoai_vi',tieuhao:'cat-tieuhao'}[k]||'badge-info'}
-function stB(s){const m={available:['Trong kho','badge-success'],allocated:['Đã cấp phát','badge-info'],borrowed:['Đang mượn','badge-warning']};const[t,c]=m[s]||[s,'badge-secondary'];return`<span class="badge ${c}">${t}</span>`}
-function cdB(c){if(!c)return'-';const m={new:['Mới','cond-new'],old:['Đã qua SD','cond-old'],broken:['Hỏng','cond-broken']};const[t,cls]=m[c]||[c,''];return`<span class="badge ${cls}">${t}</span>`}
-function acB(t){return`<span class="badge ${{allocate:'badge-info',return:'badge-success',borrow:'badge-warning',add:'badge-secondary'}[t]||'badge-secondary'}">${t}</span>`}
-function getInitials(n){if(!n)return'?';return n.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()}
-function getActiveUsers(){return users.filter(u=>u.status==='active')}
-function qtyBadge(q){return`<span class="qty-badge"><i class="fas fa-cubes"></i> SL: ${q}</span>`}
-
-function showToast(msg,type='success'){const ic={success:'fa-check-circle',error:'fa-times-circle',warning:'fa-exclamation-circle'};const c=document.getElementById('toastContainer');const el=document.createElement('div');el.className='toast '+type;el.innerHTML=`<i class="fas ${ic[type]||ic.success}"></i><span>${msg}</span>`;c.appendChild(el);setTimeout(()=>{el.style.animation='toastOut .3s forwards';setTimeout(()=>el.remove(),300)},3000)}
-function openModal(t,h){document.getElementById('modalTitle').textContent=t;document.getElementById('modalBody').innerHTML=h;document.getElementById('modal').classList.add('show')}
-function closeModal(){document.getElementById('modal').classList.remove('show')}
-function openModal2(t,h){document.getElementById('modal2Title').textContent=t;document.getElementById('modal2Body').innerHTML=h;document.getElementById('modal2').classList.add('show')}
-function closeModal2(){document.getElementById('modal2').classList.remove('show')}
-
-// ===================== USER LOOKUP =====================
-function renderUDrop(did,matches,fn,extraFn){const d=document.getElementById(did);if(!d)return;if(!matches.length){d.classList.remove('show');d.innerHTML='';return}d.innerHTML=matches.map(u=>`<div class="user-lookup-option" onmousedown="event.preventDefault();(${fn.toString()})('${u.code}')"><span class="ulo-code">${u.code}</span><span class="ulo-name">${u.name}</span><span class="ulo-dept">${u.dept}</span>${extraFn?extraFn(u):''}</div>`).join('');d.classList.add('show')}
-function hideDrop(id){const d=document.getElementById(id);if(d){d.classList.remove('show');d.innerHTML=''}}
-function showUCard(cid,u,av,nid,rid,csid,did,eid,nhid,chnid){const c=document.getElementById(cid);if(!c||!u)return;c.classList.add('show');if(av)document.getElementById(av).textContent=getInitials(u.name);if(nid)document.getElementById(nid).textContent=u.name;if(rid)document.getElementById(rid).textContent=u.role+(u.email?' · '+u.email:'');if(csid)document.getElementById(csid).textContent=u.code;if(did)document.getElementById(did).textContent=u.dept;if(eid)document.getElementById(eid).textContent=u.email||'-';if(nhid)document.getElementById(nhid).value=u.name;if(chnid)document.getElementById(chnid).value=u.code}
-function hideUCard(cid){const c=document.getElementById(cid);if(c)c.classList.remove('show')}
-document.addEventListener('click',function(e){if(!e.target.closest('.user-lookup-wrap'))document.querySelectorAll('.user-lookup-dropdown').forEach(d=>{d.classList.remove('show');d.innerHTML=''})});
-
-function renderAllocGiverBox(){if(!currentUser)return;showUCard('allocGiverCard',currentUser,'allocGiverAvatar','allocGiverName','allocGiverRole','allocGiverCodeShow','allocGiverDept','allocGiverEmail','allocGiverNameH','allocGiverCodeH')}
-function getRetEmpCandidates(){const map=new Map();devices.forEach(d=>{if(d.status==='allocated'&&d.allocatedTo&&d.allocatedTo.code){const key=d.allocatedTo.code.toUpperCase();if(!map.has(key))map.set(key,{code:d.allocatedTo.code,name:d.allocatedTo.name,dept:d.allocatedTo.dept})}});return Array.from(map.values())}
-function searchRetEmp(v){const t=v.trim().toUpperCase();const holders=getRetEmpCandidates();const list=(t?holders.filter(u=>u.code.toUpperCase().includes(t)||u.name.toUpperCase().includes(t)):holders).slice().sort((a,b)=>a.name.localeCompare(b.name));renderUDrop('retEmpDrop',list.slice(0,8),selectRetEmp,u=>{const cnt=devices.filter(d=>d.status==='allocated'&&d.allocatedTo&&d.allocatedTo.code.toUpperCase()===u.code.toUpperCase()).length;return`<span class="qty-badge" style="font-size:8px;padding:1px 6px;">${cnt} TB</span>`})}
-function selectRetEmp(code){const holders=getRetEmpCandidates();const u=holders.find(x=>x.code.toUpperCase()===code.toUpperCase());if(!u)return;retEmpUser=u;document.getElementById('retEmpSearch').value=`${u.name} (${u.code})`;hideDrop('retEmpDrop');showUCard('retEmpInfo',Object.assign({},u,{role:'Người nhận thiết bị'}),'retEmpAvatar','retEmpName','retEmpRole','retEmpCode','retEmpDept',null,null,null);retEmpDevices=devices.filter(d=>d.status==='allocated'&&d.allocatedTo&&d.allocatedTo.code.toUpperCase()===code.toUpperCase());document.getElementById('retEmpCount').textContent=retEmpDevices.length;retSrcSelected.clear();retTgtIds.clear();renderRetSrc();renderRetTgt();if(!retEmpDevices.length)showToast(`${u.name} hiện không có thiết bị nào cần thu hồi`,'warning')}
-function clearRetEmp(){retEmpUser=null;document.getElementById('retEmpSearch').value='';hideUCard('retEmpInfo');retEmpDevices=[];retSrcSelected.clear();retTgtIds.clear();renderRetSrc();renderRetTgt()}
-function renderRetReceiverBox(){if(!currentUser)return;showUCard('retReceiverCard',currentUser,'retReceiverAvatar','retReceiverName','retReceiverRole','retReceiverCodeShow','retReceiverDept',null,'retReceiverNameH','retReceiverCodeH')}
-function renderBrLenderBox(){if(!currentUser)return;showUCard('brLenderCard',currentUser,'brLenderAvatar','brLenderName','brLenderRole','brLenderCodeShow','brLenderDept',null,'brLenderNameH','brLenderCodeH')}
-
-
-// ===================== NAVIGATION =====================
-document.getElementById('navMenu').addEventListener('click',function(e){const b=e.target.closest('.nav-link');if(!b)return;const s=b.dataset.sec;if(s)showSec(s)});
-function showSec(id){const b0=document.querySelector(`.nav-link[data-sec="${id}"]`);if(b0&&b0.dataset.adminOnly&&(!currentUser||currentUser.role!=='Admin')){showToast('Chỉ Admin mới có quyền truy cập mục này','error');return}document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));const s=document.getElementById(id);if(s)s.classList.add('active');const b=document.querySelector(`.nav-link[data-sec="${id}"]`);if(b)b.classList.add('active');switch(id){case'dash':renderDashboard();break;case'allocate':renderAllocSrc();renderAllocTgt();renderAllocHistory();renderAllocGiverBox();break;case'return':renderRetSrc();renderRetTgt();renderRetHistory();renderRetReceiverBox();break;case'borrow':renderBrSrc();renderBrTgt();renderBrHistory();renderBrLenderBox();break;case'addDev':renderDevCatGrid();backToAddDev1();renderAddDevHistory();break;case'inventory':renderInventory();break;case'assets':renderAssets();break;case'adminCat':renderAdminCatList();break;case'adminUsers':renderUserTable();break}document.getElementById('notifPanel').classList.remove('show')}
-function toggleNotif(){document.getElementById('notifPanel').classList.toggle('show')}
-
-// ===================== NOTIFICATIONS =====================
-function renderNotifications(){const ns=[];const today=new Date().toISOString().split('T')[0];borrows.forEach(b=>{if(b.status==='borrowing'&&b.dueDate){const diff=Math.ceil((new Date(b.dueDate)-new Date(today))/(864e5));if(diff<0)ns.push({title:'TB quá hạn trả!',desc:`${b.borrower} - quá hạn ${Math.abs(diff)} ngày`,time:b.dueDate,cls:'notif-urgent'});else if(diff<=1)ns.push({title:'TB sắp đến hạn trả!',desc:`${b.borrower} - ${diff===0?'Hôm nay':'Ngày mai'}`,time:b.dueDate,cls:'notif-warn'})}});const bg=document.getElementById('notifBadge');bg.textContent=ns.length;bg.style.display=ns.length?'flex':'none';const ls=document.getElementById('notifList');if(!ns.length){ls.innerHTML='<div class="empty-state" style="padding:20px;"><i class="fas fa-bell-slash"></i><p>Không có thông báo</p></div>';return}ls.innerHTML=ns.map(n=>`<div class="notif-item ${n.cls}"><div class="notif-title">${n.title}</div><div class="notif-desc">${n.desc}</div><div class="notif-time">${fmtD(n.time)}</div></div>`).join('')}
-
-// ===================== DASHBOARD =====================
-function renderDashboard(){
-    const pcAvail=devices.filter(d=>d.subId==='casepc'&&d.status==='available').reduce((s,d)=>s+(d.qty||1),0);
-    const lapAvail=devices.filter(d=>d.subId==='laptop'&&d.status==='available').reduce((s,d)=>s+(d.qty||1),0);
-    const ramAvail=devices.filter(d=>d.subId==='ram'&&d.status==='available').reduce((s,d)=>s+(d.qty||1),0);
-    const storAvail=devices.filter(d=>d.subId==='storage'&&d.status==='available').reduce((s,d)=>s+(d.qty||1),0);
-    const borr=borrows.filter(b=>b.status==='borrowing').length;
-    document.getElementById('dashGrid').innerHTML=`
-        <div class="stat-card pc" onclick="filterInvAndGo('Case PC')"><div class="stat-top"><div class="stat-icon"><i class="fas fa-server"></i></div><div class="stat-number">${pcAvail}</div></div><div class="stat-label">PC (Case) trong kho</div><span class="stat-click-hint">Chi tiết →</span></div>
-        <div class="stat-card laptop" onclick="filterInvAndGo('Laptop')"><div class="stat-top"><div class="stat-icon"><i class="fas fa-laptop"></i></div><div class="stat-number">${lapAvail}</div></div><div class="stat-label">Laptop trong kho</div><span class="stat-click-hint">Chi tiết →</span></div>
-        <div class="stat-card ram" onclick="filterInvAndGo('RAM')"><div class="stat-top"><div class="stat-icon"><i class="fas fa-memory"></i></div><div class="stat-number">${ramAvail}</div></div><div class="stat-label">RAM trong kho</div><span class="stat-click-hint">Chi tiết →</span></div>
-        <div class="stat-card storage" onclick="filterInvAndGo('Ổ cứng')"><div class="stat-top"><div class="stat-icon"><i class="fas fa-hdd"></i></div><div class="stat-number">${storAvail}</div></div><div class="stat-label">Ổ cứng trong kho</div><span class="stat-click-hint">Chi tiết →</span></div>
-        <div class="stat-card borrow" onclick="showSec('borrow')"><div class="stat-top"><div class="stat-icon"><i class="fas fa-exchange-alt"></i></div><div class="stat-number">${borr}</div></div><div class="stat-label">Đang mượn</div><span class="stat-click-hint">DS mượn →</span></div>`;
-    const today=new Date().toISOString().split('T')[0];const up=[];
-    borrows.forEach(b=>{if(b.status==='borrowing'&&b.dueDate){const diff=Math.ceil((new Date(b.dueDate)-new Date(today))/864e5);if(diff<=1){const dn=b.deviceIds.map(id=>{const d=devices.find(x=>x.id===id);return d?d.name:id}).join(', ');up.push({...b,diff,devNames:dn})}}});
-    const p=document.getElementById('upcomingPanel'),ls=document.getElementById('upcomingList');
-    if(up.length){p.style.display='block';ls.innerHTML='<table style="width:100%;font-size:11.5px;"><thead><tr><th>Mã phiếu</th><th>Người mượn</th><th>TB</th><th>Hẹn trả</th><th>Còn lại</th></tr></thead><tbody>'+up.map(u=>`<tr class="history-row" onclick="viewBrDetail('${u.id}')"><td>${u.id}</td><td>${u.borrower}</td><td>${u.devNames}</td><td>${fmtD(u.dueDate)}</td><td><span class="badge ${u.diff<0?'badge-danger':'badge-warning'}">${u.diff<0?'Quá hạn '+Math.abs(u.diff)+' ngày':u.diff===0?'Hôm nay':'Ngày mai'}</span></td></tr>`).join('')+'</tbody></table>'}else{p.style.display='none'}
-    document.getElementById('recentActs').innerHTML=activities.slice(0,8).map(a=>`<tr ${a.refType&&a.refId?`class="history-row" onclick="viewActivityDetail('${a.refType}','${a.refId}')"`:''}><td>${a.action}</td><td>${a.device}</td><td>${a.user}</td><td>${fmtD(a.time)}</td><td>${acB(a.type)}</td></tr>`).join('')||'<tr><td colspan="5" class="text-muted" style="text-align:center;padding:18px;">Chưa có hoạt động</td></tr>';
-}
-function filterInvAndGo(subName){showSec('inventory');invSearch=subName;renderInventory()}
-function viewActivityDetail(refType,refId){if(!refType||!refId)return;if(refType==='alloc')viewAllocDetail(refId);else if(refType==='return')viewRetDetail(refId);else if(refType==='borrow')viewBrDetail(refId);else if(refType==='add')viewAddDevDetail(refId)}
-
-// ===================== DUAL LIST =====================
-function renderLI(cid,items,selSet,showCB=true){const el=document.getElementById(cid);if(!items.length){el.innerHTML='<div class="empty-state" style="padding:14px;"><i class="fas fa-inbox" style="font-size:20px;"></i><p style="font-size:10.5px;">Trống</p></div>';return}el.innerHTML=items.map(item=>{const s=selSet.has(item.id)?'selected':'';const condTag=item.condition?`<span class="badge ${item.condition==='new'?'cond-new':'cond-old'}" style="font-size:8px;padding:1px 5px;">${item.condition==='new'?'Mới':'Cũ'}</span>`:'';const qtyTag=`<span class="qty-badge" style="font-size:8px;padding:1px 5px;"><i class="fas fa-cubes" style="font-size:7px;"></i> ${item.qty||1}</span>`;return`<div class="list-item ${s}" onclick="toggleLI('${cid}','${item.id}',${showCB})" data-id="${item.id}">${showCB?`<input type="checkbox" ${s?'checked':''} onclick="event.stopPropagation();toggleLI('${cid}','${item.id}',true)">`:''}<div class="list-item-info"><div class="list-item-name">${item.name||item.id}</div><div class="list-item-meta">${item.subName||''} | ${item.serial||item.brand||''} ${condTag} ${qtyTag}</div></div></div>`}).join('')}
-function toggleLI(cid,id,withCB){let set,qmap;if(cid==='allocSrcList'){set=allocSrcSelected;qmap=allocQtys}else if(cid==='retSrcList')set=retSrcSelected;else if(cid==='brSrcList'){set=brSrcSelected;qmap=brQtys}else return;if(set.has(id)){set.delete(id);if(qmap)delete qmap[id]}else{set.add(id);if(qmap)qmap[id]=1}const el=document.getElementById(cid);const it=el.querySelector(`[data-id="${id}"]`);if(it){it.classList.toggle('selected');const cb=it.querySelector('input[type=checkbox]');if(cb)cb.checked=it.classList.contains('selected')}if(cid==='allocSrcList')renderAllocTgt();if(cid==='brSrcList')renderBrTgt()}
-function filterL(cid,t){const el=document.getElementById(cid);const tx=t.toLowerCase();el.querySelectorAll('.list-item').forEach(it=>{const n=it.querySelector('.list-item-name')?.textContent.toLowerCase()||'';const m=it.querySelector('.list-item-meta')?.textContent.toLowerCase()||'';it.style.display=(n.includes(tx)||m.includes(tx))?'':'none'})}
-
-// ===================== CẤP PHÁT =====================
-function getASrc(){return devices.filter(d=>d.status==='available')}
-function getATgt(){return devices.filter(d=>d.status==='available'&&allocSrcSelected.has(d.id))}
-function renderAllocSrc(){renderLI('allocSrcList',getASrc(),allocSrcSelected);document.getElementById('allocSrcCnt').textContent=getASrc().length;document.getElementById('allocSelCnt').textContent=allocSrcSelected.size}
-function renderAllocTgt(){const items=getATgt();const el=document.getElementById('allocTgtList');if(!items.length){el.innerHTML='<div class="empty-state" style="padding:14px;"><i class="fas fa-inbox" style="font-size:20px;"></i><p style="font-size:10.5px;">Trống</p></div>';document.getElementById('allocTgtCnt').textContent=0;return}
-el.innerHTML=items.map(item=>{const max=item.qty||1;if(!(item.id in allocQtys))allocQtys[item.id]=1;const q=Math.min(allocQtys[item.id],max);const condTag=item.condition?`<span class="badge ${item.condition==='new'?'cond-new':'cond-old'}" style="font-size:8px;padding:1px 5px;">${item.condition==='new'?'Mới':'Cũ'}</span>`:'';return`<div class="list-item" data-id="${item.id}"><div class="list-item-info"><div class="list-item-name">${item.name||item.id}</div><div class="list-item-meta">${item.subName||''} | ${item.serial||item.brand||''} ${condTag} <span style="color:var(--light-text);">Tồn: ${max}</span></div></div><div class="qty-picker" onclick="event.stopPropagation()"><button type="button" class="qty-btn" onclick="adjustAllocQty('${item.id}',-1)">−</button><input type="number" class="qty-input" value="${q}" min="1" max="${max}" onchange="setAllocQty('${item.id}',this.value)"><button type="button" class="qty-btn" onclick="adjustAllocQty('${item.id}',1)">+</button></div><button type="button" class="list-item-x" title="Bỏ chọn" onclick="removeAllocSel('${item.id}')"><i class="fas fa-times"></i></button></div>`}).join('');
-document.getElementById('allocTgtCnt').textContent=items.length}
-function clampQty(id,q){const d=devices.find(x=>x.id===id);const max=(d&&d.qty)||1;q=parseInt(q,10);if(isNaN(q))q=1;return Math.max(1,Math.min(max,q))}
-function adjustAllocQty(id,delta){allocQtys[id]=clampQty(id,(allocQtys[id]||1)+delta);renderAllocTgt()}
-function setAllocQty(id,val){allocQtys[id]=clampQty(id,val);renderAllocTgt()}
-function removeAllocSel(id){allocSrcSelected.delete(id);delete allocQtys[id];renderAllocSrc();renderAllocTgt()}
-function filterAllocSrc(v){filterL('allocSrcList',v)}
-function filterAllocTgt(v){filterL('allocTgtList',v)}
-function moveAlloc(dir){if(dir==='right'){}else{allocSrcSelected.clear();allocQtys={}}renderAllocSrc();renderAllocTgt()}
-function moveAllAlloc(dir){if(dir==='right'){getASrc().forEach(d=>{allocSrcSelected.add(d.id);if(!(d.id in allocQtys))allocQtys[d.id]=1})}else{allocSrcSelected.clear();allocQtys={}}renderAllocSrc();renderAllocTgt()}
-
-function handleAllocate(e){e.preventDefault();const f=e.target;const sel=devices.filter(d=>allocSrcSelected.has(d.id));if(!sel.length){showToast('Chưa chọn TB!','error');return}if(!currentUser){showToast('Phiên đăng nhập hết hạn, vui lòng đăng nhập lại!','error');return}const data=new FormData(f);const recv={name:data.get('recvName'),code:data.get('recvCode'),dept:data.get('dept'),date:data.get('allocDate')};const alloc={id:genId('CP'),giverName:currentUser.name,giverCode:currentUser.code,recvName:recv.name,recvCode:recv.code,dept:recv.dept,deviceIds:[],qtys:{},reason:data.get('reason'),date:data.get('allocDate'),status:'completed'};sel.forEach(d=>{const max=d.qty||1;const n=Math.max(1,Math.min(max,allocQtys[d.id]||1));let targetDev;if(n>=max){d.status='allocated';d.allocatedTo={name:recv.name,code:recv.code,dept:recv.dept,date:recv.date};d.location='';d.qty=max;targetDev=d}else{d.qty=max-n;targetDev=Object.assign({},d,{id:genId('DEV'),qty:n,status:'allocated',allocatedTo:{name:recv.name,code:recv.code,dept:recv.dept,date:recv.date},borrowedBy:null,location:''});devices.push(targetDev)}alloc.deviceIds.push(targetDev.id);alloc.qtys[targetDev.id]=n;activities.unshift({action:'Cấp phát',device:targetDev.name+' (SL: '+n+')',user:recv.name,time:alloc.date,type:'allocate',status:'Hoàn thành',refType:'alloc',refId:alloc.id})});allocations.push(alloc);activities.sort((a,b)=>b.time.localeCompare(a.time));saveData();f.reset();allocSrcSelected.clear();allocQtys={};renderAllocSrc();renderAllocTgt();renderAllocHistory();showToast(`Đã cấp phát ${Object.values(alloc.qtys).reduce((s,q)=>s+q,0)} TB cho ${recv.name}`,'success')}
-
-function renderAllocHistory(){document.getElementById('allocHistory').innerHTML=allocations.slice().reverse().map(a=>{const sl=Object.values(a.qtys).reduce((s,q)=>s+q,0);return`<tr class="history-row" onclick="viewAllocDetail('${a.id}')"><td>${a.id}</td><td>${a.giverName}</td><td>${a.recvName}</td><td>${a.dept}</td><td><span class="qty-badge"><i class="fas fa-cubes"></i> ${sl}</span></td><td>${fmtD(a.date)}</td><td><span class="badge badge-success">Hoàn thành</span></td></tr>`}).join('')||'<tr><td colspan="7" class="text-muted" style="text-align:center;padding:14px;">Chưa có lịch sử</td></tr>'}
-
-function viewAllocDetail(id){const a=allocations.find(x=>x.id===id);if(!a)return;let devHtml='<div style="display:flex;flex-wrap:wrap;gap:4px;">';a.deviceIds.forEach(did=>{const d=devices.find(x=>x.id===did);if(d)devHtml+=`<div class="dev-chip"><span class="dc-name">${d.name}</span><span class="dc-serial">${d.serial||d.brand||''}</span><span class="badge ${d.condition==='new'?'cond-new':'cond-old'}" style="font-size:8px;margin-left:4px;">${d.condition==='new'?'Mới':'Cũ'}</span></div>`});devHtml+='</div>';openModal('Chi tiết phiếu cấp phát '+a.id,`<div class="detail-section"><h4><i class="fas fa-file-alt"></i> Thông tin phiếu</h4><div class="detail-grid"><div class="detail-row"><span class="dr-label">Mã phiếu:</span><span class="dr-value">${a.id}</span></div><div class="detail-row"><span class="dr-label">Ngày CP:</span><span class="dr-value">${fmtD(a.date)}</span></div><div class="detail-row"><span class="dr-label">Trạng thái:</span><span class="dr-value"><span class="badge badge-success">Hoàn thành</span></span></div><div class="detail-row"><span class="dr-label">Lý do:</span><span class="dr-value">${a.reason}</span></div></div></div><div class="detail-section"><h4><i class="fas fa-user-check"></i> Người cấp</h4><div class="detail-grid"><div class="detail-row"><span class="dr-label">Họ tên:</span><span class="dr-value">${a.giverName}</span></div><div class="detail-row"><span class="dr-label">Mã NV:</span><span class="dr-value">${a.giverCode}</span></div></div></div><div class="detail-section"><h4><i class="fas fa-user-plus"></i> Người nhận</h4><div class="detail-grid"><div class="detail-row"><span class="dr-label">Họ tên:</span><span class="dr-value">${a.recvName}</span></div><div class="detail-row"><span class="dr-label">Mã NV:</span><span class="dr-value">${a.recvCode}</span></div><div class="detail-row"><span class="dr-label">Bộ phận:</span><span class="dr-value">${a.dept}</span></div></div></div><div class="detail-section"><h4><i class="fas fa-cubes"></i> Danh sách TB (${Object.values(a.qtys).reduce((s,q)=>s+q,0)} chiếc)</h4>${devHtml}</div><div style="margin-top:14px;text-align:right;"><button class="btn btn-sm btn-outline" onclick="printAllocPDF('${a.id}')"><i class="fas fa-print"></i> In / Xuất PDF biên bản</button></div>`)}
-
-// ===================== THU HỒI =====================
-function getRSrc(){return retEmpDevices.filter(d=>!retTgtIds.has(d.id))}
-function getRTgt(){return retEmpDevices.filter(d=>retTgtIds.has(d.id))}
-function renderRetSrc(){renderLI('retSrcList',getRSrc(),retSrcSelected);document.getElementById('retSrcCnt').textContent=getRSrc().length;document.getElementById('retSelCnt').textContent=retTgtIds.size}
-function renderRetTgt(){renderLI('retTgtList',getRTgt(),new Set(),false);document.getElementById('retTgtCnt').textContent=getRTgt().length}
-function filterRetSrc(v){filterL('retSrcList',v)}
-function filterRetTgt(v){filterL('retTgtList',v)}
-function moveRet(dir){if(dir==='right'){retSrcSelected.forEach(id=>retTgtIds.add(id));retSrcSelected.clear()}else{retTgtIds.clear()}renderRetSrc();renderRetTgt()}
-function moveAllRet(dir){if(dir==='right')retEmpDevices.forEach(d=>retTgtIds.add(d.id));else retTgtIds.clear();retSrcSelected.clear();renderRetSrc();renderRetTgt()}
-
-function handleReturn(e){e.preventDefault();const sel=retEmpDevices.filter(d=>retTgtIds.has(d.id));if(!sel.length){showToast('Chưa chọn TB!','error');return}if(!retEmpUser){showToast('Chọn Người trả!','error');return}if(!currentUser){showToast('Phiên đăng nhập hết hạn, vui lòng đăng nhập lại!','error');return}const f=e.target;const data=new FormData(f);openModal('Trạng thái TB sau thu hồi',`<p class="mb-3 text-muted">Chọn trạng thái cho <b>${sel.length}</b> thiết bị:</p><div class="cond-radio-group" style="margin-bottom:14px;"><label class="cond-radio cr-new"><input type="radio" name="retCond" value="new" checked><span class="cond-label">Mới</span></label><label class="cond-radio cr-old"><input type="radio" name="retCond" value="old"><span class="cond-label">Đã qua SD</span></label><label class="cond-radio cr-broken"><input type="radio" name="retCond" value="broken"><span class="cond-label">Hỏng</span></label></div><div style="text-align:right;"><button class="btn btn-success" onclick="confirmReturn()"><i class="fas fa-check"></i> Xác nhận</button></div>`);window._retTemp={form:f,data:sel,reason:data.get('retReason'),date:data.get('retDate')}}
-function confirmReturn(){const t=window._retTemp;if(!t||!currentUser)return;const cond=document.querySelector('input[name="retCond"]:checked')?.value||'old';const ret={id:genId('TH'),returnerName:retEmpUser.name,returnerCode:retEmpUser.code,receiverName:currentUser.name,receiverCode:currentUser.code,deviceIds:t.data.map(d=>d.id),qtys:{},reason:t.reason,date:t.date,condition:cond};t.data.forEach(d=>{const q=d.qty||1;ret.qtys[d.id]=q;d.status='available';d.condition=cond;d.allocatedTo=null;d.location='Kho A-Kệ1';d.qty=q});returns.push(ret);t.data.forEach(d=>activities.unshift({action:'Thu hồi',device:d.name+' (SL: '+(d.qty||1)+')',user:retEmpUser.name,time:t.date,type:'return',status:'Đã thu hồi',refType:'return',refId:ret.id}));activities.sort((a,b)=>b.time.localeCompare(a.time));saveData();closeModal();t.form.reset();retSrcSelected.clear();retTgtIds.clear();retEmpDevices=[];retEmpUser=null;hideUCard('retEmpInfo');document.getElementById('retEmpSearch').value='';document.getElementById('retSrcList').innerHTML='<div class="empty-state" style="padding:14px;"><i class="fas fa-search" style="font-size:22px;"></i><p style="font-size:10.5px;">Nhập mã NV</p></div>';renderRetTgt();renderRetHistory();showToast(`Đã thu hồi ${Object.values(ret.qtys).reduce((s,q)=>s+q,0)} TB`,'success')}
-function renderRetHistory(){document.getElementById('retHistory').innerHTML=returns.slice().reverse().map(r=>{const sl=Object.values(r.qtys).reduce((s,q)=>s+q,0);return`<tr class="history-row" onclick="viewRetDetail('${r.id}')"><td>${r.id}</td><td>${r.returnerName}</td><td>${r.receiverName}</td><td><span class="qty-badge"><i class="fas fa-cubes"></i> ${sl}</span></td><td>${fmtD(r.date)}</td><td>${cdB(r.condition)}</td></tr>`}).join('')||'<tr><td colspan="6" class="text-muted" style="text-align:center;padding:14px;">Chưa có lịch sử</td></tr>'}
-function viewRetDetail(id){const r=returns.find(x=>x.id===id);if(!r)return;let devHtml='<div style="display:flex;flex-wrap:wrap;gap:4px;">';r.deviceIds.forEach(did=>{const d=devices.find(x=>x.id===did);if(d)devHtml+=`<div class="dev-chip"><span class="dc-name">${d.name}</span><span class="dc-serial">${d.serial||''}</span></div>`});devHtml+='</div>';openModal('Chi tiết phiếu thu hồi '+r.id,`<div class="detail-section"><h4><i class="fas fa-file-alt"></i> Thông tin phiếu</h4><div class="detail-grid"><div class="detail-row"><span class="dr-label">Mã phiếu:</span><span class="dr-value">${r.id}</span></div><div class="detail-row"><span class="dr-label">Ngày TH:</span><span class="dr-value">${fmtD(r.date)}</span></div><div class="detail-row"><span class="dr-label">TT sau TH:</span><span class="dr-value">${cdB(r.condition)}</span></div><div class="detail-row"><span class="dr-label">Lý do:</span><span class="dr-value">${r.reason}</span></div></div></div><div class="detail-section"><h4><i class="fas fa-user-check"></i> Người trả</h4><div class="detail-grid"><div class="detail-row"><span class="dr-label">Họ tên:</span><span class="dr-value">${r.returnerName}</span></div><div class="detail-row"><span class="dr-label">Mã NV:</span><span class="dr-value">${r.returnerCode}</span></div></div></div><div class="detail-section"><h4><i class="fas fa-user-plus"></i> Người nhận lại</h4><div class="detail-grid"><div class="detail-row"><span class="dr-label">Họ tên:</span><span class="dr-value">${r.receiverName}</span></div><div class="detail-row"><span class="dr-label">Mã NV:</span><span class="dr-value">${r.receiverCode}</span></div></div></div><div class="detail-section"><h4><i class="fas fa-cubes"></i> Danh sách TB</h4>${devHtml}</div><div style="margin-top:14px;text-align:right;"><button class="btn btn-sm btn-outline" onclick="printRetPDF('${r.id}')"><i class="fas fa-print"></i> In / Xuất PDF biên bản</button></div>`)}
-
-// ===================== MƯỢN TB =====================
-function getBSrc(){return devices.filter(d=>d.status==='available')}
-function getBTgt(){return devices.filter(d=>brTgtIds.has(d.id))}
-function renderBrSrc(){renderLI('brSrcList',getBSrc(),brSrcSelected);document.getElementById('brSrcCnt').textContent=getBSrc().length;document.getElementById('brSelCnt').textContent=brTgtIds.size}
-function renderBrTgt(){const items=getBTgt();const el=document.getElementById('brTgtList');if(!items.length){el.innerHTML='<div class="empty-state" style="padding:14px;"><i class="fas fa-inbox" style="font-size:22px;"></i><p style="font-size:10.5px;">Chưa chọn</p></div>';document.getElementById('brTgtCnt').textContent=0;return}
-el.innerHTML=items.map(item=>{const max=item.qty||1;if(!(item.id in brQtys))brQtys[item.id]=1;const q=Math.min(brQtys[item.id],max);const condTag=item.condition?`<span class="badge ${item.condition==='new'?'cond-new':'cond-old'}" style="font-size:8px;padding:1px 5px;">${item.condition==='new'?'Mới':'Cũ'}</span>`:'';return`<div class="list-item" data-id="${item.id}"><div class="list-item-info"><div class="list-item-name">${item.name||item.id}</div><div class="list-item-meta">${item.subName||''} | ${item.serial||item.brand||''} ${condTag} <span style="color:var(--light-text);">Tồn: ${max}</span></div></div><div class="qty-picker" onclick="event.stopPropagation()"><button type="button" class="qty-btn" onclick="adjustBrQty('${item.id}',-1)">−</button><input type="number" class="qty-input" value="${q}" min="1" max="${max}" onchange="setBrQty('${item.id}',this.value)"><button type="button" class="qty-btn" onclick="adjustBrQty('${item.id}',1)">+</button></div><button type="button" class="list-item-x" title="Bỏ chọn" onclick="removeBrSel('${item.id}')"><i class="fas fa-times"></i></button></div>`}).join('');
-document.getElementById('brTgtCnt').textContent=items.length}
-function adjustBrQty(id,delta){brQtys[id]=clampQty(id,(brQtys[id]||1)+delta);renderBrTgt()}
-function setBrQty(id,val){brQtys[id]=clampQty(id,val);renderBrTgt()}
-function removeBrSel(id){brTgtIds.delete(id);delete brQtys[id];renderBrSrc();renderBrTgt()}
-function filterBrSrc(v){filterL('brSrcList',v)}
-function filterBrTgt(v){filterL('brTgtList',v)}
-function moveBr(dir){if(dir==='right'){brSrcSelected.forEach(id=>{brTgtIds.add(id);if(!(id in brQtys))brQtys[id]=1});brSrcSelected.clear()}else{brSrcSelected.clear();brTgtIds.clear();brQtys={}}renderBrSrc();renderBrTgt()}
-function moveAllBr(dir){if(dir==='right'){getBSrc().forEach(d=>{brTgtIds.add(d.id);if(!(d.id in brQtys))brQtys[d.id]=1})}else{brTgtIds.clear();brQtys={}}brSrcSelected.clear();renderBrSrc();renderBrTgt()}
-
-function handleBorrow(e){e.preventDefault();const sel=devices.filter(d=>brTgtIds.has(d.id));if(!sel.length){showToast('Chưa chọn TB!','error');return}if(!currentUser){showToast('Phiên đăng nhập hết hạn, vui lòng đăng nhập lại!','error');return}const f=e.target;const data=new FormData(f);const bw={name:data.get('brBorrower'),code:data.get('brBorrowerCode')};const b={id:genId('MR'),lender:currentUser.name,lenderCode:currentUser.code,borrower:bw.name,borrowerCode:bw.code,deviceIds:[],qtys:{},reason:data.get('brReason'),date:data.get('brDate'),dueDate:data.get('brDueDate'),status:'borrowing',returnDate:null,returnCondition:null};sel.forEach(d=>{const max=d.qty||1;const n=Math.max(1,Math.min(max,brQtys[d.id]||1));let targetDev;if(n>=max){d.status='borrowed';d.borrowedBy={name:bw.name,code:bw.code,date:b.date,dueDate:b.dueDate,reason:b.reason};d.location='';d.qty=max;targetDev=d}else{d.qty=max-n;targetDev=Object.assign({},d,{id:genId('DEV'),qty:n,status:'borrowed',borrowedBy:{name:bw.name,code:bw.code,date:b.date,dueDate:b.dueDate,reason:b.reason},allocatedTo:null,location:''});devices.push(targetDev)}b.deviceIds.push(targetDev.id);b.qtys[targetDev.id]=n;activities.unshift({action:'Mượn TB',device:targetDev.name+' (SL: '+n+')',user:bw.name,time:b.date,type:'borrow',status:'Đang mượn',refType:'borrow',refId:b.id})});borrows.push(b);activities.sort((a,b)=>b.time.localeCompare(a.time));saveData();f.reset();brSrcSelected.clear();brTgtIds.clear();brQtys={};renderBrSrc();renderBrTgt();renderBrHistory();showToast(`Đăng ký mượn ${Object.values(b.qtys).reduce((s,q)=>s+q,0)} TB thành công`,'success')}
-
-function returnBorrow(bid){const b=borrows.find(x=>x.id===bid);if(!b)return;const dn=b.deviceIds.map(id=>{const d=devices.find(x=>x.id===id);return d?d.name:id}).join(', ');openModal('Trả thiết bị mượn',`<p class="mb-3">Trả: <b>${dn}</b></p><p class="mb-2 text-muted">Người mượn: ${b.borrower}</p><div class="form-group mb-3"><label class="form-label">Trạng thái sau khi trả</label><div class="cond-radio-group"><label class="cond-radio cr-new"><input type="radio" name="brRetCond" value="new" checked><span class="cond-label">Mới</span></label><label class="cond-radio cr-old"><input type="radio" name="brRetCond" value="old"><span class="cond-label">Đã qua SD</span></label><label class="cond-radio cr-broken"><input type="radio" name="brRetCond" value="broken"><span class="cond-label">Hỏng</span></label></div></div><div style="text-align:right;"><button class="btn btn-success" onclick="confirmReturnBorrow('${bid}')"><i class="fas fa-check"></i> Xác nhận trả</button></div>`)}
-function confirmReturnBorrow(bid){const b=borrows.find(x=>x.id===bid);if(!b)return;const cond=document.querySelector('input[name="brRetCond"]:checked')?.value||'old';const today=new Date().toISOString().split('T')[0];b.status='returned';b.returnDate=today;b.returnCondition=cond;b.deviceIds.forEach(id=>{const d=devices.find(x=>x.id===id);if(d){d.status='available';d.condition=cond;d.borrowedBy=null;d.location='Kho A-Kệ1';if(!d.qty)d.qty=1}});b.deviceIds.forEach(id=>{const d=devices.find(x=>x.id===id);if(d)activities.unshift({action:'Trả TB mượn',device:d.name+' (SL: '+(d.qty||1)+')',user:b.borrower,time:today,type:'return',status:'Đã trả',refType:'borrow',refId:b.id})});activities.sort((a,b)=>b.time.localeCompare(a.time));saveData();closeModal();renderBrHistory();showToast('Đã trả TB thành công','success')}
-
-function renderBrHistory(){document.getElementById('brHistory').innerHTML=borrows.slice().reverse().map(b=>{const sl=Object.values(b.qtys).reduce((s,q)=>s+q,0);let sb,act;if(b.status==='borrowing'){const today=new Date().toISOString().split('T')[0];const diff=Math.ceil((new Date(b.dueDate)-new Date(today))/864e5);sb=diff<0?`<span class="badge badge-danger">Quá hạn</span>`:`<span class="badge badge-warning">Đang mượn</span>`;act=`<button class="btn btn-sm btn-success" onclick="returnBorrow('${b.id}')"><i class="fas fa-undo"></i> Trả</button>`}else{sb=`<span class="badge badge-success">Đã trả</span>`;act=`<span class="text-muted" style="font-size:10.5px;">Trả ${fmtD(b.returnDate)}</span>`}return`<tr class="history-row" onclick="viewBrDetail('${b.id}')"><td>${b.id}</td><td>${b.borrower}</td><td><span class="qty-badge"><i class="fas fa-cubes"></i> ${sl}</span></td><td>${fmtD(b.date)}</td><td>${fmtD(b.dueDate)}</td><td>${sb}</td><td onclick="event.stopPropagation()">${act}</td></tr>`}).join('')||'<tr><td colspan="7" class="text-muted" style="text-align:center;padding:14px;">Chưa có dữ liệu</td></tr>'}
-
-function viewBrDetail(id){const b=borrows.find(x=>x.id===id);if(!b)return;let devHtml='<div style="display:flex;flex-wrap:wrap;gap:4px;">';b.deviceIds.forEach(did=>{const d=devices.find(x=>x.id===did);if(d)devHtml+=`<div class="dev-chip"><span class="dc-name">${d.name}</span><span class="dc-serial">${d.serial||''}</span></div>`});devHtml+='</div>';const stMap={borrowing:'Đang mượn',returned:'Đã trả'};const stCls={borrowing:'badge-warning',returned:'badge-success'};openModal('Chi tiết phiếu mượn '+b.id,`<div class="detail-section"><h4><i class="fas fa-file-alt"></i> Thông tin phiếu</h4><div class="detail-grid"><div class="detail-row"><span class="dr-label">Mã phiếu:</span><span class="dr-value">${b.id}</span></div><div class="detail-row"><span class="dr-label">Ngày mượn:</span><span class="dr-value">${fmtD(b.date)}</span></div><div class="detail-row"><span class="dr-label">Hẹn trả:</span><span class="dr-value">${fmtD(b.dueDate)}</span></div><div class="detail-row"><span class="dr-label">Trạng thái:</span><span class="dr-value"><span class="badge ${stCls[b.status]}">${stMap[b.status]}</span></span></div><div class="detail-row"><span class="dr-label">Lý do:</span><span class="dr-value">${b.reason}</span></div>${b.returnDate?`<div class="detail-row"><span class="dr-label">Ngày trả:</span><span class="dr-value">${fmtD(b.returnDate)}</span></div><div class="detail-row"><span class="dr-label">TT khi trả:</span><span class="dr-value">${cdB(b.returnCondition)}</span></div>`:''}</div></div><div class="detail-section"><h4><i class="fas fa-user-check"></i> Người cấp</h4><div class="detail-grid"><div class="detail-row"><span class="dr-label">Họ tên:</span><span class="dr-value">${b.lender}</span></div><div class="detail-row"><span class="dr-label">Mã NV:</span><span class="dr-value">${b.lenderCode}</span></div></div></div><div class="detail-section"><h4><i class="fas fa-user-plus"></i> Người mượn</h4><div class="detail-grid"><div class="detail-row"><span class="dr-label">Họ tên:</span><span class="dr-value">${b.borrower}</span></div><div class="detail-row"><span class="dr-label">Mã NV:</span><span class="dr-value">${b.borrowerCode}</span></div></div></div><div class="detail-section"><h4><i class="fas fa-cubes"></i> Danh sách TB</h4>${devHtml}</div><div style="margin-top:14px;text-align:right;"><button class="btn btn-sm btn-outline" onclick="printBrPDF('${b.id}')"><i class="fas fa-print"></i> In / Xuất PDF biên bản</button></div>`)}
-
-// ===================== THÊM TB =====================
-function renderDevCatGrid(){let h='';for(const[ck,cat]of Object.entries(categoryConfig)){cat.subcategories.forEach(sub=>{h+=`<div class="dev-cat-card" onclick="showDevForm('${ck}','${sub.id}')"><i class="fas ${sub.icon}"></i><h3>${sub.name}</h3><p>${cat.name}</p></div>`})}document.getElementById('devCatGrid').innerHTML=h}
-function showDevForm(ck,sid){const cat=categoryConfig[ck];const sub=cat.subcategories.find(s=>s.id===sid);if(!sub)return;currentDevCatKey=ck;currentDevSubId=sid;document.getElementById('addDevStep1').style.display='none';document.getElementById('addDevStep2').style.display='block';document.getElementById('devFormTitle').textContent='Thêm '+sub.name;document.getElementById('devFormIcon').innerHTML=`<i class="fas ${sub.icon}"></i>`;document.getElementById('devFormCatName').textContent=sub.name;document.getElementById('devFormCatDesc').textContent=cat.name;let fh='<div class="form-grid">';sub.fields.forEach(f=>{const rq=f.required?'<span class="req">*</span>':'';fh+=`<div class="form-group"><label class="form-label">${f.label} ${rq}</label>`;if(f.type==='select')fh+=`<select class="form-select" name="${f.name}" ${f.required?'required':''}><option value="">-- Chọn --</option>${(f.options||[]).map(o=>`<option>${o}</option>`).join('')}</select>`;else fh+=`<input type="${f.type||'text'}" class="form-input" name="${f.name}" ${f.required?'required':''} placeholder="${f.label}">`;fh+='</div>'});fh+='</div>';if(sub.hasCondition)fh+=`<div class="form-group"><label class="form-label">Tình trạng <span class="req">*</span></label><div class="cond-radio-group"><label class="cond-radio cr-new"><input type="radio" name="condition" value="new" checked><span class="cond-label">Mới</span></label><label class="cond-radio cr-old"><input type="radio" name="condition" value="old"><span class="cond-label">Đã qua SD</span></label><label class="cond-radio cr-broken"><input type="radio" name="condition" value="broken"><span class="cond-label">Hỏng</span></label></div></div>`;document.getElementById('devDynamicFields').innerHTML=fh}
-function backToAddDev1(){document.getElementById('addDevStep1').style.display='block';document.getElementById('addDevStep2').style.display='none'}
-function handleAddDev(e){e.preventDefault();const f=e.target;const data=new FormData(f);const cat=categoryConfig[currentDevCatKey];const sub=cat.subcategories.find(s=>s.id===currentDevSubId);if(!sub)return;const qty=parseInt(data.get('quantity'))||1;const dev={id:genId('DEV'),name:data.get('name')||sub.name,catKey:currentDevCatKey,subId:currentDevSubId,subName:sub.name,condition:sub.hasCondition?(data.get('condition')||'new'):null,status:'available',location:data.get('location')||'',notes:data.get('notes')||'',qty:qty,allocatedTo:null,borrowedBy:null,createdAt:new Date().toISOString().split('T')[0]};sub.fields.forEach(field=>{if(field.name!=='name')dev[field.name]=data.get(field.name)||''});devices.push(dev);addDevLogs.push({id:dev.id,name:dev.name,subName:sub.name,qty,location:dev.location,notes:dev.notes,createdAt:dev.createdAt,condition:dev.condition,addedBy:currentUser?currentUser.name:'Admin'});activities.unshift({action:'Thêm mới',device:dev.name+' (SL: '+qty+')',user:currentUser?currentUser.name:'Admin',time:dev.createdAt,type:'add',status:'Trong kho',refType:'add',refId:dev.id});saveData();f.reset();backToAddDev1();renderAddDevHistory();showToast(`Đã thêm "${dev.name}" x${qty} vào kho`,'success')}
-
-// ===================== NHẬP TB TỪ EXCEL =====================
-function sanitizeSheetName(name){return name.replace(/[\\\/\?\*\[\]:]/g,'').slice(0,31)||'Sheet'}
-function getSubcategoryLookup(){const map={};for(const[ck,cat]of Object.entries(categoryConfig)){cat.subcategories.forEach(sub=>{map[sanitizeSheetName(sub.name).trim().toLowerCase()]={catKey:ck,cat,sub};map[sub.name.trim().toLowerCase()]={catKey:ck,cat,sub}})}return map}
-function openExcelImport(){window._excelRows=null;openModal('Nhập Thiết bị từ Excel',`
-<p class="text-muted mb-3" style="font-size:11.5px;">File mẫu có <b>1 sheet riêng cho mỗi loại TB</b> (đúng tên loại + đúng các trường của loại đó, VD sheet "Laptop" có cột CPU/RAM/Ổ cứng, sheet "RAM" có cột Dung lượng/Loại...). Bạn chỉ cần điền vào những sheet cần dùng, để trống hoặc xóa sheet không dùng đến. Không đổi tên sheet, vì hệ thống dựa vào tên sheet để biết đó là loại TB nào.</p>
-<div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
-  <button type="button" class="btn btn-outline btn-sm" onclick="downloadExcelTemplate()"><i class="fas fa-download"></i> Tải file mẫu (đủ các loại TB)</button>
-  <label class="btn btn-primary btn-sm" style="cursor:pointer;margin:0;"><i class="fas fa-upload"></i> Chọn file Excel đã điền<input type="file" id="excelFileInput" accept=".xlsx,.xls,.csv" style="display:none;" onchange="handleExcelFile(event)"></label>
-</div>
-<div id="excelPreviewArea"></div>
-`)}
-function downloadExcelTemplate(){const wb=XLSX.utils.book_new();const used=new Set();for(const[ck,cat]of Object.entries(categoryConfig)){cat.subcategories.forEach(sub=>{let sheetName=sanitizeSheetName(sub.name);let base=sheetName.slice(0,28),n=2;while(used.has(sheetName)){sheetName=base+'_'+n;n++}used.add(sheetName);const headers=[...sub.fields.map(f=>f.label),'Số lượng','Vị trí'];if(sub.hasCondition)headers.push('Tình trạng');headers.push('Ghi chú');const exampleRow=sub.fields.map(f=>f.type==='select'&&f.options?f.options[0]:'');exampleRow.push('1','Kho A-Kệ1');if(sub.hasCondition)exampleRow.push('Mới');exampleRow.push('');const ws=XLSX.utils.aoa_to_sheet([headers,exampleRow]);XLSX.utils.book_append_sheet(wb,ws,sheetName)})}XLSX.writeFile(wb,'mau-nhap-thiet-bi-theo-loai.xlsx')}
-function normCond(v){const t=(v||'').toString().trim().toLowerCase();if(['mới','moi','new'].includes(t))return'new';if(['hỏng','hong','broken'].includes(t))return'broken';if(t)return'old';return''}
-function handleExcelFile(ev){const file=ev.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){try{const wb=XLSX.read(e.target.result,{type:'array'});const lookup=getSubcategoryLookup();const allRows=[];wb.SheetNames.forEach(sheetName=>{const ws=wb.Sheets[sheetName];const rows=XLSX.utils.sheet_to_json(ws,{defval:''});if(!rows.length)return;const match=lookup[sheetName.trim().toLowerCase()];if(!match){rows.forEach(()=>{allRows.push({name:'(sheet "'+sheetName+'")',subNameRaw:sheetName,qty:1,valid:false,error:'Tên sheet không khớp loại TB nào trong danh mục'})});return}const sub=match.sub,ck=match.catKey;const getVal=(r,label)=>{for(const rk of Object.keys(r)){if(rk.trim().toLowerCase()===label.trim().toLowerCase())return r[rk]}return''};rows.forEach(r=>{const fieldsData={};let missing=[];sub.fields.forEach(f=>{const v=(getVal(r,f.label)||'').toString().trim();fieldsData[f.name]=v;if(f.required&&!v)missing.push(f.label)});let qty=parseInt(getVal(r,'Số lượng'),10);if(!qty||qty<1)qty=1;const location=(getVal(r,'Vị trí')||'').toString().trim();const condRaw=getVal(r,'Tình trạng');const notes=(getVal(r,'Ghi chú')||'').toString().trim();const name=fieldsData.name||'';let error='';if(!name)error='Thiếu '+(sub.fields.find(f=>f.name==='name')?.label||'Tên');else if(missing.length)error='Thiếu: '+missing.join(', ');allRows.push({name,subNameRaw:sub.name,catKey:ck,subId:sub.id,subName:sub.name,fieldsData,qty,location,condition:sub.hasCondition?normCond(condRaw):'',hasCondition:sub.hasCondition,notes,valid:!error,error})})});if(!allRows.length){document.getElementById('excelPreviewArea').innerHTML='<p class="text-muted" style="padding:14px;text-align:center;">File không có dữ liệu ở sheet nào khớp loại TB trong danh mục.</p>';return}window._excelRows=allRows;renderExcelPreview()}catch(err){console.error(err);document.getElementById('excelPreviewArea').innerHTML='<p style="color:var(--danger);padding:14px;">Không đọc được file. Hãy chắc chắn đây là file .xlsx/.xls/.csv hợp lệ, và không đổi tên các sheet trong file mẫu.</p>'}};reader.readAsArrayBuffer(file)}
-function renderExcelPreview(){const rows=window._excelRows||[];const okCount=rows.filter(r=>r.valid).length;const errCount=rows.length-okCount;const rowsHtml=rows.map((r,i)=>{let specs='-';if(r.fieldsData){const sub=r.catKey?categoryConfig[r.catKey]?.subcategories.find(s=>s.id===r.subId):null;specs=Object.entries(r.fieldsData).filter(([k,v])=>k!=='name'&&v).map(([k,v])=>{const f=sub?.fields.find(fl=>fl.name===k);return`${f?f.label:k}: ${v}`}).join(', ')||'-'}return`<tr style="${r.valid?'':'background:#fdecea;'}"><td>${i+1}</td><td>${r.name||'-'}</td><td>${r.subNameRaw||'-'}</td><td style="max-width:240px;white-space:normal;">${specs}</td><td>${r.qty}</td><td>${r.location||'-'}</td><td>${r.valid?'<span class="badge badge-success">Hợp lệ</span>':`<span class="badge badge-danger" title="${r.error}">✗ ${r.error}</span>`}</td></tr>`}).join('');document.getElementById('excelPreviewArea').innerHTML=`<div class="table-container" style="max-height:300px;overflow-y:auto;margin-bottom:10px;"><table style="font-size:11px;"><thead><tr><th>#</th><th>Tên</th><th>Loại TB</th><th>Thông số</th><th>SL</th><th>Vị trí</th><th>Trạng thái</th></tr></thead><tbody>${rowsHtml}</tbody></table></div><p style="font-size:11.5px;margin-bottom:10px;"><b style="color:var(--success);">${okCount} dòng hợp lệ</b> sẽ được nhập vào kho${errCount?`, <b style="color:var(--danger);">${errCount} dòng lỗi</b> sẽ bị bỏ qua`:''}.</p><div style="text-align:right;display:flex;gap:8px;justify-content:flex-end;"><button type="button" class="btn btn-outline" onclick="closeModal()">Hủy</button><button type="button" class="btn btn-primary" ${okCount?'':'disabled'} onclick="confirmExcelImport()"><i class="fas fa-check"></i> Xác nhận nhập ${okCount} TB</button></div>`}
-function todayStr(){return new Date().toISOString().split('T')[0]}
-const STATUS_TXT={available:'Trong kho',allocated:'Đã cấp phát',borrowed:'Đang mượn'};
-const COND_TXT={new:'Mới',old:'Đã qua SD',broken:'Hỏng'};
-
-// ===================== EXPORT #1: DANH SÁCH KIỂM KÊ (EXCEL) =====================
-function exportInventoryExcel(){const rows=getFiltInv();if(!rows.length){showToast('Không có dữ liệu để xuất','error');return}const data=rows.map(d=>{const holder=d.allocatedTo?`${d.allocatedTo.name} (${d.allocatedTo.code})`:d.borrowedBy?`${d.borrowedBy.name} (${d.borrowedBy.code})`:'';return{'Mã TB':d.id,'Tên':d.name,'Category':catN(d.catKey),'Loại':d.subName,'Serial':d.serial||'','Tình trạng':COND_TXT[d.condition]||'','Số lượng':d.qty||1,'Vị trí':d.location||'','Trạng thái':STATUS_TXT[d.status]||d.status,'Người đang giữ':holder,'Ngày tạo':d.createdAt||''}});const ws=XLSX.utils.json_to_sheet(data);ws['!cols']=Object.keys(data[0]).map(()=>({wch:16}));const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Kiem ke');XLSX.writeFile(wb,`kiem-ke-thiet-bi-${todayStr()}.xlsx`);showToast('Đã xuất file Excel','success')}
-
-// ===================== EXPORT #2: LỊCH SỬ NGHIỆP VỤ (EXCEL) =====================
-function exportAllocExcel(){if(!allocations.length){showToast('Chưa có dữ liệu cấp phát','error');return}const data=allocations.map(a=>({'Mã phiếu':a.id,'Người cấp':a.giverName,'Mã NV cấp':a.giverCode,'Người nhận':a.recvName,'Mã NV nhận':a.recvCode,'Bộ phận':a.dept,'Số lượng TB':Object.values(a.qtys).reduce((s,q)=>s+q,0),'Lý do':a.reason||'','Ngày':fmtD(a.date)}));const ws=XLSX.utils.json_to_sheet(data);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Cap phat');XLSX.writeFile(wb,`lich-su-cap-phat-${todayStr()}.xlsx`);showToast('Đã xuất file Excel','success')}
-function exportRetExcel(){if(!returns.length){showToast('Chưa có dữ liệu thu hồi','error');return}const data=returns.map(r=>({'Mã phiếu':r.id,'Người trả':r.returnerName,'Mã NV trả':r.returnerCode,'Người nhận lại':r.receiverName,'Mã NV nhận':r.receiverCode,'Số lượng TB':Object.values(r.qtys).reduce((s,q)=>s+q,0),'Tình trạng sau TH':COND_TXT[r.condition]||'','Lý do':r.reason||'','Ngày':fmtD(r.date)}));const ws=XLSX.utils.json_to_sheet(data);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Thu hoi');XLSX.writeFile(wb,`lich-su-thu-hoi-${todayStr()}.xlsx`);showToast('Đã xuất file Excel','success')}
-function exportBrExcel(){if(!borrows.length){showToast('Chưa có dữ liệu mượn TB','error');return}const stMap={borrowing:'Đang mượn',returned:'Đã trả'};const data=borrows.map(b=>({'Mã phiếu':b.id,'Người cấp':b.lender,'Người mượn':b.borrower,'Mã NV mượn':b.borrowerCode,'Số lượng TB':Object.values(b.qtys||{}).reduce((s,q)=>s+q,0)||b.deviceIds.length,'Ngày mượn':fmtD(b.date),'Hẹn trả':fmtD(b.dueDate),'Ngày trả thực tế':b.returnDate?fmtD(b.returnDate):'','Trạng thái':stMap[b.status]||b.status,'Lý do':b.reason||''}));const ws=XLSX.utils.json_to_sheet(data);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Muon TB');XLSX.writeFile(wb,`lich-su-muon-tb-${todayStr()}.xlsx`);showToast('Đã xuất file Excel','success')}
-function exportAddDevExcel(){if(!addDevLogs.length){showToast('Chưa có dữ liệu thêm TB','error');return}const data=addDevLogs.map(l=>({'Mã phiếu':l.id,'Thiết bị':l.name,'Loại':l.subName,'Số lượng':l.qty,'Vị trí':l.location||'','Tình trạng':COND_TXT[l.condition]||'','Người thêm':l.addedBy||'','Ghi chú':l.notes||'','Ngày thêm':fmtD(l.createdAt)}));const ws=XLSX.utils.json_to_sheet(data);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Them TB');XLSX.writeFile(wb,`lich-su-them-tb-${todayStr()}.xlsx`);showToast('Đã xuất file Excel','success')}
-
-// ===================== EXPORT #3: BIÊN BẢN PDF =====================
-function devNameSafe(did){const d=devices.find(x=>x.id===did);if(d)return d.name;const log=addDevLogs.find(x=>x.id===did);if(log)return log.name+' (đã xóa khỏi kho)';return did+' (đã xóa khỏi kho)'}
-function devSerialSafe(did){const d=devices.find(x=>x.id===did);return d?(d.serial||'-'):'-'}
-function devCondSafe(did){const d=devices.find(x=>x.id===did);return d?(COND_TXT[d.condition]||'-'):'-'}
-function openPrintWindow(title,bodyHtml){const win=window.open('','_blank','width=850,height=1100');if(!win){showToast('Trình duyệt đã chặn cửa sổ in. Vui lòng cho phép popup rồi thử lại.','error');return}win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${title}</title><style>
-body{font-family:'Segoe UI',Arial,'Helvetica Neue',sans-serif;padding:24px 40px;color:#222;}
-.company{text-align:center;font-weight:800;font-size:15px;letter-spacing:1px;margin-bottom:2px;}
-.h1{text-align:center;font-size:19px;font-weight:800;margin:6px 0 22px;}
-.info-row{margin-bottom:7px;font-size:13px;}
-.info-row b{display:inline-block;min-width:120px;}
-table{width:100%;border-collapse:collapse;margin:18px 0;font-size:12.5px;}
-th,td{border:1px solid #999;padding:7px 9px;text-align:left;}
-th{background:#0a6abf;color:#fff;}
-.sign-wrap{display:flex;justify-content:space-around;margin-top:60px;text-align:center;}
-.sign-col{width:40%;}
-.sign-col .stitle{font-weight:700;font-size:13px;margin-bottom:2px;}
-.sign-col .ssub{font-size:11px;color:#666;margin-bottom:70px;}
-@media print{body{padding:8mm 14mm;}}
-</style></head><body>${bodyHtml}<div class="no-print" style="text-align:center;margin-top:24px;"><button onclick="window.print()" style="padding:8px 18px;font-size:13px;cursor:pointer;">In / Lưu PDF</button></div><style>@media print{.no-print{display:none;}}</style></body></html>`);win.document.close();setTimeout(()=>{try{win.focus();win.print()}catch(e){}},350)}
-function printAllocPDF(id){const a=allocations.find(x=>x.id===id);if(!a)return;const rows=a.deviceIds.map((did,i)=>`<tr><td>${i+1}</td><td>${devNameSafe(did)}</td><td>${devSerialSafe(did)}</td><td>${a.qtys[did]||1}</td><td>${devCondSafe(did)}</td></tr>`).join('');const html=`<div class="company">CYBERTAN</div><div class="h1">BIÊN BẢN CẤP PHÁT THIẾT BỊ</div><div class="info-row"><b>Số phiếu:</b> ${a.id} &nbsp;&nbsp;&nbsp; <b>Ngày:</b> ${fmtD(a.date)}</div><div class="info-row"><b>Bên giao:</b> ${a.giverName} (${a.giverCode})</div><div class="info-row"><b>Bên nhận:</b> ${a.recvName} (${a.recvCode}) - Bộ phận: ${a.dept}</div><div class="info-row"><b>Lý do:</b> ${a.reason||'-'}</div><table><thead><tr><th>#</th><th>Tên thiết bị</th><th>Serial</th><th>SL</th><th>Tình trạng</th></tr></thead><tbody>${rows}</tbody></table><div class="sign-wrap"><div class="sign-col"><div class="stitle">Bên giao</div><div class="ssub">(Ký, ghi rõ họ tên)</div></div><div class="sign-col"><div class="stitle">Bên nhận</div><div class="ssub">(Ký, ghi rõ họ tên)</div></div></div>`;openPrintWindow('Biên bản cấp phát '+a.id,html)}
-function printRetPDF(id){const r=returns.find(x=>x.id===id);if(!r)return;const rows=r.deviceIds.map((did,i)=>`<tr><td>${i+1}</td><td>${devNameSafe(did)}</td><td>${devSerialSafe(did)}</td><td>${r.qtys[did]||1}</td></tr>`).join('');const html=`<div class="company">CYBERTAN</div><div class="h1">BIÊN BẢN THU HỒI THIẾT BỊ</div><div class="info-row"><b>Số phiếu:</b> ${r.id} &nbsp;&nbsp;&nbsp; <b>Ngày:</b> ${fmtD(r.date)}</div><div class="info-row"><b>Bên trả:</b> ${r.returnerName} (${r.returnerCode})</div><div class="info-row"><b>Bên nhận lại:</b> ${r.receiverName} (${r.receiverCode})</div><div class="info-row"><b>Tình trạng sau TH:</b> ${COND_TXT[r.condition]||'-'} &nbsp;&nbsp;&nbsp; <b>Lý do:</b> ${r.reason||'-'}</div><table><thead><tr><th>#</th><th>Tên thiết bị</th><th>Serial</th><th>SL</th></tr></thead><tbody>${rows}</tbody></table><div class="sign-wrap"><div class="sign-col"><div class="stitle">Bên trả</div><div class="ssub">(Ký, ghi rõ họ tên)</div></div><div class="sign-col"><div class="stitle">Bên nhận lại</div><div class="ssub">(Ký, ghi rõ họ tên)</div></div></div>`;openPrintWindow('Biên bản thu hồi '+r.id,html)}
-function printBrPDF(id){const b=borrows.find(x=>x.id===id);if(!b)return;const rows=b.deviceIds.map((did,i)=>`<tr><td>${i+1}</td><td>${devNameSafe(did)}</td><td>${devSerialSafe(did)}</td><td>${(b.qtys&&b.qtys[did])||1}</td></tr>`).join('');const html=`<div class="company">CYBERTAN</div><div class="h1">BIÊN BẢN MƯỢN THIẾT BỊ</div><div class="info-row"><b>Số phiếu:</b> ${b.id} &nbsp;&nbsp;&nbsp; <b>Ngày mượn:</b> ${fmtD(b.date)} &nbsp;&nbsp;&nbsp; <b>Hẹn trả:</b> ${fmtD(b.dueDate)}</div><div class="info-row"><b>Bên cấp:</b> ${b.lender}</div><div class="info-row"><b>Bên mượn:</b> ${b.borrower} (${b.borrowerCode})</div><div class="info-row"><b>Lý do:</b> ${b.reason||'-'}</div><table><thead><tr><th>#</th><th>Tên thiết bị</th><th>Serial</th><th>SL</th></tr></thead><tbody>${rows}</tbody></table><div class="sign-wrap"><div class="sign-col"><div class="stitle">Bên cấp</div><div class="ssub">(Ký, ghi rõ họ tên)</div></div><div class="sign-col"><div class="stitle">Bên mượn</div><div class="ssub">(Ký, ghi rõ họ tên)</div></div></div>`;openPrintWindow('Biên bản mượn '+b.id,html)}
-
-// ===================== EXPORT #4: BÁO CÁO THỐNG KÊ (EXCEL) =====================
-function exportStatsExcel(){const wb=XLSX.utils.book_new();
-const bySub={};devices.forEach(d=>{const k=d.subName||'(khác)';if(!bySub[k])bySub[k]={loai:k,tong:0,trongKho:0,daCapPhat:0,dangMuon:0};bySub[k].tong+=d.qty||1;if(d.status==='available')bySub[k].trongKho+=d.qty||1;else if(d.status==='allocated')bySub[k].daCapPhat+=d.qty||1;else if(d.status==='borrowed')bySub[k].dangMuon+=d.qty||1});
-const ws1=XLSX.utils.json_to_sheet(Object.values(bySub).map(x=>({'Loại TB':x.loai,'Tổng SL':x.tong,'Trong kho':x.trongKho,'Đã cấp phát':x.daCapPhat,'Đang mượn':x.dangMuon})));XLSX.utils.book_append_sheet(wb,ws1,'Theo loai TB');
-const byStatus={available:0,allocated:0,borrowed:0};devices.forEach(d=>{byStatus[d.status]=(byStatus[d.status]||0)+(d.qty||1)});
-const ws2=XLSX.utils.json_to_sheet([{'Trạng thái':'Trong kho','Số lượng':byStatus.available||0},{'Trạng thái':'Đã cấp phát','Số lượng':byStatus.allocated||0},{'Trạng thái':'Đang mượn','Số lượng':byStatus.borrowed||0}]);XLSX.utils.book_append_sheet(wb,ws2,'Theo trang thai');
-const byDept={};devices.forEach(d=>{if(d.allocatedTo&&d.allocatedTo.dept){const k=d.allocatedTo.dept;byDept[k]=(byDept[k]||0)+(d.qty||1)}});
-const ws3=XLSX.utils.json_to_sheet(Object.entries(byDept).map(([dept,sl])=>({'Bộ phận':dept,'Số lượng đang giữ':sl})));XLSX.utils.book_append_sheet(wb,ws3,'Theo bo phan');
-XLSX.writeFile(wb,`bao-cao-thong-ke-${todayStr()}.xlsx`);showToast('Đã xuất báo cáo thống kê','success')}
-
-// ===================== EXPORT #5: SAO LƯU TOÀN BỘ DỮ LIỆU (JSON) =====================
-function exportBackupJSON(){const snap=getStateSnapshot();const blob=new Blob([JSON.stringify(snap,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`sao-luu-du-lieu-${todayStr()}.json`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);showToast('Đã tải file sao lưu','success')}
-function renderAddDevHistory(){document.getElementById('addDevHistory').innerHTML=addDevLogs.slice().reverse().map(l=>`<tr class="history-row" onclick="viewAddDevDetail('${l.id}')"><td>${l.id}</td><td>${l.name}</td><td><span class="qty-badge"><i class="fas fa-cubes"></i> ${l.qty}</span></td><td>${l.location||'-'}</td><td>${l.addedBy||'-'}</td><td>${fmtD(l.createdAt)}</td></tr>`).join('')||'<tr><td colspan="6" class="text-muted" style="text-align:center;padding:14px;">Chưa có dữ liệu</td></tr>'}
-function viewAddDevDetail(id){const d=devices.find(x=>x.id===id);let l=addDevLogs.find(x=>x.id===id);if(!l){if(!d)return;l={id:d.id,name:d.name,subName:d.subName,qty:d.qty||1,location:d.location,notes:d.notes,createdAt:d.createdAt,condition:d.condition,addedBy:'Admin'}}let fieldsHtml='';if(d){const cat=categoryConfig[d.catKey];if(cat){const sub=cat.subcategories.find(s=>s.id===d.subId);if(sub)sub.fields.forEach(f=>{if(d[f.name])fieldsHtml+=`<div class="detail-row"><span class="dr-label">${f.label}:</span><span class="dr-value">${d[f.name]}</span></div>`})}}openModal('Chi tiết TB đã thêm '+l.id,`<div class="detail-section"><h4><i class="fas fa-info-circle"></i> Thông tin chung</h4><div class="detail-grid"><div class="detail-row"><span class="dr-label">Mã TB:</span><span class="dr-value">${l.id}</span></div><div class="detail-row"><span class="dr-label">Tên:</span><span class="dr-value">${l.name}</span></div><div class="detail-row"><span class="dr-label">Loại:</span><span class="dr-value">${l.subName}</span></div><div class="detail-row"><span class="dr-label">Số lượng:</span><span class="dr-value"><span class="qty-badge"><i class="fas fa-cubes"></i> ${l.qty}</span></span></div><div class="detail-row"><span class="dr-label">Vị trí:</span><span class="dr-value">${l.location||'-'}</span></div><div class="detail-row"><span class="dr-label">Tình trạng:</span><span class="dr-value">${cdB(l.condition)}</span></div><div class="detail-row"><span class="dr-label">Người thêm:</span><span class="dr-value">${l.addedBy||'-'}</span></div><div class="detail-row"><span class="dr-label">Ngày thêm:</span><span class="dr-value">${fmtD(l.createdAt)}</span></div><div class="detail-row"><span class="dr-label">Ghi chú:</span><span class="dr-value">${l.notes||'-'}</span></div></div></div>${fieldsHtml?'<div class="detail-section"><h4><i class="fas fa-list-alt"></i> Thông số chi tiết</h4><div class="detail-grid">'+fieldsHtml+'</div></div>':''}`)}
-
-// ===================== KIỂM TRA KHO =====================
-function getFiltInv(){return devices.filter(d=>{if(invFilter!=='all'&&catN(d.catKey)!==invFilter)return false;if(invSearch){const t=invSearch.toLowerCase();const m=[d.id,d.name,d.subName,d.serial,d.brand,d.model,d.location].filter(Boolean).join(' ').toLowerCase();if(!m.includes(t))return false}return true})}
-function renderInventory(){const f=getFiltInv();document.getElementById('invResultCnt').textContent=f.length+' items';const em=document.getElementById('invEmpty');const tb=document.getElementById('invTableBody');if(!f.length){tb.innerHTML='';em.style.display='block';return}em.style.display='none';tb.innerHTML=f.map(d=>`<tr><td><input type="checkbox" ${invChecked.has(d.id)?'checked':''} onchange="toggleInvChk('${d.id}',this.checked)"></td><td style="font-weight:700;color:var(--primary);font-size:10.5px;">${d.id}</td><td>${d.name}</td><td><span class="cat-tag ${catC(d.catKey)}">${catN(d.catKey)}</span></td><td>${d.subName}</td><td style="font-size:10.5px;">${d.serial||'-'}</td><td>${cdB(d.condition)}</td><td><span class="qty-badge"><i class="fas fa-cubes"></i> ${d.qty||1}</span></td><td>${d.location||'-'}</td><td><button class="btn btn-sm btn-outline" onclick="viewDevDetail('${d.id}')"><i class="fas fa-eye"></i></button> <button class="btn btn-sm btn-primary" onclick="editDevQty('${d.id}')" title="Sửa SL"><i class="fas fa-edit"></i></button> <button class="btn btn-sm btn-danger" onclick="deleteDev('${d.id}')" title="${d.status==='available'?'Xóa':'Chỉ xóa được TB đang trong kho (chưa cấp phát/mượn)'}" ${d.status!=='available'?'disabled':''}><i class="fas fa-trash"></i></button></td></tr>`).join('');updateBulkBar()}
-function filterInv(cat,btn){invFilter=cat;document.querySelectorAll('#invFilterBar .filter-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');invChecked.clear();document.getElementById('invCheckAll').checked=false;renderInventory()}
-function searchInv(v){invSearch=v;renderInventory()}
-function toggleInvChk(id,c){if(c)invChecked.add(id);else invChecked.delete(id);updateBulkBar()}
-function toggleAllInv(c){getFiltInv().forEach(d=>{if(c)invChecked.add(d.id);else invChecked.delete(d.id)});renderInventory()}
-function clearSelInv(){invChecked.clear();document.getElementById('invCheckAll').checked=false;renderInventory()}
-function updateBulkBar(){const b=document.getElementById('bulkBar');document.getElementById('selInvCnt').textContent=invChecked.size;if(invChecked.size>0)b.classList.add('show');else b.classList.remove('show')}
-function bulkCP(){if(!invChecked.size)return;showSec('allocate');allocSrcSelected.clear();invChecked.forEach(id=>{const d=devices.find(x=>x.id===id);if(d&&d.status==='available')allocSrcSelected.add(id)});invChecked.clear();renderAllocSrc();renderAllocTgt();showToast(`Đã chọn ${allocSrcSelected.size} TB để CP`,'success')}
-
-function editDevQty(id){const d=devices.find(x=>x.id===id);if(!d)return;openModal('Sửa số lượng - '+d.name,`<p class="mb-2"><b>${d.name}</b> (${d.id})</p><p class="text-muted mb-3" style="font-size:11px;">Hiện tại: <span class="qty-badge"><i class="fas fa-cubes"></i> ${d.qty||1}</span> | Tình trạng: ${cdB(d.condition)}</p><div class="form-group"><label class="form-label">Số lượng mới</label><input type="number" class="form-input" id="editQtyInput" min="0" value="${d.qty||1}"></div><div style="text-align:right;margin-top:14px;"><button class="btn btn-primary" onclick="saveDevQty('${id}')"><i class="fas fa-save"></i> Lưu</button></div>`)}
-function saveDevQty(id){const d=devices.find(x=>x.id===id);if(!d)return;const newQty=parseInt(document.getElementById('editQtyInput').value);if(isNaN(newQty)||newQty<0){showToast('Số lượng không hợp lệ','error');return}if(newQty===0){if(d.status!=='available'){showToast('Không thể xóa: TB đang được cấp phát/mượn. Hãy thu hồi trước.','error');return}if(!confirm(`Số lượng về 0 sẽ XÓA "${d.name}" khỏi kho. Tiếp tục?`))return;devices=devices.filter(x=>x.id!==id);invChecked.delete(id);saveData();closeModal();renderInventory();showToast('Đã xóa khỏi kho (SL về 0)','success');return}d.qty=newQty;if(d.status!=='available'){d.status='available';d.allocatedTo=null;d.borrowedBy=null}saveData();closeModal();renderInventory();showToast(`Đã cập nhật SL: ${newQty}`,'success')}
-
-function viewDevDetail(id){const d=devices.find(x=>x.id===id);if(!d)return;let fh='';const cat=categoryConfig[d.catKey];if(cat){const sub=cat.subcategories.find(s=>s.id===d.subId);if(sub)sub.fields.forEach(f=>{if(f.name!=='name'&&d[f.name])fh+=`<div class="detail-row"><span class="dr-label">${f.label}:</span><span class="dr-value">${d[f.name]}</span></div>`})}openModal('Chi tiết thiết bị '+d.id,`<div class="detail-section"><h4><i class="fas fa-info-circle"></i> Thông tin chung</h4><div class="detail-grid"><div class="detail-row"><span class="dr-label">Mã TB:</span><span class="dr-value">${d.id}</span></div><div class="detail-row"><span class="dr-label">Tên:</span><span class="dr-value">${d.name}</span></div><div class="detail-row"><span class="dr-label">Category:</span><span class="dr-value"><span class="cat-tag ${catC(d.catKey)}">${catN(d.catKey)}</span></span></div><div class="detail-row"><span class="dr-label">Loại:</span><span class="dr-value">${d.subName}</span></div><div class="detail-row"><span class="dr-label">Serial:</span><span class="dr-value">${d.serial||'-'}</span></div><div class="detail-row"><span class="dr-label">Tình trạng:</span><span class="dr-value">${cdB(d.condition)}</span></div><div class="detail-row"><span class="dr-label">Số lượng:</span><span class="dr-value"><span class="qty-badge"><i class="fas fa-cubes"></i> ${d.qty||1}</span></span></div><div class="detail-row"><span class="dr-label">Trạng thái:</span><span class="dr-value">${stB(d.status)}</span></div><div class="detail-row"><span class="dr-label">Vị trí:</span><span class="dr-value">${d.location||'-'}</span></div><div class="detail-row"><span class="dr-label">Ngày tạo:</span><span class="dr-value">${fmtD(d.createdAt)}</span></div></div></div>${fh?'<div class="detail-section"><h4><i class="fas fa-list-alt"></i> Thông số</h4><div class="detail-grid">'+fh+'</div></div>':''}${d.allocatedTo?`<div class="detail-section"><h4><i class="fas fa-user-check"></i> Thông tin cấp phát</h4><div class="detail-grid"><div class="detail-row"><span class="dr-label">Người SD:</span><span class="dr-value">${d.allocatedTo.name} (${d.allocatedTo.code})</span></div><div class="detail-row"><span class="dr-label">Bộ phận:</span><span class="dr-value">${d.allocatedTo.dept}</span></div><div class="detail-row"><span class="dr-label">Ngày CP:</span><span class="dr-value">${fmtD(d.allocatedTo.date)}</span></div></div></div>`:''}${d.borrowedBy?`<div class="detail-section"><h4><i class="fas fa-exchange-alt"></i> Thông tin mượn</h4><div class="detail-grid"><div class="detail-row"><span class="dr-label">Người mượn:</span><span class="dr-value">${d.borrowedBy.name} (${d.borrowedBy.code})</span></div><div class="detail-row"><span class="dr-label">Ngày mượn:</span><span class="dr-value">${fmtD(d.borrowedBy.date)}</span></div><div class="detail-row"><span class="dr-label">Hẹn trả:</span><span class="dr-value">${fmtD(d.borrowedBy.dueDate)}</span></div><div class="detail-row"><span class="dr-label">Lý do:</span><span class="dr-value">${d.borrowedBy.reason}</span></div></div></div>`:''}<div style="margin-top:14px;display:flex;gap:7px;justify-content:flex-end;"><button class="btn btn-sm btn-outline" onclick="editDevLocation('${d.id}')"><i class="fas fa-map-marker-alt"></i> Sửa vị trí</button><button class="btn btn-sm btn-danger" onclick="deleteDev('${d.id}')"><i class="fas fa-trash"></i> Xóa</button></div>`)}
-function editDevLocation(id){const d=devices.find(x=>x.id===id);if(!d)return;openModal('Sửa vị trí',`<p class="mb-2"><b>${d.name}</b> (${d.id})</p><div class="form-group"><label class="form-label">Vị trí mới</label><input type="text" class="form-input" id="editLocInput" value="${d.location||''}"></div><div style="text-align:right;"><button class="btn btn-primary" onclick="saveDevLoc('${id}')"><i class="fas fa-save"></i> Lưu</button></div>`)}
-function saveDevLoc(id){const d=devices.find(x=>x.id===id);if(!d)return;d.location=document.getElementById('editLocInput').value;saveData();closeModal();renderInventory();showToast('Đã cập nhật vị trí','success')}
-function deleteDev(id){const d=devices.find(x=>x.id===id);if(!d)return;if(d.status!=='available'){showToast('Chỉ xóa TB trong kho!','error');return}openModal('Xác nhận xóa',`<p class="mb-3">Xóa <b>"${d.name}"</b> (${d.id})? SL: ${d.qty||1}</p><p class="text-danger mb-3" style="font-size:11px;"><i class="fas fa-exclamation-triangle"></i> Không thể hoàn tác!</p><div style="text-align:right;"><button class="btn btn-danger" onclick="confirmDelDev('${id}')"><i class="fas fa-trash"></i> Xóa</button></div>`)}
-function confirmDelDev(id){devices=devices.filter(d=>d.id!==id);invChecked.delete(id);saveData();closeModal();renderInventory();showToast('Đã xóa','success')}
-function bulkDeleteInv(){const ids=Array.from(invChecked);const items=devices.filter(d=>ids.includes(d.id));const okItems=items.filter(d=>d.status==='available');const blocked=items.length-okItems.length;if(!okItems.length){showToast('Các TB đã chọn đều đang cấp phát/mượn, không thể xóa','error');return}openModal('Xác nhận xóa hàng loạt',`<p class="mb-3">Xóa <b>${okItems.length}</b> thiết bị đã chọn khỏi kho?${blocked?`<br><span style="color:var(--warning);font-size:11px;">(${blocked} TB đang cấp phát/mượn sẽ được bỏ qua)</span>`:''}</p><p class="text-danger mb-3" style="font-size:11px;"><i class="fas fa-exclamation-triangle"></i> Không thể hoàn tác!</p><div style="text-align:right;"><button class="btn btn-danger" onclick="confirmBulkDeleteInv()"><i class="fas fa-trash"></i> Xóa ${okItems.length} TB</button></div>`)}
-function confirmBulkDeleteInv(){const ids=Array.from(invChecked);devices=devices.filter(d=>!(ids.includes(d.id)&&d.status==='available'));invChecked.clear();saveData();closeModal();renderInventory();showToast('Đã xóa các TB đã chọn','success')}
-
-// ===================== DANH MỤC TS =====================
-function getFiltAssets(){return devices.filter(d=>{if(assetCatFilter&&catN(d.catKey)!==assetCatFilter)return false;if(assetStatusFilter&&d.status!==assetStatusFilter)return false;if(assetSearch){const t=assetSearch.toLowerCase();const m=[d.id,d.name,d.subName,d.serial,d.brand].filter(Boolean).join(' ').toLowerCase();if(!m.includes(t))return false}return true})}
-function renderAssets(){const f=getFiltAssets();document.getElementById('assetTableBody').innerHTML=f.map(d=>{const user=d.allocatedTo?`${d.allocatedTo.name} (${d.allocatedTo.code})`:d.borrowedBy?`${d.borrowedBy.name} (Mượn)`: '-';return`<tr><td style="font-weight:700;color:var(--primary);font-size:10.5px;">${d.id}</td><td>${d.name}</td><td><span class="cat-tag ${catC(d.catKey)}">${catN(d.catKey)}</span></td><td>${d.subName}</td><td style="font-size:10.5px;">${d.serial||'-'}</td><td>${stB(d.status)}</td><td><span class="qty-badge"><i class="fas fa-cubes"></i> ${d.qty||1}</span></td><td>${d.location||'-'}</td><td style="font-size:10.5px;">${user}</td></tr>`}).join('')||'<tr><td colspan="9" class="text-muted" style="text-align:center;padding:14px;">Không có dữ liệu</td></tr>'}
-function filterAssetsByCat(v){assetCatFilter=v;renderAssets()}
-function filterAssetsByStatus(v){assetStatusFilter=v;renderAssets()}
-function searchAssets(v){assetSearch=v;renderAssets()}
-
-// ===================== TRA CỨU NV =====================
-function lookupEmp(){const code=document.getElementById('empLookupInput').value.trim().toUpperCase();if(!code){showToast('Nhập mã NV','warning');return}const emp=users.find(u=>u.code.toUpperCase()===code);if(!emp){document.getElementById('empResult').style.display='none';document.getElementById('noResult').style.display='block';return}document.getElementById('noResult').style.display='none';document.getElementById('empResult').style.display='block';document.getElementById('empResName').textContent=emp.name;document.getElementById('empResCode').textContent=emp.code;document.getElementById('empResDept').textContent=emp.dept;const ed=devices.filter(d=>{if(d.allocatedTo&&d.allocatedTo.code.toUpperCase()===code)return true;if(d.borrowedBy&&d.borrowedBy.code.toUpperCase()===code)return true;return false});document.getElementById('empResCnt').textContent=ed.reduce((s,d)=>s+(d.qty||1),0)+' TB';document.getElementById('empAssetsBody').innerHTML=ed.map(d=>{const ot=d.allocatedTo?'Đã cấp phát':'Đang mượn';return`<tr><td style="font-weight:700;color:var(--primary);font-size:10.5px;">${d.id}</td><td>${d.name}</td><td><span class="cat-tag ${catC(d.catKey)}">${catN(d.catKey)}</span></td><td><span class="qty-badge"><i class="fas fa-cubes"></i> ${d.qty||1}</span></td><td><span class="badge ${d.allocatedTo?'badge-info':'badge-warning'}">${ot}</span></td></tr>`}).join('')||'<tr><td colspan="5" class="text-muted" style="text-align:center;padding:12px;">Không có TB</td></tr>'}
-
-// ===================== QL DANH MỤC =====================
-function switchAdminTab(ck,btn){currentAdminCat=ck;document.querySelectorAll('#adminTabs .admin-tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');renderAdminCatList()}
-function renderAdminCatList(){const cat=categoryConfig[currentAdminCat];if(!cat)return;document.getElementById('adminCatList').innerHTML=cat.subcategories.map(sub=>{const dc=devices.filter(d=>d.catKey===currentAdminCat&&d.subId===sub.id).reduce((s,d)=>s+(d.qty||1),0);return`<div class="cat-mgr-item"><div class="cat-mgr-info"><h4><i class="fas ${sub.icon}" style="color:var(--primary);"></i> ${sub.name}</h4><p>${sub.fields.length} trường | ${dc} TB ${sub.hasCondition?'| Có tình trạng':''}</p></div><div class="cat-mgr-actions"><button class="btn btn-sm btn-outline" onclick="editSubCat('${currentAdminCat}','${sub.id}')"><i class="fas fa-edit"></i></button><button class="btn btn-sm btn-danger" onclick="deleteSubCat('${currentAdminCat}','${sub.id}')"><i class="fas fa-trash"></i></button></div></div>`}).join('')||'<div class="empty-state" style="padding:18px;"><i class="fas fa-folder-open"></i><p>Chưa có loại TB</p></div>'}
-function showAddSubCatModal(){openModal('Thêm loại TB mới - '+catN(currentAdminCat),`<div class="form-group mb-2"><label class="form-label">Tên loại <span class="req">*</span></label><input type="text" class="form-input" id="nsName" placeholder="VD: Laptop"></div><div class="form-group mb-2"><label class="form-label">Icon (FA class)</label><input type="text" class="form-input" id="nsIcon" value="fa-cube"></div><div class="form-group mb-2"><label class="form-label">Có tình trạng?</label><select class="form-select" id="nsCond"><option value="true">Có</option><option value="false">Không</option></select></div><div class="form-group mb-2"><label class="form-label">Trường</label><div id="nsFields" class="field-editor"></div><button type="button" class="btn btn-sm btn-outline mt-2" onclick="addNF()"><i class="fas fa-plus"></i> Thêm trường</button></div><div style="text-align:right;margin-top:12px;"><button class="btn btn-primary" onclick="saveNSC()"><i class="fas fa-save"></i> Lưu</button></div>`);window._nfs=[{name:'name',label:'Tên TB',type:'text',required:true},{name:'brand',label:'Hãng',type:'text',required:true},{name:'model',label:'Model',type:'text',required:true},{name:'serial',label:'Serial',type:'text',required:true}];window._nfContext='add';renderNFs()}
-function renderNFs(){document.getElementById('nsFields').innerHTML=window._nfs.map((f,i)=>`<div class="field-item" data-idx="${i}" ondragover="fieldDragOver(event)" ondragleave="fieldDragLeave(event)" ondrop="fieldDrop(event,${i},'new')"><span class="field-handle" draggable="true" ondragstart="fieldDragStart(event,${i})" ondragend="fieldDragEnd(event)"><i class="fas fa-grip-vertical"></i></span><span class="field-name">${f.label} (${f.name})</span><span class="field-type">${f.type}</span>${f.required?'<span class="field-req">*</span>':''}<button class="btn btn-sm" style="background:none;color:var(--danger);padding:2px 5px;" onclick="rmNF(${i})"><i class="fas fa-times"></i></button></div>`).join('')}
-function addNF(){openModal2('Thêm trường',`<div class="form-group mb-2"><label class="form-label">Key <span class="req">*</span></label><input type="text" class="form-input" id="nfName" placeholder="cpu"></div><div class="form-group mb-2"><label class="form-label">Nhãn <span class="req">*</span></label><input type="text" class="form-input" id="nfLabel" placeholder="CPU"></div><div class="form-group mb-2"><label class="form-label">Kiểu</label><select class="form-select" id="nfType"><option value="text">Text</option><option value="select">Select</option></select></div><div class="form-group mb-2"><label class="form-label">Bắt buộc?</label><select class="form-select" id="nfReq"><option value="true">Có</option><option value="false">Không</option></select></div><div id="nfOptsW" style="display:none;" class="form-group mb-2"><label class="form-label">Giá trị (ngăn cách phẩy)</label><input type="text" class="form-input" id="nfOpts" placeholder="A, B, C"></div><div style="text-align:right;"><button class="btn btn-primary" onclick="saveNF()"><i class="fas fa-plus"></i> Thêm</button></div>`);document.getElementById('nfType').addEventListener('change',function(){document.getElementById('nfOptsW').style.display=this.value==='select'?'block':'none'})}
-function saveNF(){const n=document.getElementById('nfName').value.trim(),l=document.getElementById('nfLabel').value.trim(),t=document.getElementById('nfType').value,r=document.getElementById('nfReq').value==='true';if(!n||!l){showToast('Nhập đầy đủ','error');return}const f={name:n,label:l,type:t,required:r};if(t==='select'){const o=document.getElementById('nfOpts').value.split(',').map(s=>s.trim()).filter(Boolean);if(o.length)f.options=o}closeModal2();if(window._nfContext==='edit'){window._efs.push(f);renderEFs()}else{window._nfs.push(f);renderNFs()}}
-function rmNF(i){window._nfs.splice(i,1);renderNFs()}
-function saveNSC(){const n=document.getElementById('nsName').value.trim(),ic=document.getElementById('nsIcon').value.trim()||'fa-cube',hc=document.getElementById('nsCond').value==='true';if(!n){showToast('Nhập tên','error');return}categoryConfig[currentAdminCat].subcategories.push({id:n.toLowerCase().replace(/[^a-z0-9]/g,'_')+Date.now()%1000,name:n,icon:ic,hasCondition:hc,fields:[...window._nfs]});saveData();closeModal();renderAdminCatList();renderDevCatGrid();showToast(`Đã thêm "${n}"`,'success')}
-function editSubCat(ck,sid){const sub=categoryConfig[ck].subcategories.find(s=>s.id===sid);if(!sub)return;window._efs=[...sub.fields];openModal('Sửa - '+sub.name,`<div class="form-group mb-2"><label class="form-label">Tên</label><input type="text" class="form-input" id="esName" value="${sub.name}"></div><div class="form-group mb-2"><label class="form-label">Icon</label><input type="text" class="form-input" id="esIcon" value="${sub.icon}"></div><div class="form-group mb-2"><label class="form-label">Có tình trạng?</label><select class="form-select" id="esCond"><option value="true" ${sub.hasCondition?'selected':''}>Có</option><option value="false" ${!sub.hasCondition?'selected':''}>Không</option></select></div><div class="form-group mb-2"><label class="form-label">Trường</label><div id="esFields" class="field-editor"></div><button type="button" class="btn btn-sm btn-outline mt-2" onclick="addEF()"><i class="fas fa-plus"></i> Thêm trường</button></div><div style="text-align:right;margin-top:12px;"><button class="btn btn-primary" onclick="saveESC('${ck}','${sid}')"><i class="fas fa-save"></i> Lưu</button></div>`);window._nfContext='edit';renderEFs();window._eck=ck;window._esid=sid}
-function renderEFs(){document.getElementById('esFields').innerHTML=window._efs.map((f,i)=>`<div class="field-item" data-idx="${i}" ondragover="fieldDragOver(event)" ondragleave="fieldDragLeave(event)" ondrop="fieldDrop(event,${i},'edit')"><span class="field-handle" draggable="true" ondragstart="fieldDragStart(event,${i})" ondragend="fieldDragEnd(event)"><i class="fas fa-grip-vertical"></i></span><span class="field-name">${f.label} (${f.name})</span><span class="field-type">${f.type}</span>${f.required?'<span class="field-req">*</span>':''}<button class="btn btn-sm" style="background:none;color:var(--danger);padding:2px 5px;" onclick="rmEF(${i})"><i class="fas fa-times"></i></button></div>`).join('')}
-let _dragFieldIdx=null;
-function fieldDragStart(e,idx){_dragFieldIdx=idx;e.target.closest('.field-item').classList.add('dragging');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',String(idx))}
-function fieldDragOver(e){e.preventDefault();e.dataTransfer.dropEffect='move';e.currentTarget.classList.add('drag-over')}
-function fieldDragLeave(e){e.currentTarget.classList.remove('drag-over')}
-function fieldDrop(e,idx,ctx){e.preventDefault();e.currentTarget.classList.remove('drag-over');if(_dragFieldIdx===null||_dragFieldIdx===idx){_dragFieldIdx=null;return}const arr=ctx==='new'?window._nfs:window._efs;const[moved]=arr.splice(_dragFieldIdx,1);arr.splice(idx,0,moved);_dragFieldIdx=null;if(ctx==='new')renderNFs();else renderEFs()}
-function fieldDragEnd(e){document.querySelectorAll('.field-item.dragging').forEach(el=>el.classList.remove('dragging'));document.querySelectorAll('.field-item.drag-over').forEach(el=>el.classList.remove('drag-over'));_dragFieldIdx=null}
-function addEF(){addNF()}
-function rmEF(i){window._efs.splice(i,1);renderEFs()}
-function saveESC(ck,sid){const sub=categoryConfig[ck].subcategories.find(s=>s.id===sid);if(!sub)return;const oldName=sub.name;const newName=document.getElementById('esName').value.trim()||sub.name;sub.name=newName;sub.icon=document.getElementById('esIcon').value.trim()||sub.icon;sub.hasCondition=document.getElementById('esCond').value==='true';sub.fields=[...window._efs];if(newName!==oldName){let cnt=0;devices.forEach(d=>{if(d.catKey===ck&&d.subId===sid){d.subName=newName;cnt++}});addDevLogs.forEach(l=>{const d=devices.find(x=>x.id===l.id);if(d&&d.catKey===ck&&d.subId===sid)l.subName=newName});if(cnt)showToast(`Đã đồng bộ tên mới cho ${cnt} thiết bị`,'success')}saveData();closeModal();renderAdminCatList();renderDevCatGrid();showToast('Đã cập nhật','success')}
-function deleteSubCat(ck,sid){const sub=categoryConfig[ck].subcategories.find(s=>s.id===sid);if(!sub)return;if(devices.filter(d=>d.catKey===ck&&d.subId===sid).length){showToast('Không xóa! Còn TB thuộc loại này','error');return}openModal('Xác nhận xóa',`<p class="mb-3">Xóa <b>"${sub.name}"</b>?</p><div style="text-align:right;"><button class="btn btn-danger" onclick="categoryConfig['${ck}'].subcategories=categoryConfig['${ck}'].subcategories.filter(s=>s.id!=='${sid}');saveData();closeModal();renderAdminCatList();renderDevCatGrid();showToast('Đã xóa','success')"><i class="fas fa-trash"></i> Xóa</button></div>`)}
-function resetCatConfig(){openModal('Reset danh mục',`<p class="mb-3">Đặt lại cấu hình danh mục về mặc định?</p><div style="text-align:right;"><button class="btn btn-danger" onclick="categoryConfig=getDefaultCatConfig();saveData();closeModal();renderAdminCatList();renderDevCatGrid();showToast('Đã reset','success')">Xác nhận</button></div>`)}
-
-// ===================== QL BỘ PHẬN =====================
-function renderDeptMgrList(){const el=document.getElementById('deptMgrList');if(!el)return;el.innerHTML=departments.map((d,i)=>{const cnt=users.filter(u=>u.dept===d).length;return`<div class="cat-mgr-item"><div class="cat-mgr-info"><h4><i class="fas fa-building" style="color:var(--primary);"></i> ${d}</h4><p>${cnt} nhân viên</p></div><div class="cat-mgr-actions"><button class="btn btn-sm btn-outline" onclick="editDept(${i})"><i class="fas fa-edit"></i></button><button class="btn btn-sm btn-danger" onclick="deleteDept(${i})"><i class="fas fa-trash"></i></button></div></div>`}).join('')||'<div class="empty-state" style="padding:18px;"><i class="fas fa-folder-open"></i><p>Chưa có bộ phận</p></div>';renderDeptSelects()}
-function showAddDeptModal(){openModal('Thêm Bộ phận',`<div class="form-group mb-2"><label class="form-label">Tên bộ phận <span class="req">*</span></label><input type="text" class="form-input" id="ndName" placeholder="VD: Kỹ thuật"></div><div style="text-align:right;margin-top:12px;"><button class="btn btn-primary" onclick="saveNewDept()"><i class="fas fa-save"></i> Lưu</button></div>`)}
-function saveNewDept(){const n=document.getElementById('ndName').value.trim();if(!n){showToast('Nhập tên bộ phận','error');return}if(departments.some(d=>d.toLowerCase()===n.toLowerCase())){showToast('Bộ phận đã tồn tại!','error');return}departments.push(n);saveData();closeModal();renderDeptMgrList();showToast(`Đã thêm "${n}"`,'success')}
-function editDept(i){const d=departments[i];if(d===undefined)return;openModal('Sửa Bộ phận',`<div class="form-group mb-2"><label class="form-label">Tên bộ phận <span class="req">*</span></label><input type="text" class="form-input" id="edName" value="${d}"></div><div style="text-align:right;margin-top:12px;"><button class="btn btn-primary" onclick="saveEditDept(${i})"><i class="fas fa-save"></i> Lưu</button></div>`)}
-function saveEditDept(i){const n=document.getElementById('edName').value.trim();if(!n){showToast('Nhập tên bộ phận','error');return}const old=departments[i];if(old===undefined)return;if(n!==old&&departments.some((d,idx)=>idx!==i&&d.toLowerCase()===n.toLowerCase())){showToast('Bộ phận đã tồn tại!','error');return}users.forEach(u=>{if(u.dept===old)u.dept=n});devices.forEach(dv=>{if(dv.allocatedTo&&dv.allocatedTo.dept===old)dv.allocatedTo.dept=n});allocations.forEach(a=>{if(a.dept===old)a.dept=n});departments[i]=n;saveData();closeModal();renderDeptMgrList();renderUserTable();showToast('Đã cập nhật','success')}
-function deleteDept(i){const d=departments[i];if(d===undefined)return;if(users.some(u=>u.dept===d)){showToast('Không xóa! Còn user thuộc bộ phận này','error');return}openModal('Xác nhận xóa',`<p class="mb-3">Xóa bộ phận <b>"${d}"</b>?</p><div style="text-align:right;"><button class="btn btn-danger" onclick="departments.splice(${i},1);saveData();closeModal();renderDeptMgrList();showToast('Đã xóa','success')"><i class="fas fa-trash"></i> Xóa</button></div>`)}
-function renderDeptSelects(){const opts='<option value="">-- Chọn --</option>'+departments.map(d=>`<option>${d}</option>`).join('');const el=document.getElementById('allocRecvDept');if(el){const cur=el.value;el.innerHTML=opts;if(departments.includes(cur))el.value=cur}}
-
-// ===================== QL USER =====================
-function renderUserTable(){document.getElementById('userTableBody').innerHTML=users.map(u=>`<tr><td style="font-weight:700;color:var(--primary);">${u.code}</td><td>${u.name}</td><td style="font-size:10.5px;">${u.email}</td><td>${u.dept}</td><td><span class="badge ${u.role==='Admin'?'badge-danger':u.role==='Manager'?'badge-warning':'badge-info'}">${u.role}</span></td><td><span class="badge ${u.status==='active'?'badge-success':'badge-secondary'}">${u.status==='active'?'Hoạt động':'Ngưng'}</span></td><td><div class="d-flex gap-2"><button class="btn btn-sm btn-outline" onclick="editUser('${u.code}')"><i class="fas fa-edit"></i></button><button class="btn btn-sm btn-danger" onclick="deleteUser('${u.code}')"><i class="fas fa-trash"></i></button></div></td></tr>`).join('')}
-function showAddUserModal(){openModal('Thêm User',`<div class="form-grid"><div class="form-group"><label class="form-label">Mã NV <span class="req">*</span></label><input type="text" class="form-input" id="nuCode" placeholder="NV007"></div><div class="form-group"><label class="form-label">Họ tên <span class="req">*</span></label><input type="text" class="form-input" id="nuName" placeholder="Nguyễn Văn A"></div><div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="nuEmail"></div><div class="form-group"><label class="form-label">Bộ phận</label><select class="form-select" id="nuDept">${departments.map(d=>`<option>${d}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Vai trò</label><select class="form-select" id="nuRole"><option>User</option><option>Manager</option><option>Admin</option></select></div><div class="form-group"><label class="form-label">TT</label><select class="form-select" id="nuStatus"><option value="active">Hoạt động</option><option value="inactive">Ngưng</option></select></div><div class="form-group"><label class="form-label">Mật khẩu đăng nhập</label><input type="text" class="form-input" id="nuPass" placeholder="Để trống = 123456"></div></div><div style="text-align:right;margin-top:12px;"><button class="btn btn-primary" onclick="saveNU()"><i class="fas fa-save"></i> Lưu</button></div>`)}
-function saveNU(){const c=document.getElementById('nuCode').value.trim(),n=document.getElementById('nuName').value.trim();if(!c||!n){showToast('Nhập mã NV và họ tên','error');return}if(users.find(u=>u.code.toUpperCase()===c.toUpperCase())){showToast('Mã NV đã tồn tại!','error');return}const pass=document.getElementById('nuPass').value.trim()||'123456';users.push({code:c,name:n,email:document.getElementById('nuEmail').value.trim(),dept:document.getElementById('nuDept').value,role:document.getElementById('nuRole').value,status:document.getElementById('nuStatus').value,password:pass});saveData();closeModal();renderUserTable();showToast(`Đã thêm "${n}" (mật khẩu: ${pass})`,'success')}
-function editUser(code){const u=users.find(x=>x.code===code);if(!u)return;openModal('Sửa - '+u.name,`<div class="form-grid"><div class="form-group"><label class="form-label">Mã NV</label><input type="text" class="form-input" value="${u.code}" disabled></div><div class="form-group"><label class="form-label">Họ tên <span class="req">*</span></label><input type="text" class="form-input" id="euName" value="${u.name}"></div><div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="euEmail" value="${u.email||''}"></div><div class="form-group"><label class="form-label">Bộ phận</label><select class="form-select" id="euDept">${departments.map(d=>`<option ${d===u.dept?'selected':''}>${d}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Vai trò</label><select class="form-select" id="euRole">${['User','Manager','Admin'].map(r=>`<option ${r===u.role?'selected':''}>${r}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">TT</label><select class="form-select" id="euStatus"><option value="active" ${u.status==='active'?'selected':''}>Hoạt động</option><option value="inactive" ${u.status==='inactive'?'selected':''}>Ngưng</option></select></div><div class="form-group"><label class="form-label">Đổi mật khẩu</label><input type="text" class="form-input" id="euPass" placeholder="Để trống = giữ nguyên"></div></div><div style="text-align:right;margin-top:12px;"><button class="btn btn-primary" onclick="saveEU('${code}')"><i class="fas fa-save"></i> Lưu</button></div>`)}
-function saveEU(code){const u=users.find(x=>x.code===code);if(!u)return;const n=document.getElementById('euName').value.trim();if(!n){showToast('Nhập họ tên','error');return}u.name=n;u.email=document.getElementById('euEmail').value.trim();u.dept=document.getElementById('euDept').value;u.role=document.getElementById('euRole').value;u.status=document.getElementById('euStatus').value;const np=document.getElementById('euPass').value.trim();if(np)u.password=np;saveData();closeModal();renderUserTable();if(currentUser&&currentUser.code===u.code)currentUser=u;showToast('Đã cập nhật','success')}
-function deleteUser(code){const u=users.find(x=>x.code===code);if(!u)return;if(devices.filter(d=>(d.allocatedTo&&d.allocatedTo.code===code)||(d.borrowedBy&&d.borrowedBy.code===code)).length){showToast('Không xóa! NV còn TB','error');return}openModal('Xác nhận xóa',`<p class="mb-3">Xóa <b>"${u.name}"</b>?</p><div style="text-align:right;"><button class="btn btn-danger" onclick="users=users.filter(x=>x.code!=='${code}');saveData();closeModal();renderUserTable();showToast('Đã xóa','success')"><i class="fas fa-trash"></i> Xóa</button></div>`)}
-function resetUsers(){openModal('Reset Users',`<p class="mb-3">Đặt lại danh sách users?</p><div style="text-align:right;"><button class="btn btn-danger" onclick="users=getDefaultUsers();saveData();closeModal();renderUserTable();showToast('Đã reset','success')">Xác nhận</button></div>`)}
-
-// ===================== INIT =====================
-async function init(){
-    loadData();
-    const today=new Date().toISOString().split('T')[0];document.querySelectorAll('input[type="date"]').forEach(i=>{if(!i.value)i.value=today});
-    if(SUPABASE_CONFIGURED){setSyncBadge('syncing');await loadRemoteData()}
-    if(tryAutoLogin()){
-        hideLoginScreen();
-        renderDashboard();renderNotifications();renderDeptMgrList();
-        afterLogin();
-    }else{
-        showLoginScreen();
-    }
-}
-document.addEventListener('click',function(e){const p=document.getElementById('notifPanel'),b=document.querySelector('.notif-btn');if(!p.contains(e.target)&&!b.contains(e.target))p.classList.remove('show')});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeModal2();closeModal()}});
-init();
-</script>
+<script src="assets/js/xlsx.full.min.js"></script>
+<script src="assets/js/supabase.min.js"></script>
+<script src="assets/js/config/supabase.config.js"></script>
+<script src="assets/js/data/defaults.js"></script>
+<script src="assets/js/core/asset-groups.js"></script>
+<script src="assets/js/core/dynamic-fields.js"></script>
+<script src="assets/js/core/state.js"></script>
+<script src="assets/js/core/auth.js"></script>
+<script src="assets/js/core/storage.js"></script>
+<script src="assets/js/core/state-history.js"></script>
+<script src="assets/js/shared/utils.js"></script>
+<script src="assets/js/shared/table-sort.js"></script>
+<script src="assets/js/core/warehouse-manager.js"></script>
+<script src="assets/js/core/product-management.js"></script>
+<script src="assets/js/shared/user-lookup.js"></script>
+<script src="assets/js/core/navigation.js"></script>
+<script src="assets/js/features/notifications.js"></script>
+<script src="assets/js/features/dashboard.js"></script>
+<script src="assets/js/shared/dual-list.js"></script>
+<script src="assets/js/features/allocation.js"></script>
+<script src="assets/js/features/return.js"></script>
+<script src="assets/js/features/borrowing.js"></script>
+<script src="assets/js/features/add-device.js"></script>
+<script src="assets/js/export/excel-import.js"></script>
+<script src="assets/js/export/inventory-excel.js"></script>
+<script src="assets/js/export/assets-excel.js"></script>
+<script src="assets/js/features/inventory-snapshots.js"></script>
+<script src="assets/js/export/history-excel.js"></script>
+<script src="assets/js/export/pdf.js"></script>
+<script src="assets/js/export/statistics-excel.js"></script>
+<script src="assets/js/export/backup-json.js"></script>
+<script src="assets/js/features/inventory.js"></script>
+<script src="assets/js/features/assets.js"></script>
+<script src="assets/js/features/employee-lookup.js"></script>
+<script src="assets/js/features/categories.js"></script>
+<script src="assets/js/features/departments.js"></script>
+<script src="assets/js/features/users.js"></script>
+<script src="assets/js/core/app.js"></script>
 </body>
 </html>
