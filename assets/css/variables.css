@@ -1,0 +1,8 @@
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --primary:#0a6abf;--dark:#064a8a;--light:#e8f4fd;--accent:#2196F3;
+            --bg:#f0f4f8;--text:#1a2332;--light-text:#6b7c93;--white:#fff;
+            --success:#1b9e3e;--warning:#c78c00;--danger:#c62828;--border:#dde3ea;
+            --shadow:0 2px 10px rgba(10,106,191,.1);--shadow-lg:0 6px 24px rgba(10,106,191,.16);
+            --radius:10px;
+        }
